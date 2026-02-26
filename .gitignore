@@ -6,3 +6,4 @@ venv/
 *.db
 *:Zone.Identifier
 logs/
+train_data/

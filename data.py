@@ -3,6 +3,8 @@ Data fetching module using Yahoo Finance.
 Includes session-level caching for sector peer data.
 """
 
+import math
+
 import yfinance as yf
 import pandas as pd
 from typing import Optional
@@ -40,15 +42,26 @@ PEER_FETCH_WORKERS = 10
 
 def clear_cache():
     """Clear all caches."""
-    global _sector_cache, _historical_cache
-    _sector_cache = {}
-    _historical_cache = {}
+    with _cache_lock:
+        _sector_cache.clear()
+        _historical_cache.clear()
     _clear_sentiment_cache()
     _clear_reddit_buzz_cache()
     _clear_insider_cache()
     _clear_analyst_cache()
     _clear_options_cache()
     _clear_trends_cache()
+
+
+def _sanitize_for_json(obj):
+    """Replace NaN/Inf floats with None for valid JSON serialization."""
+    if isinstance(obj, float) and (math.isnan(obj) or math.isinf(obj)):
+        return None
+    if isinstance(obj, dict):
+        return {k: _sanitize_for_json(v) for k, v in obj.items()}
+    if isinstance(obj, list):
+        return [_sanitize_for_json(v) for v in obj]
+    return obj
 
 
 def _safe_get(df, label, col):
@@ -220,7 +233,7 @@ def fetch_historical_kpis(ticker_str: str) -> dict:
                     year_start = d - pd.DateOffset(years=1)
                     mask = (divs.index >= year_start) & (divs.index <= d)
                     annual_div = divs[mask].sum()
-                    if annual_div >= 0:
+                    if annual_div > 0:
                         yearly["dividendYield"].append((_date_str(date), annual_div / close))
         except Exception as e:
             logger.debug(f"Dividend data unavailable for {ticker_str}: {e}")
@@ -521,9 +534,10 @@ def analyze_stock(ticker: str) -> dict:
         "short_ratio": info.get("shortRatio"),
         "shares_short": info.get("sharesShort"),
         "shares_short_prior_month": info.get("sharesShortPriorMonth"),
+        "shares_outstanding": info.get("sharesOutstanding"),
     }
 
-    return {
+    return _sanitize_for_json({
         "ticker": resolved_ticker,
         "company_name": company_name,
         "sector": sector,
@@ -542,4 +556,4 @@ def analyze_stock(ticker: str) -> dict:
         "analyst_ratings": analyst_data,
         "options_sentiment": options_data,
         "google_trends": trends_data,
-    }
+    })

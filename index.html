@@ -451,7 +451,7 @@
         }
 
         /* Reddit Buzz Card */
-        .reddit-buzz-card {
+        .indicator-card {
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 8px;
@@ -459,7 +459,7 @@
             margin-bottom: 2rem;
         }
 
-        .reddit-buzz-card h4 {
+        .indicator-card h4 {
             font-family: var(--mono);
             font-size: 0.85rem;
             font-weight: 500;
@@ -470,24 +470,24 @@
             gap: 0.6rem;
         }
 
-        .reddit-buzz-card .not-found {
+        .indicator-card .not-found {
             color: var(--text-dim);
             font-size: 0.85rem;
         }
 
-        .reddit-buzz-body {
+        .indicator-body {
             display: flex;
             gap: 2rem;
             align-items: flex-start;
             flex-wrap: wrap;
         }
 
-        .reddit-buzz-stat {
+        .indicator-stat {
             text-align: center;
             min-width: 100px;
         }
 
-        .reddit-buzz-stat .stat-value {
+        .indicator-stat .stat-value {
             font-family: var(--mono);
             font-size: 1.6rem;
             font-weight: 500;
@@ -495,13 +495,13 @@
             color: var(--text);
         }
 
-        .reddit-buzz-stat .stat-label {
+        .indicator-stat .stat-label {
             font-size: 0.75rem;
             color: var(--text-dim);
             margin-top: 0.2rem;
         }
 
-        .reddit-buzz-stat .trend {
+        .indicator-stat .trend {
             font-size: 0.8rem;
             font-family: var(--mono);
             margin-top: 0.15rem;
@@ -800,7 +800,7 @@
             border: 1px solid rgba(52, 211, 153, 0.3);
         }
 
-        /* Short Interest Card — reuses reddit-buzz-card/stat layout */
+        /* Short Interest Card — reuses indicator-card/stat layout */
         .short-flag {
             display: inline-block;
             font-family: var(--mono);
@@ -1095,7 +1095,7 @@
             <button class="search-btn" id="analyzeBtn" onclick="analyze()">Analyze</button>
         </div>
 
-        <div class="error-msg" id="errorMsg"></div>
+        <div class="error-msg" id="errorMsg" role="alert"></div>
 
         <div class="loading" id="loading">
             <div class="spinner"></div>
@@ -1459,7 +1459,7 @@
             if (rb && rb.available) {
                 if (!rb.found || rb.mentions === 0) {
                     redditBuzzHtml = `
-                        <div class="reddit-buzz-card">
+                        <div class="indicator-card">
                             <h4>Reddit Buzz</h4>
                             <p class="not-found">No Reddit mentions found for ${safeTicker}</p>
                         </div>`;
@@ -1486,19 +1486,19 @@
                         : '';
 
                     redditBuzzHtml = `
-                        <div class="reddit-buzz-card">
+                        <div class="indicator-card">
                             <h4>Reddit Buzz ${rankDisplay}</h4>
-                            <div class="reddit-buzz-body">
-                                <div class="reddit-buzz-stat">
+                            <div class="indicator-body">
+                                <div class="indicator-stat">
                                     <div class="stat-value">${parseInt(rb.mentions).toLocaleString()}</div>
                                     <div class="stat-label">mentions</div>
                                     ${trendHtml}
                                 </div>
-                                <div class="reddit-buzz-stat">
+                                <div class="indicator-stat">
                                     <div class="stat-value">${parseInt(rb.upvotes).toLocaleString()}</div>
                                     <div class="stat-label">upvotes</div>
                                 </div>
-                                <div class="reddit-buzz-stat">
+                                <div class="indicator-stat">
                                     <div class="stat-value" style="color:var(--text-muted)">${parseInt(rb.mentions_24h_ago).toLocaleString()}</div>
                                     <div class="stat-label">mentions 24h ago</div>
                                 </div>
@@ -1526,21 +1526,25 @@
                 }
 
                 shortInterestHtml = `
-                    <div class="reddit-buzz-card">
+                    <div class="indicator-card">
                         <h4>Short Interest${flagHtml}</h4>
-                        <div class="reddit-buzz-body">
-                            <div class="reddit-buzz-stat">
+                        <div class="indicator-body">
+                            <div class="indicator-stat">
                                 <div class="stat-value">${pct != null ? pct.toFixed(2) + '%' : 'N/A'}</div>
                                 <div class="stat-label">of float shorted</div>
                                 ${changeHtml}
                             </div>
-                            <div class="reddit-buzz-stat">
+                            <div class="indicator-stat">
                                 <div class="stat-value">${ratio != null ? ratio.toFixed(2) : 'N/A'}</div>
                                 <div class="stat-label">days to cover</div>
                             </div>
-                            <div class="reddit-buzz-stat">
+                            <div class="indicator-stat">
                                 <div class="stat-value" style="color:var(--text-muted)">${shares != null ? parseInt(shares).toLocaleString() : 'N/A'}</div>
                                 <div class="stat-label">shares short</div>
+                            </div>
+                            <div class="indicator-stat">
+                                <div class="stat-value" style="color:var(--text-muted)">${si.shares_outstanding != null ? parseInt(si.shares_outstanding).toLocaleString() : 'N/A'}</div>
+                                <div class="stat-label">shares outstanding</div>
                             </div>
                         </div>
                     </div>`;
@@ -1586,12 +1590,12 @@
                         <div class="insider-card">
                             <h4>Insider Trading (${ins.lookback_days}d)${clusterHtml}</h4>
                             <div class="insider-summary">
-                                <div class="reddit-buzz-stat">
+                                <div class="indicator-stat">
                                     <div class="stat-value" style="color:var(--green)">${ins.buy_count}</div>
                                     <div class="stat-label">purchases (${ins.unique_buyers} insiders)</div>
                                     <div class="trend trend-up" style="font-size:0.75rem">${fmtVal(ins.total_buy_value)}</div>
                                 </div>
-                                <div class="reddit-buzz-stat">
+                                <div class="indicator-stat">
                                     <div class="stat-value" style="color:var(--red)">${ins.sell_count}</div>
                                     <div class="stat-label">sales (${ins.unique_sellers} insiders)</div>
                                     <div class="trend trend-down" style="font-size:0.75rem">${fmtVal(ins.total_sell_value)}</div>
@@ -1675,15 +1679,15 @@
                                     <span>Bearish (2.0)</span>
                                 </div>
                             </div>
-                            <div class="reddit-buzz-stat">
+                            <div class="indicator-stat">
                                 <div class="stat-value">${ratio != null ? ratio.toFixed(2) : 'N/A'}</div>
                                 <div class="stat-label">put/call ratio</div>
                             </div>
-                            <div class="reddit-buzz-stat">
+                            <div class="indicator-stat">
                                 <div class="stat-value">${opt.atm_iv != null ? opt.atm_iv.toFixed(1) + '%' : 'N/A'}</div>
                                 <div class="stat-label">ATM implied vol</div>
                             </div>
-                            <div class="reddit-buzz-stat">
+                            <div class="indicator-stat">
                                 <div class="stat-value" style="color:var(--text-muted)">${opt.put_volume != null ? parseInt(opt.put_volume).toLocaleString() : 'N/A'} / ${opt.call_volume != null ? parseInt(opt.call_volume).toLocaleString() : 'N/A'}</div>
                                 <div class="stat-label">put / call volume</div>
                             </div>
@@ -1719,16 +1723,16 @@
                         <h4>Google Trends (90d)${spikeBadge}</h4>
                         <div class="trends-body">
                             <div class="trends-sparkline">${sparkSvg}</div>
-                            <div class="reddit-buzz-stat">
+                            <div class="indicator-stat">
                                 <div class="stat-value">${gt.current}</div>
                                 <div class="stat-label">current interest</div>
                                 ${trendDir}
                             </div>
-                            <div class="reddit-buzz-stat">
+                            <div class="indicator-stat">
                                 <div class="stat-value" style="color:var(--text-muted)">${gt.average}</div>
                                 <div class="stat-label">90d average</div>
                             </div>
-                            <div class="reddit-buzz-stat">
+                            <div class="indicator-stat">
                                 <div class="stat-value" style="color:var(--text-muted)">${gt.peak}</div>
                                 <div class="stat-label">90d peak</div>
                             </div>

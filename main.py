@@ -9,7 +9,6 @@ Provides both:
 import asyncio
 import time
 import logging
-import traceback
 from pathlib import Path
 from typing import Optional
 
@@ -23,12 +22,14 @@ setup_logging()
 logger = logging.getLogger(__name__)
 
 from data import analyze_stock, clear_cache
+from train import router as train_router
 
 app = FastAPI(
     title="Stock Rater",
     description="Rate stocks on a 1-10 value scale based on financial KPIs, with sector comparison.",
     version="1.0.0",
 )
+app.include_router(train_router)
 
 
 # --- Middleware ---
@@ -63,7 +64,7 @@ async def api_analyze(ticker: str):
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
     except Exception as e:
-        logger.error(f"Error analyzing {ticker}: {traceback.format_exc()}")
+        logger.error(f"Error analyzing {ticker}: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail=f"Error analyzing '{ticker}': {str(e)}")
 
 
@@ -88,7 +89,9 @@ frontend_logger = logging.getLogger("frontend")
 
 @app.post("/api/log")
 async def receive_frontend_log(log: FrontendLog):
-    log_level = getattr(logging, log.level.upper(), logging.INFO)
+    _VALID_LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR"}
+    level_name = log.level.upper()
+    log_level = getattr(logging, level_name) if level_name in _VALID_LEVELS else logging.INFO
     extra = {"source": "frontend"}
     extra.update(log.context)
     frontend_logger.log(log_level, log.message, extra=extra)
