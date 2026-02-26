@@ -752,11 +752,14 @@
                 Each KPI receives three sub-scores: an <strong>absolute score</strong> (how does the value
                 compare to dynamic sector-relative thresholds based on the 20th/80th percentile of peers?),
                 a <strong>relative score</strong> (how does it compare to the industry or sector median among
-                S&P 500 peers?), and a <strong>trend score</strong> (is the metric improving or deteriorating
-                over the past 5 years?). The final rating is a weighted combination: 30% absolute + 50%
-                relative + 20% trend. When industry peers are available (5+), the relative score uses industry
-                comparison instead of the broader sector. KPIs are weighted by importance. The result is mapped
-                to a 1-10 scale where 10 = best value and 1 = worst value.
+                S&amp;P 500 peers?), and a <strong>trend score</strong> (is the metric improving or deteriorating
+                based on annual financial statements?). The final rating is a weighted combination: 30% absolute
+                + 50% relative + 20% trend. When trend data is unavailable for a KPI, its weight redistributes
+                proportionally across absolute and relative. When industry peers are available (5+), the relative
+                score uses industry comparison instead of the broader sector. Some KPIs with negative values are
+                excluded (e.g. negative P/E) or penalized (e.g. negative book value), depending on whether the
+                negative is meaningless or a red flag. KPIs are weighted by importance. The result is mapped to
+                a 1-10 scale where 10 = best value and 1 = worst value.
             </p>
         </details>
 
@@ -1032,17 +1035,30 @@
                         ? `<span><span class="dot" style="background:var(--accent)"></span> Sector avg (${(s.sector_avg_bullish * 100).toFixed(0)}%)</span>`
                         : '';
 
-                    const buzzRatio = s.buzz_ratio;
-                    const buzzClass = buzzRatio > 1.5 ? 'buzz-bright' : buzzRatio >= 0.7 ? 'buzz-muted' : 'buzz-dim';
-                    const buzzText = buzzRatio.toFixed(2) + 'x';
+                    const neutralPct = (100 - parseFloat(bullPct) - parseFloat(bearPct)).toFixed(0);
+
+                    let buzzHtml = '';
+                    if (s.buzz_ratio != null) {
+                        const buzzRatio = s.buzz_ratio;
+                        const buzzClass = buzzRatio > 1.5 ? 'buzz-bright' : buzzRatio >= 0.7 ? 'buzz-muted' : 'buzz-dim';
+                        buzzHtml = `
+                            <div class="buzz-section">
+                                <div class="buzz-value ${buzzClass}">${escapeHtml(buzzRatio.toFixed(2) + 'x')}</div>
+                                <div class="buzz-label">vs normal volume</div>
+                            </div>`;
+                    }
 
                     const sectorScoreComp = s.company_news_score != null && s.sector_avg_news_score != null
                         ? `News score: <strong>${s.company_news_score.toFixed(2)}</strong> vs sector <strong>${s.sector_avg_news_score.toFixed(2)}</strong>`
                         : '';
 
+                    const weeklyAvgLine = s.weekly_avg != null
+                        ? `Weekly average: <strong>${Number(s.weekly_avg).toFixed(1)}</strong><br>`
+                        : '';
+
                     sentimentHtml = `
                         <div class="sentiment-card">
-                            <h4>News Sentiment</h4>
+                            <h4>News Sentiment (${parseInt(s.articles_this_week)} articles this week)</h4>
                             <div class="sentiment-body">
                                 <div class="sentiment-gauge">
                                     <div class="sentiment-bar-track">
@@ -1054,17 +1070,14 @@
                                         <span>Bullish (${bullPct}%)</span>
                                     </div>
                                     <div class="sentiment-labels">
-                                        <span><span class="dot" style="background:var(--text)"></span> ${escapeHtml(safeTicker)}</span>
+                                        <span><span class="dot" style="background:var(--text)"></span> ${safeTicker}</span>
                                         ${sectorLabel}
                                     </div>
                                 </div>
-                                <div class="buzz-section">
-                                    <div class="buzz-value ${buzzClass}">${escapeHtml(buzzText)}</div>
-                                    <div class="buzz-label">vs normal volume</div>
-                                </div>
+                                ${buzzHtml}
                                 <div class="sentiment-meta">
-                                    Articles this week: <strong>${parseInt(s.articles_this_week)}</strong><br>
-                                    Weekly average: <strong>${Number(s.weekly_avg).toFixed(1)}</strong><br>
+                                    Bullish: <strong>${bullPct}%</strong> / Bearish: <strong>${bearPct}%</strong> / Neutral: <strong>${neutralPct}%</strong><br>
+                                    ${weeklyAvgLine}
                                     ${sectorScoreComp}
                                 </div>
                             </div>

@@ -499,4 +499,5 @@ def analyze_stock(ticker: str) -> dict:
         "industry_comparison_active": industry_averages is not None,
         "rating": rating,
         "kpi_comparison": kpi_comparison,
+        "sentiment": sentiment_data,
     }
