@@ -2,6 +2,14 @@
 
 ## 2026-02-26
 
+### Added (UX)
+- Shareable URLs: analysis results push `?ticker=AAPL` to URL, auto-analyzes on page load from URL params
+- Current stock price displayed below company name in stock header
+- Recent searches: last 8 tickers stored in localStorage, shown as clickable chips below search bar
+- Sentiment/indicator cards in 2-column CSS grid layout (news + insider cards span full width)
+- Mobile improvements: single-column grid, stacked score bars, tighter indicator gaps
+- Dynamic page title updates to `TICKER -- Stock Rater` on analysis
+
 ### Added
 - 5 sentiment indicators: short interest, insider trading, analyst consensus, options flow, Google Trends
 - News sentiment & buzz indicator via Finnhub API (headline keyword scoring, bull/bear ratio)
