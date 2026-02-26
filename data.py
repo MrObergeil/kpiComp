@@ -15,6 +15,16 @@ from sp500 import SP500_BY_SECTOR
 from rating import extract_kpis, compute_sector_averages, get_kpi_keys
 from sentiment import fetch_sentiment
 from sentiment import clear_cache as _clear_sentiment_cache
+from reddit_buzz import fetch_reddit_buzz
+from reddit_buzz import clear_cache as _clear_reddit_buzz_cache
+from insider_trading import fetch_insider_trading
+from insider_trading import clear_cache as _clear_insider_cache
+from analyst_ratings import fetch_analyst_ratings
+from analyst_ratings import clear_cache as _clear_analyst_cache
+from options_sentiment import fetch_options_sentiment
+from options_sentiment import clear_cache as _clear_options_cache
+from google_trends import fetch_google_trends
+from google_trends import clear_cache as _clear_trends_cache
 
 logger = logging.getLogger(__name__)
 
@@ -34,6 +44,11 @@ def clear_cache():
     _sector_cache = {}
     _historical_cache = {}
     _clear_sentiment_cache()
+    _clear_reddit_buzz_cache()
+    _clear_insider_cache()
+    _clear_analyst_cache()
+    _clear_options_cache()
+    _clear_trends_cache()
 
 
 def _safe_get(df, label, col):
@@ -415,13 +430,23 @@ def analyze_stock(ticker: str) -> dict:
     stock_kpis = extract_kpis(info)
 
     # 3. Fetch sector peers, historical KPIs, and sentiment in parallel
-    with ThreadPoolExecutor(max_workers=3) as pool:
+    with ThreadPoolExecutor(max_workers=6) as pool:
         peers_future = pool.submit(get_sector_peers_kpis, sector, resolved_ticker)
         hist_future = pool.submit(fetch_historical_kpis, resolved_ticker)
         sentiment_future = pool.submit(fetch_sentiment, resolved_ticker)
+        reddit_future = pool.submit(fetch_reddit_buzz, resolved_ticker)
+        insider_future = pool.submit(fetch_insider_trading, resolved_ticker)
+        analyst_future = pool.submit(fetch_analyst_ratings, resolved_ticker)
+        options_future = pool.submit(fetch_options_sentiment, resolved_ticker)
+        trends_future = pool.submit(fetch_google_trends, resolved_ticker)
         peers_kpis = peers_future.result()
         historical_data = hist_future.result()
         sentiment_data = sentiment_future.result()
+        reddit_buzz_data = reddit_future.result()
+        insider_data = insider_future.result()
+        analyst_data = analyst_future.result()
+        options_data = options_future.result()
+        trends_data = trends_future.result()
 
     sector_averages = compute_sector_averages(peers_kpis)
 
@@ -487,6 +512,16 @@ def analyze_stock(ticker: str) -> dict:
             "negative_flag_reason": kpi_score.get("flag_reason"),
         })
 
+    # 7. Extract short interest data (already in info dict)
+    short_pct = info.get("shortPercentOfFloat")
+    short_interest = {
+        "available": short_pct is not None,
+        "short_pct_of_float": round(short_pct * 100, 2) if short_pct is not None else None,
+        "short_ratio": info.get("shortRatio"),
+        "shares_short": info.get("sharesShort"),
+        "shares_short_prior_month": info.get("sharesShortPriorMonth"),
+    }
+
     return {
         "ticker": resolved_ticker,
         "company_name": company_name,
@@ -500,4 +535,10 @@ def analyze_stock(ticker: str) -> dict:
         "rating": rating,
         "kpi_comparison": kpi_comparison,
         "sentiment": sentiment_data,
+        "reddit_buzz": reddit_buzz_data,
+        "short_interest": short_interest,
+        "insider_trading": insider_data,
+        "analyst_ratings": analyst_data,
+        "options_sentiment": options_data,
+        "google_trends": trends_data,
     }

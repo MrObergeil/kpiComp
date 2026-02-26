@@ -523,6 +523,296 @@
             border: 1px solid rgba(56, 189, 248, 0.25);
         }
 
+        /* Google Trends Card */
+        .trends-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .trends-card h4 {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .trends-body {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-end;
+            flex-wrap: wrap;
+        }
+
+        .trends-sparkline {
+            flex: 1;
+            min-width: 200px;
+            height: 50px;
+        }
+
+        .trends-sparkline svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .trends-sparkline polyline {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 1.5;
+            stroke-linejoin: round;
+        }
+
+        .spike-badge {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            background: rgba(251, 191, 36, 0.15);
+            color: var(--yellow);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        /* Options Sentiment Card */
+        .options-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .options-card h4 {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .options-body {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .pc-gauge {
+            flex: 1;
+            min-width: 180px;
+        }
+
+        .pc-bar-track {
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(to right, var(--green), var(--yellow) 50%, var(--red));
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .pc-marker {
+            position: absolute;
+            top: -3px;
+            width: 4px;
+            height: 16px;
+            border-radius: 2px;
+            transform: translateX(-50%);
+            background: var(--text);
+            box-shadow: 0 0 4px rgba(255,255,255,0.5);
+        }
+
+        .pc-legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+
+        /* Analyst Ratings Card */
+        .analyst-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .analyst-card h4 {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .analyst-bar-track {
+            display: flex;
+            height: 14px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .analyst-bar-track > div {
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        .analyst-legend {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            font-size: 0.72rem;
+            color: var(--text-dim);
+        }
+
+        .analyst-legend span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .analyst-legend .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .analyst-body {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .analyst-chart {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .analyst-score {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .direction-badge {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+        }
+
+        .direction-improving {
+            background: rgba(52, 211, 153, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .direction-deteriorating {
+            background: rgba(248, 113, 113, 0.15);
+            color: var(--red);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+
+        .direction-stable {
+            background: rgba(148, 163, 184, 0.15);
+            color: var(--text-dim);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        /* Insider Trading Card */
+        .insider-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .insider-card h4 {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .insider-card .no-activity {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .insider-summary {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .insider-txns {
+            width: 100%;
+            font-size: 0.78rem;
+            border-collapse: collapse;
+        }
+
+        .insider-txns th {
+            text-align: left;
+            color: var(--text-dim);
+            font-weight: 400;
+            padding: 0.3rem 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .insider-txns td {
+            padding: 0.3rem 0.5rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(30, 41, 59, 0.5);
+        }
+
+        .insider-txns .buy-row td:first-child { color: var(--green); }
+        .insider-txns .sell-row td:first-child { color: var(--red); }
+
+        .cluster-badge {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            background: rgba(52, 211, 153, 0.15);
+            color: var(--green);
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        /* Short Interest Card — reuses reddit-buzz-card/stat layout */
+        .short-flag {
+            display: inline-block;
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            background: rgba(248, 113, 113, 0.15);
+            color: var(--red);
+            border: 1px solid rgba(248, 113, 113, 0.3);
+        }
+
         /* KPI Table */
         .kpi-section h3 {
             font-family: var(--mono);
@@ -1211,6 +1501,235 @@
                 }
             }
 
+            let shortInterestHtml = '';
+            const si = data.short_interest;
+            if (si && si.available) {
+                const pct = si.short_pct_of_float;
+                const ratio = si.short_ratio;
+                const shares = si.shares_short;
+                const priorShares = si.shares_short_prior_month;
+
+                const flagHtml = pct > 10 ? ' <span class="short-flag">High</span>' : '';
+
+                let changeHtml = '';
+                if (shares != null && priorShares != null && priorShares > 0) {
+                    const changePct = ((shares - priorShares) / priorShares * 100).toFixed(1);
+                    const arrow = changePct > 0 ? '&#9650;' : changePct < 0 ? '&#9660;' : '&#8212;';
+                    const cls = changePct > 0 ? 'trend-up' : changePct < 0 ? 'trend-down' : 'trend-flat';
+                    changeHtml = `<div class="trend ${cls}">${arrow} ${Math.abs(changePct)}% vs prior month</div>`;
+                }
+
+                shortInterestHtml = `
+                    <div class="reddit-buzz-card">
+                        <h4>Short Interest${flagHtml}</h4>
+                        <div class="reddit-buzz-body">
+                            <div class="reddit-buzz-stat">
+                                <div class="stat-value">${pct != null ? pct.toFixed(2) + '%' : 'N/A'}</div>
+                                <div class="stat-label">of float shorted</div>
+                                ${changeHtml}
+                            </div>
+                            <div class="reddit-buzz-stat">
+                                <div class="stat-value">${ratio != null ? ratio.toFixed(2) : 'N/A'}</div>
+                                <div class="stat-label">days to cover</div>
+                            </div>
+                            <div class="reddit-buzz-stat">
+                                <div class="stat-value" style="color:var(--text-muted)">${shares != null ? parseInt(shares).toLocaleString() : 'N/A'}</div>
+                                <div class="stat-label">shares short</div>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+
+            let insiderHtml = '';
+            const ins = data.insider_trading;
+            if (ins && ins.available) {
+                const hasTxns = ins.buy_count > 0 || ins.sell_count > 0;
+                if (!hasTxns) {
+                    insiderHtml = `
+                        <div class="insider-card">
+                            <h4>Insider Trading</h4>
+                            <p class="no-activity">No open-market insider transactions in the last ${ins.lookback_days} days</p>
+                        </div>`;
+                } else {
+                    const clusterHtml = ins.cluster_buy ? ' <span class="cluster-badge">Cluster Buy</span>' : '';
+
+                    const fmtVal = (v) => {
+                        if (v == null || v === 0) return '$0';
+                        if (v >= 1e6) return '$' + (v / 1e6).toFixed(1) + 'M';
+                        if (v >= 1e3) return '$' + (v / 1e3).toFixed(0) + 'K';
+                        return '$' + v.toLocaleString();
+                    };
+
+                    let txnRows = '';
+                    if (ins.recent_transactions && ins.recent_transactions.length > 0) {
+                        txnRows = ins.recent_transactions.map(t => {
+                            const cls = t.type === 'buy' ? 'buy-row' : 'sell-row';
+                            const label = t.type === 'buy' ? 'Buy' : 'Sell';
+                            const price = t.price != null ? '$' + Number(t.price).toFixed(2) : 'N/A';
+                            return `<tr class="${cls}">
+                                <td>${escapeHtml(label)}</td>
+                                <td>${escapeHtml(t.name)}</td>
+                                <td>${parseInt(t.shares).toLocaleString()}</td>
+                                <td>${price}</td>
+                                <td>${escapeHtml(t.date)}</td>
+                            </tr>`;
+                        }).join('');
+                    }
+
+                    insiderHtml = `
+                        <div class="insider-card">
+                            <h4>Insider Trading (${ins.lookback_days}d)${clusterHtml}</h4>
+                            <div class="insider-summary">
+                                <div class="reddit-buzz-stat">
+                                    <div class="stat-value" style="color:var(--green)">${ins.buy_count}</div>
+                                    <div class="stat-label">purchases (${ins.unique_buyers} insiders)</div>
+                                    <div class="trend trend-up" style="font-size:0.75rem">${fmtVal(ins.total_buy_value)}</div>
+                                </div>
+                                <div class="reddit-buzz-stat">
+                                    <div class="stat-value" style="color:var(--red)">${ins.sell_count}</div>
+                                    <div class="stat-label">sales (${ins.unique_sellers} insiders)</div>
+                                    <div class="trend trend-down" style="font-size:0.75rem">${fmtVal(ins.total_sell_value)}</div>
+                                </div>
+                            </div>
+                            ${txnRows ? `<table class="insider-txns">
+                                <thead><tr><th>Type</th><th>Insider</th><th>Shares</th><th>Price</th><th>Date</th></tr></thead>
+                                <tbody>${txnRows}</tbody>
+                            </table>` : ''}
+                        </div>`;
+                }
+            }
+
+            let analystHtml = '';
+            const ar = data.analyst_ratings;
+            if (ar && ar.available && ar.total_analysts > 0) {
+                const total = ar.total_analysts;
+                const pct = (v) => ((v / total) * 100).toFixed(1);
+
+                const dirCls = ar.direction === 'improving' ? 'direction-improving'
+                    : ar.direction === 'deteriorating' ? 'direction-deteriorating' : 'direction-stable';
+                const dirLabel = ar.direction.charAt(0).toUpperCase() + ar.direction.slice(1);
+                const dirBadge = `<span class="direction-badge ${dirCls}">${dirLabel}</span>`;
+
+                const scoreLabel = ar.consensus_score >= 1.0 ? 'Strong Buy'
+                    : ar.consensus_score >= 0.5 ? 'Buy'
+                    : ar.consensus_score >= -0.5 ? 'Hold'
+                    : ar.consensus_score >= -1.0 ? 'Sell' : 'Strong Sell';
+
+                analystHtml = `
+                    <div class="analyst-card">
+                        <h4>Analyst Consensus (${total} analysts) ${dirBadge}</h4>
+                        <div class="analyst-body">
+                            <div class="analyst-chart">
+                                <div class="analyst-bar-track">
+                                    <div style="width:${pct(ar.strong_buy)}%;background:var(--green)"></div>
+                                    <div style="width:${pct(ar.buy)}%;background:rgba(52,211,153,0.5)"></div>
+                                    <div style="width:${pct(ar.hold)}%;background:var(--yellow)"></div>
+                                    <div style="width:${pct(ar.sell)}%;background:rgba(248,113,113,0.5)"></div>
+                                    <div style="width:${pct(ar.strong_sell)}%;background:var(--red)"></div>
+                                </div>
+                                <div class="analyst-legend">
+                                    <span><span class="dot" style="background:var(--green)"></span>Strong Buy (${ar.strong_buy})</span>
+                                    <span><span class="dot" style="background:rgba(52,211,153,0.5)"></span>Buy (${ar.buy})</span>
+                                    <span><span class="dot" style="background:var(--yellow)"></span>Hold (${ar.hold})</span>
+                                    <span><span class="dot" style="background:rgba(248,113,113,0.5)"></span>Sell (${ar.sell})</span>
+                                    <span><span class="dot" style="background:var(--red)"></span>Strong Sell (${ar.strong_sell})</span>
+                                </div>
+                            </div>
+                            <div class="analyst-score">
+                                <div class="stat-value" style="font-family:var(--mono);font-size:1.6rem;font-weight:500">${ar.consensus_score.toFixed(2)}</div>
+                                <div class="stat-label" style="font-size:0.75rem;color:var(--text-dim)">${scoreLabel}</div>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+
+            let optionsHtml = '';
+            const opt = data.options_sentiment;
+            if (opt && opt.available) {
+                // P/C ratio gauge: 0 = bullish, 1 = neutral, 2+ = bearish
+                // Map to 0-100% position: clamp ratio to 0-2 range
+                const ratio = opt.pc_ratio;
+                const markerPct = ratio != null ? Math.min(Math.max(ratio / 2 * 100, 0), 100) : 50;
+
+                const pcLabel = ratio != null
+                    ? (ratio > 1.0 ? 'Bearish lean' : ratio < 0.7 ? 'Bullish lean' : 'Neutral')
+                    : 'N/A';
+
+                optionsHtml = `
+                    <div class="options-card">
+                        <h4>Options Sentiment (exp: ${escapeHtml(opt.expiry)})</h4>
+                        <div class="options-body">
+                            <div class="pc-gauge">
+                                <div class="pc-bar-track">
+                                    <div class="pc-marker" style="left:${markerPct}%" title="P/C: ${ratio != null ? ratio.toFixed(2) : 'N/A'}"></div>
+                                </div>
+                                <div class="pc-legend">
+                                    <span>Bullish (0.0)</span>
+                                    <span>${pcLabel}</span>
+                                    <span>Bearish (2.0)</span>
+                                </div>
+                            </div>
+                            <div class="reddit-buzz-stat">
+                                <div class="stat-value">${ratio != null ? ratio.toFixed(2) : 'N/A'}</div>
+                                <div class="stat-label">put/call ratio</div>
+                            </div>
+                            <div class="reddit-buzz-stat">
+                                <div class="stat-value">${opt.atm_iv != null ? opt.atm_iv.toFixed(1) + '%' : 'N/A'}</div>
+                                <div class="stat-label">ATM implied vol</div>
+                            </div>
+                            <div class="reddit-buzz-stat">
+                                <div class="stat-value" style="color:var(--text-muted)">${opt.put_volume != null ? parseInt(opt.put_volume).toLocaleString() : 'N/A'} / ${opt.call_volume != null ? parseInt(opt.call_volume).toLocaleString() : 'N/A'}</div>
+                                <div class="stat-label">put / call volume</div>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+
+            let trendsHtml = '';
+            const gt = data.google_trends;
+            if (gt && gt.available) {
+                const spikeBadge = gt.spike ? ' <span class="spike-badge">Attention Spike</span>' : '';
+
+                let trendDir = '';
+                if (gt.trend_pct != null) {
+                    const arrow = gt.trend_pct > 0 ? '&#9650;' : gt.trend_pct < 0 ? '&#9660;' : '&#8212;';
+                    const cls = gt.trend_pct > 0 ? 'trend-up' : gt.trend_pct < 0 ? 'trend-down' : 'trend-flat';
+                    trendDir = `<div class="trend ${cls}">${arrow} ${Math.abs(gt.trend_pct).toFixed(0)}% vs prior week</div>`;
+                }
+
+                // Build sparkline SVG from data points
+                let sparkSvg = '';
+                if (gt.sparkline && gt.sparkline.length > 1) {
+                    const pts = gt.sparkline;
+                    const maxVal = Math.max(...pts, 1);
+                    const w = 300;
+                    const h = 50;
+                    const coords = pts.map((v, i) => `${(i / (pts.length - 1)) * w},${h - (v / maxVal) * (h - 4)}`).join(' ');
+                    sparkSvg = `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${coords}" /></svg>`;
+                }
+
+                trendsHtml = `
+                    <div class="trends-card">
+                        <h4>Google Trends (90d)${spikeBadge}</h4>
+                        <div class="trends-body">
+                            <div class="trends-sparkline">${sparkSvg}</div>
+                            <div class="reddit-buzz-stat">
+                                <div class="stat-value">${gt.current}</div>
+                                <div class="stat-label">current interest</div>
+                                ${trendDir}
+                            </div>
+                            <div class="reddit-buzz-stat">
+                                <div class="stat-value" style="color:var(--text-muted)">${gt.average}</div>
+                                <div class="stat-label">90d average</div>
+                            </div>
+                            <div class="reddit-buzz-stat">
+                                <div class="stat-value" style="color:var(--text-muted)">${gt.peak}</div>
+                                <div class="stat-label">90d peak</div>
+                            </div>
+                        </div>
+                    </div>`;
+            }
+
             resultsEl.innerHTML = `
                 <div class="stock-header">
                     <div class="stock-info">
@@ -1266,6 +1785,11 @@
 
                 ${sentimentHtml}
                 ${redditBuzzHtml}
+                ${shortInterestHtml}
+                ${insiderHtml}
+                ${analystHtml}
+                ${optionsHtml}
+                ${trendsHtml}
 
                 <div class="kpi-section">
                     <h3>KPI Comparison -- ${comparisonLabel}
