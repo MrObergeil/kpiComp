@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentiment Training</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e17;
+            --bg-card: #111827;
+            --bg-card-hover: #1a2332;
+            --border: #1e293b;
+            --border-accent: #334155;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.15);
+            --green: #34d399;
+            --green-dim: rgba(52, 211, 153, 0.15);
+            --red: #f87171;
+            --red-dim: rgba(248, 113, 113, 0.15);
+            --yellow: #fbbf24;
+            --yellow-dim: rgba(251, 191, 36, 0.15);
+            --mono: 'DM Mono', 'Courier New', monospace;
+            --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1060px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            font-family: var(--mono);
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: var(--accent);
+        }
+
+        .back-link {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            text-decoration: none;
+        }
+
+        .back-link:hover { color: var(--accent); }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            padding: 0.6rem 1.2rem;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .tab:hover { color: var(--text-muted); }
+        .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+        /* Search */
+        .search-row {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .search-input {
+            font-family: var(--mono);
+            font-size: 1rem;
+            padding: 0.6rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            width: 220px;
+            outline: none;
+        }
+
+        .search-input:focus { border-color: var(--accent); }
+        .search-input::placeholder { color: var(--text-dim); }
+
+        .btn {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text);
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .btn:hover { background: var(--bg-card-hover); border-color: var(--border-accent); }
+        .btn-accent { border-color: var(--accent); color: var(--accent); }
+        .btn-accent:hover { background: var(--accent-glow); }
+
+        /* Articles */
+        .articles-header {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 0.75rem;
+        }
+
+        .article-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .article-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+        }
+
+        .article-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .article-headline {
+            font-weight: 500;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            flex: 1;
+        }
+
+        .article-headline a {
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .article-headline a:hover { color: var(--accent); }
+
+        .score-badge {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .score-bullish { background: var(--green-dim); color: var(--green); }
+        .score-bearish { background: var(--red-dim); color: var(--red); }
+        .score-neutral { background: var(--yellow-dim); color: var(--yellow); }
+
+        .article-summary {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-family: var(--mono);
+            margin-bottom: 0.5rem;
+        }
+
+        .keyword-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .pill {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 3px;
+        }
+
+        .pill-bull { background: var(--green-dim); color: var(--green); }
+        .pill-bear { background: var(--red-dim); color: var(--red); }
+
+        .feedback-row {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .fb-btn {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.6rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            background: none;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .fb-btn:hover { background: var(--bg-card-hover); }
+        .fb-btn.correct { color: var(--green); border-color: var(--green); }
+        .fb-btn.wrong { color: var(--red); border-color: var(--red); }
+
+        .fb-btn.selected {
+            font-weight: 700;
+        }
+        .fb-btn.correct.selected { background: var(--green-dim); }
+        .fb-btn.wrong.selected { background: var(--red-dim); }
+
+        .correct-picker {
+            display: none;
+            gap: 0.4rem;
+            align-items: center;
+            margin-left: 0.5rem;
+        }
+
+        .correct-picker.visible { display: flex; }
+
+        .correct-picker .fb-btn {
+            font-size: 0.75rem;
+            padding: 0.2rem 0.5rem;
+        }
+
+        /* Keywords section */
+        .section-title {
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .keywords-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .kw-column h3 {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .kw-column.bullish h3 { color: var(--green); }
+        .kw-column.bearish h3 { color: var(--red); }
+
+        .kw-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-bottom: 0.75rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .kw-tag {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .kw-tag.base { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); }
+        .kw-tag.custom { border: 1px solid; }
+        .kw-tag.custom.bull { background: var(--green-dim); color: var(--green); border-color: var(--green); }
+        .kw-tag.custom.bear { background: var(--red-dim); color: var(--red); border-color: var(--red); }
+        .kw-tag.removed { text-decoration: line-through; opacity: 0.4; }
+
+        .kw-remove {
+            cursor: pointer;
+            opacity: 0.5;
+            font-size: 0.65rem;
+        }
+
+        .kw-remove:hover { opacity: 1; }
+
+        .kw-add-row {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .kw-add-input {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            padding: 0.35rem 0.6rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            outline: none;
+            width: 140px;
+        }
+
+        .kw-add-input:focus { border-color: var(--accent); }
+
+        .keyword-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Feedback log */
+        .feedback-log {
+            margin-top: 1rem;
+        }
+
+        .feedback-toggle {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0.4rem 0;
+        }
+
+        .feedback-toggle:hover { color: var(--text-muted); }
+
+        .feedback-table {
+            width: 100%;
+            margin-top: 0.75rem;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        .feedback-table.visible { display: table; }
+
+        .feedback-table th {
+            font-family: var(--mono);
+            color: var(--text-dim);
+            text-align: left;
+            padding: 0.4rem 0.6rem;
+            border-bottom: 1px solid var(--border);
+            font-weight: 400;
+        }
+
+        .feedback-table td {
+            padding: 0.4rem 0.6rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-muted);
+            max-width: 300px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .status-msg {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .loading { color: var(--accent); }
+        .error { color: var(--red); }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>Sentiment Training</h1>
+        <a href="/" class="back-link">Back to main</a>
+    </header>
+
+    <div class="tabs">
+        <button class="tab active" data-tab="news">News</button>
+    </div>
+
+    <div class="search-row">
+        <input type="text" id="tickerInput" class="search-input" placeholder="AAPL" autocomplete="off">
+        <button id="fetchBtn" class="btn btn-accent">Fetch Articles</button>
+    </div>
+
+    <div id="articlesSection">
+        <div class="status-msg" id="articlesStatus">Enter a ticker to fetch articles</div>
+        <div id="articlesHeader" class="articles-header" style="display:none;"></div>
+        <div id="articleList" class="article-list"></div>
+    </div>
+
+    <div id="keywordsSection">
+        <div class="section-title">Keyword Management</div>
+        <div class="keywords-grid">
+            <div class="kw-column bullish">
+                <h3>Bullish Keywords</h3>
+                <div id="bullishList" class="kw-list"></div>
+                <div class="kw-add-row">
+                    <input type="text" id="bullishAddInput" class="kw-add-input" placeholder="add keyword">
+                    <button class="btn" onclick="addKeyword('bullish')">+</button>
+                </div>
+            </div>
+            <div class="kw-column bearish">
+                <h3>Bearish Keywords</h3>
+                <div id="bearishList" class="kw-list"></div>
+                <div class="kw-add-row">
+                    <input type="text" id="bearishAddInput" class="kw-add-input" placeholder="add keyword">
+                    <button class="btn" onclick="addKeyword('bearish')">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="keyword-actions">
+            <button id="saveKwBtn" class="btn btn-accent">Save Keywords</button>
+            <button id="resetKwBtn" class="btn">Reset to Defaults</button>
+        </div>
+    </div>
+
+    <div class="feedback-log">
+        <button class="feedback-toggle" id="feedbackToggle">Feedback Log</button>
+        <table class="feedback-table" id="feedbackTable">
+            <thead>
+                <tr>
+                    <th>Ticker</th>
+                    <th>Headline</th>
+                    <th>Computed</th>
+                    <th>Correct</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody id="feedbackBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+const INDICATOR = 'news';
+let currentTicker = '';
+let currentArticles = [];
+let keywordData = null;
+let pendingOverrides = null;
+
+// --- Fetch articles ---
+
+const tickerInput = document.getElementById('tickerInput');
+const fetchBtn = document.getElementById('fetchBtn');
+
+fetchBtn.addEventListener('click', () => fetchArticles());
+tickerInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') fetchArticles(); });
+
+async function fetchArticles() {
+    const ticker = tickerInput.value.trim().toUpperCase();
+    if (!ticker) return;
+    currentTicker = ticker;
+
+    const status = document.getElementById('articlesStatus');
+    const header = document.getElementById('articlesHeader');
+    const list = document.getElementById('articleList');
+
+    status.style.display = 'block';
+    status.className = 'status-msg loading';
+    status.textContent = `Fetching articles for ${ticker}...`;
+    header.style.display = 'none';
+    list.innerHTML = '';
+
+    try {
+        const resp = await fetch(`/train/api/articles/${ticker}`);
+        if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
+        const data = await resp.json();
+        currentArticles = data.articles;
+
+        if (currentArticles.length === 0) {
+            status.className = 'status-msg';
+            status.textContent = `No articles found for ${ticker}`;
+            return;
+        }
+
+        status.style.display = 'none';
+        header.style.display = 'block';
+        header.textContent = `${currentArticles.length} articles for ${ticker}`;
+        renderArticles();
+    } catch (e) {
+        status.className = 'status-msg error';
+        status.textContent = `Error: ${e.message}`;
+    }
+}
+
+function renderArticles() {
+    const list = document.getElementById('articleList');
+    list.innerHTML = '';
+
+    for (let i = 0; i < currentArticles.length; i++) {
+        const art = currentArticles[i];
+        const card = document.createElement('div');
+        card.className = 'article-card';
+
+        const scoreLabel = art.score > 0 ? 'Bullish' : art.score < 0 ? 'Bearish' : 'Neutral';
+        const scoreClass = art.score > 0 ? 'score-bullish' : art.score < 0 ? 'score-bearish' : 'score-neutral';
+
+        const dt = art.datetime ? new Date(art.datetime * 1000) : null;
+        const dateStr = dt ? dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '';
+
+        const bullPills = (art.matched_keywords.bullish || []).map(w => `<span class="pill pill-bull">${w}</span>`).join('');
+        const bearPills = (art.matched_keywords.bearish || []).map(w => `<span class="pill pill-bear">${w}</span>`).join('');
+
+        card.innerHTML = `
+            <div class="article-top">
+                <div class="article-headline">
+                    ${art.url ? `<a href="${art.url}" target="_blank" rel="noopener">${esc(art.headline)}</a>` : esc(art.headline)}
+                </div>
+                <span class="score-badge ${scoreClass}">${scoreLabel}</span>
+            </div>
+            ${art.summary ? `<div class="article-summary">${esc(art.summary)}</div>` : ''}
+            <div class="article-meta">
+                ${art.source ? `<span>${esc(art.source)}</span>` : ''}
+                ${dateStr ? `<span>${dateStr}</span>` : ''}
+            </div>
+            ${(bullPills || bearPills) ? `<div class="keyword-pills">${bullPills}${bearPills}</div>` : ''}
+            <div class="feedback-row">
+                <button class="fb-btn correct" data-idx="${i}" onclick="submitFeedback(${i}, 'correct', this)">Correct</button>
+                <button class="fb-btn wrong" data-idx="${i}" onclick="showCorrectPicker(${i}, this)">Wrong</button>
+                <div class="correct-picker" id="picker-${i}">
+                    <span style="font-size:0.75rem;color:var(--text-dim)">Should be:</span>
+                    <button class="fb-btn" onclick="submitFeedback(${i}, 1, this)">Bullish</button>
+                    <button class="fb-btn" onclick="submitFeedback(${i}, 0, this)">Neutral</button>
+                    <button class="fb-btn" onclick="submitFeedback(${i}, -1, this)">Bearish</button>
+                </div>
+            </div>
+        `;
+        list.appendChild(card);
+    }
+}
+
+function showCorrectPicker(idx, btn) {
+    btn.classList.add('selected');
+    document.getElementById(`picker-${idx}`).classList.add('visible');
+}
+
+async function submitFeedback(idx, value, btn) {
+    const art = currentArticles[idx];
+    const correctScore = value === 'correct' ? art.score : value;
+
+    // Visual feedback
+    const card = btn.closest('.article-card');
+    const fbRow = card.querySelector('.feedback-row');
+
+    try {
+        await fetch('/train/api/feedback', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                indicator: INDICATOR,
+                ticker: currentTicker,
+                headline: art.headline,
+                summary: art.summary || '',
+                computed_score: art.score,
+                correct_score: correctScore,
+                matched_keywords: art.matched_keywords,
+                source: art.source || '',
+            }),
+        });
+
+        fbRow.innerHTML = `<span style="font-family:var(--mono);font-size:0.75rem;color:var(--text-dim)">
+            Feedback saved${value !== 'correct' ? ` (should be ${correctScore > 0 ? 'bullish' : correctScore < 0 ? 'bearish' : 'neutral'})` : ''}
+        </span>`;
+    } catch (e) {
+        fbRow.innerHTML = `<span style="font-family:var(--mono);font-size:0.75rem;color:var(--red)">Error saving feedback</span>`;
+    }
+
+    loadFeedback();
+}
+
+
+// --- Keywords ---
+
+async function loadKeywords() {
+    try {
+        const resp = await fetch(`/train/api/keywords/${INDICATOR}`);
+        keywordData = await resp.json();
+        pendingOverrides = JSON.parse(JSON.stringify(keywordData.overrides));
+        renderKeywords();
+    } catch (e) {
+        console.error('Failed to load keywords', e);
+    }
+}
+
+function renderKeywords() {
+    renderKeywordColumn('bullish');
+    renderKeywordColumn('bearish');
+}
+
+function renderKeywordColumn(type) {
+    const listEl = document.getElementById(`${type}List`);
+    listEl.innerHTML = '';
+
+    const baseSet = new Set(type === 'bullish' ? keywordData.base_bullish : keywordData.base_bearish);
+    const addKey = `${type}_add`;
+    const removeKey = `${type}_remove`;
+    const added = new Set(pendingOverrides[addKey] || []);
+    const removed = new Set(pendingOverrides[removeKey] || []);
+
+    // Effective = base + added - removed
+    const effective = new Set([...baseSet, ...added]);
+    const allWords = [...effective].sort();
+
+    for (const word of allWords) {
+        const isCustom = added.has(word);
+        const tag = document.createElement('span');
+        tag.className = `kw-tag ${isCustom ? `custom ${type === 'bullish' ? 'bull' : 'bear'}` : 'base'}`;
+        tag.innerHTML = `${word} <span class="kw-remove" onclick="removeKeyword('${type}', '${word}')">&times;</span>`;
+        listEl.appendChild(tag);
+    }
+
+    // Show removed base words
+    for (const word of [...removed].sort()) {
+        if (baseSet.has(word)) {
+            const tag = document.createElement('span');
+            tag.className = 'kw-tag base removed';
+            tag.innerHTML = `${word} <span class="kw-remove" onclick="restoreKeyword('${type}', '${word}')" title="Restore">+</span>`;
+            listEl.appendChild(tag);
+        }
+    }
+}
+
+function addKeyword(type) {
+    const input = document.getElementById(`${type}AddInput`);
+    const word = input.value.trim().toLowerCase().replace(/[^a-z]/g, '');
+    if (!word || !pendingOverrides) return;
+
+    const addKey = `${type}_add`;
+    const removeKey = `${type}_remove`;
+
+    if (!pendingOverrides[addKey].includes(word)) {
+        pendingOverrides[addKey].push(word);
+    }
+    // If it was in remove list, un-remove it
+    pendingOverrides[removeKey] = pendingOverrides[removeKey].filter(w => w !== word);
+
+    input.value = '';
+    renderKeywords();
+}
+
+function removeKeyword(type, word) {
+    if (!pendingOverrides) return;
+    const addKey = `${type}_add`;
+    const removeKey = `${type}_remove`;
+    const baseSet = new Set(type === 'bullish' ? keywordData.base_bullish : keywordData.base_bearish);
+
+    // If custom, just remove from add list
+    if (pendingOverrides[addKey].includes(word)) {
+        pendingOverrides[addKey] = pendingOverrides[addKey].filter(w => w !== word);
+    }
+    // If base, add to remove list
+    if (baseSet.has(word) && !pendingOverrides[removeKey].includes(word)) {
+        pendingOverrides[removeKey].push(word);
+    }
+
+    renderKeywords();
+}
+
+function restoreKeyword(type, word) {
+    if (!pendingOverrides) return;
+    const removeKey = `${type}_remove`;
+    pendingOverrides[removeKey] = pendingOverrides[removeKey].filter(w => w !== word);
+    renderKeywords();
+}
+
+document.getElementById('saveKwBtn').addEventListener('click', async () => {
+    if (!pendingOverrides) return;
+    try {
+        const resp = await fetch(`/train/api/keywords/${INDICATOR}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pendingOverrides),
+        });
+        const data = await resp.json();
+        pendingOverrides = JSON.parse(JSON.stringify(data.overrides));
+        await loadKeywords();
+
+        // Re-fetch articles to show updated scoring
+        if (currentTicker) fetchArticles();
+    } catch (e) {
+        console.error('Failed to save keywords', e);
+    }
+});
+
+document.getElementById('resetKwBtn').addEventListener('click', async () => {
+    pendingOverrides = { bullish_add: [], bullish_remove: [], bearish_add: [], bearish_remove: [] };
+    try {
+        await fetch(`/train/api/keywords/${INDICATOR}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(pendingOverrides),
+        });
+        await loadKeywords();
+        if (currentTicker) fetchArticles();
+    } catch (e) {
+        console.error('Failed to reset keywords', e);
+    }
+});
+
+// Allow Enter to add keywords
+document.getElementById('bullishAddInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') addKeyword('bullish'); });
+document.getElementById('bearishAddInput').addEventListener('keydown', (e) => { if (e.key === 'Enter') addKeyword('bearish'); });
+
+
+// --- Feedback log ---
+
+const feedbackToggle = document.getElementById('feedbackToggle');
+const feedbackTable = document.getElementById('feedbackTable');
+
+feedbackToggle.addEventListener('click', () => {
+    feedbackTable.classList.toggle('visible');
+    if (feedbackTable.classList.contains('visible')) loadFeedback();
+});
+
+async function loadFeedback() {
+    try {
+        const resp = await fetch('/train/api/feedback');
+        const data = await resp.json();
+        const body = document.getElementById('feedbackBody');
+        body.innerHTML = '';
+
+        const entries = (data.feedback || []).slice().reverse().slice(0, 50);
+        for (const e of entries) {
+            const scoreLabel = (s) => s > 0 ? 'Bullish' : s < 0 ? 'Bearish' : 'Neutral';
+            const tr = document.createElement('tr');
+            const ts = e.timestamp ? new Date(e.timestamp).toLocaleString() : '';
+            tr.innerHTML = `
+                <td>${esc(e.ticker)}</td>
+                <td title="${esc(e.headline)}">${esc(e.headline)}</td>
+                <td>${scoreLabel(e.computed_score)}</td>
+                <td>${scoreLabel(e.correct_score)}</td>
+                <td>${ts}</td>
+            `;
+            body.appendChild(tr);
+        }
+
+        feedbackToggle.textContent = `Feedback Log (${data.feedback.length})`;
+    } catch (e) {
+        console.error('Failed to load feedback', e);
+    }
+}
+
+function esc(str) {
+    if (!str) return '';
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+}
+
+// Init
+loadKeywords();
+</script>
+</body>
+</html>
