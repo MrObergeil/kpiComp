@@ -388,6 +388,7 @@ def analyze_stock(ticker: str) -> dict:
             diff = None
             diff_str = "N/A"
 
+        kpi_score = rating["kpi_scores"].get(cfg.key, {})
         kpi_comparison.append({
             "key": cfg.key,
             "display_name": cfg.display_name,
@@ -399,11 +400,13 @@ def analyze_stock(ticker: str) -> dict:
             "sector_raw": sector_val,
             "diff_raw": diff,
             "lower_is_better": cfg.lower_is_better,
-            "kpi_score": rating["kpi_scores"].get(cfg.key, {}),
+            "kpi_score": kpi_score,
             "description": cfg.description,
             "weight_raw": cfg.weight,
             "historical_avg": format_kpi_value(cfg.key, hist_val),
             "historical_raw": hist_val,
+            "negative_flag": kpi_score.get("flag"),
+            "negative_flag_reason": kpi_score.get("flag_reason"),
         })
 
     return {

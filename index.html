@@ -432,6 +432,42 @@
             display: block;
         }
 
+        /* Negative KPI flag indicators */
+        .kpi-table tbody tr.kpi-excluded {
+            opacity: 0.45;
+        }
+
+        .kpi-table tbody tr.kpi-penalized {
+            background: var(--red-dim);
+        }
+
+        .score-flag-tooltip {
+            display: none;
+            position: absolute;
+            right: 0;
+            bottom: calc(100% + 6px);
+            background: #1e293b;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            line-height: 1.5;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-accent);
+            max-width: 280px;
+            width: max-content;
+            z-index: 10;
+            pointer-events: none;
+            font-family: var(--sans);
+        }
+
+        .kpi-score-cell {
+            position: relative;
+        }
+
+        .kpi-score-cell:hover .score-flag-tooltip {
+            display: block;
+        }
+
         /* KPI Toggle Checkboxes */
         .kpi-table thead th.col-toggle,
         .kpi-table tbody td.col-toggle {
@@ -683,6 +719,9 @@
             let kpiRows = data.kpi_comparison.map(kpi => {
                 const diffClass = getDiffClass(kpi.diff_raw, kpi.lower_is_better);
                 const combined = kpi.kpi_score?.combined;
+                const flag = kpi.negative_flag;
+                const flagReason = kpi.negative_flag_reason;
+
                 const dotColor = getScoreDotColor(combined);
                 const scoreText = combined !== null && combined !== undefined
                     ? (combined * 10).toFixed(1)
@@ -692,11 +731,25 @@
                     ? `<span class="kpi-tooltip">${kpi.description}</span>`
                     : '';
 
+                // Row class for negative flags
+                const rowClass = flag === 'excluded' ? 'kpi-excluded'
+                    : flag === 'penalized' ? 'kpi-penalized' : '';
+
+                // Checkbox: disabled for excluded KPIs
+                const checkboxAttrs = flag === 'excluded'
+                    ? 'disabled'
+                    : (hasScore ? 'checked' : 'checked disabled');
+
+                // Score tooltip for flagged KPIs
+                const flagTooltip = flagReason
+                    ? `<span class="score-flag-tooltip">${flag === 'excluded' ? 'Excluded' : 'Penalized'}: ${flagReason}</span>`
+                    : '';
+
                 return `
-                    <tr data-kpi-key="${kpi.key}">
+                    <tr data-kpi-key="${kpi.key}" class="${rowClass}">
                         <td class="col-toggle">
                             <input type="checkbox" class="kpi-toggle" data-kpi-key="${kpi.key}"
-                                ${hasScore ? 'checked' : 'checked disabled'}
+                                ${checkboxAttrs}
                                 onchange="recalculate()">
                         </td>
                         <td class="kpi-name-cell">
@@ -712,6 +765,7 @@
                             <span class="kpi-score-cell">
                                 <span class="kpi-score-dot" style="background:${dotColor}"></span>
                                 ${scoreText}
+                                ${flagTooltip}
                             </span>
                         </td>
                     </tr>

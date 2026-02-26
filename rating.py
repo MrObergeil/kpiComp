@@ -43,6 +43,9 @@ class KPIConfig:
     # For higher_is_better: best = high end, worst = low end
     abs_best: float
     abs_worst: float
+    # How to handle negative values: "allow" (default), "exclude" (treat as N/A), "penalize" (score 0)
+    negative_handling: str = "allow"
+    negative_reason: str = ""  # Human-readable reason shown in UI tooltips
     format_as_pct: bool = False  # Display as percentage
     format_decimals: int = 2
     description: str = ""
@@ -53,30 +56,40 @@ KPI_CONFIGS = [
         key="trailingPE", display_name="P/E Ratio (TTM)",
         weight=0.15, lower_is_better=True,
         abs_best=5.0, abs_worst=60.0,
+        negative_handling="exclude",
+        negative_reason="Negative earnings make P/E meaningless as a valuation metric",
         description="Price / trailing 12-month earnings. Lower means you're paying less per dollar of profit.",
     ),
     KPIConfig(
         key="forwardPE", display_name="Forward P/E",
         weight=0.12, lower_is_better=True,
         abs_best=5.0, abs_worst=50.0,
+        negative_handling="exclude",
+        negative_reason="Expected losses make forward P/E meaningless",
         description="Price / estimated future earnings. Based on analyst forecasts for the next 12 months.",
     ),
     KPIConfig(
         key="priceToBook", display_name="P/B Ratio",
         weight=0.10, lower_is_better=True,
         abs_best=0.5, abs_worst=20.0,
+        negative_handling="penalize",
+        negative_reason="Negative book value indicates liabilities exceed assets",
         description="Market price / book value per share. Below 1.0 suggests the stock trades below its net asset value.",
     ),
     KPIConfig(
         key="enterpriseToEbitda", display_name="EV/EBITDA",
         weight=0.12, lower_is_better=True,
         abs_best=3.0, abs_worst=40.0,
+        negative_handling="penalize",
+        negative_reason="Negative EBITDA indicates operating losses",
         description="Enterprise value / EBITDA. Accounts for debt, useful for comparing companies with different capital structures.",
     ),
     KPIConfig(
         key="debtToEquity", display_name="Debt/Equity",
         weight=0.10, lower_is_better=True,
         abs_best=0.0, abs_worst=300.0,
+        negative_handling="penalize",
+        negative_reason="Negative equity indicates balance sheet insolvency",
         description="Total debt / shareholder equity. Higher means more leverage and financial risk.",
     ),
     KPIConfig(
@@ -141,6 +154,9 @@ def compute_sector_averages(all_kpis: list[dict[str, Optional[float]]]) -> dict[
     averages = {}
     for cfg in KPI_CONFIGS:
         values = [kpi[cfg.key] for kpi in all_kpis if kpi.get(cfg.key) is not None]
+        # Exclude negative values for KPIs where negatives are meaningless or distressed
+        if cfg.negative_handling != "allow":
+            values = [v for v in values if v >= 0]
         if values:
             # Use median instead of mean to reduce outlier impact
             values.sort()
@@ -226,7 +242,28 @@ def calculate_rating(
         avg = sector_averages.get(cfg.key)
 
         if val is None:
-            kpi_scores[cfg.key] = {"absolute": None, "relative": None, "combined": None}
+            kpi_scores[cfg.key] = {"absolute": None, "relative": None, "combined": None, "flag": None, "flag_reason": None}
+            continue
+
+        # Handle negative values per KPI config
+        if val < 0 and cfg.negative_handling == "exclude":
+            kpi_scores[cfg.key] = {"absolute": None, "relative": None, "combined": None, "flag": "excluded", "flag_reason": cfg.negative_reason}
+            continue
+
+        if val < 0 and cfg.negative_handling == "penalize":
+            abs_score = 0.0
+            rel_score = 0.0
+            combined = 0.0
+            kpi_scores[cfg.key] = {
+                "absolute": 0.0,
+                "relative": 0.0,
+                "combined": 0.0,
+                "flag": "penalized",
+                "flag_reason": cfg.negative_reason,
+            }
+            total_abs_weighted += 0.0
+            total_rel_weighted += 0.0
+            total_weight_used += cfg.weight
             continue
 
         abs_score = _score_absolute(val, cfg)
@@ -237,6 +274,8 @@ def calculate_rating(
             "absolute": round(abs_score, 3),
             "relative": round(rel_score, 3),
             "combined": round(combined, 3),
+            "flag": None,
+            "flag_reason": None,
         }
 
         total_abs_weighted += abs_score * cfg.weight
