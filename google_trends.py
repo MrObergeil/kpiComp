@@ -72,7 +72,7 @@ def fetch_google_trends(ticker: str) -> dict | None:
 
     # Recent trend: last 7 values vs prior 7
     recent_avg = sum(values[-7:]) / min(len(values), 7)
-    prior_avg = sum(values[-14:-7]) / min(len(values[:-7]), 7) if len(values) > 7 else avg
+    prior_avg = sum(values[-14:-7]) / len(values[-14:-7]) if len(values) > 7 else avg
 
     if prior_avg > 0:
         trend_pct = round(((recent_avg - prior_avg) / prior_avg) * 100, 1)

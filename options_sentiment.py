@@ -7,7 +7,7 @@ Options flow captures informed/leveraged money -- strong academic backing.
 import time
 import threading
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 
 import yfinance as yf
 
@@ -27,7 +27,7 @@ def clear_cache():
 
 def _find_nearest_monthly(expirations: tuple) -> str | None:
     """Find the nearest expiration that's at least 7 days out (skip weeklies too close)."""
-    today = datetime.utcnow().date()
+    today = datetime.now(timezone.utc).date()
     for exp in expirations:
         exp_date = datetime.strptime(exp, "%Y-%m-%d").date()
         days_out = (exp_date - today).days

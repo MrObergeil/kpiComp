@@ -430,7 +430,7 @@ def analyze_stock(ticker: str) -> dict:
     stock_kpis = extract_kpis(info)
 
     # 3. Fetch sector peers, historical KPIs, and sentiment in parallel
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=8) as pool:
         peers_future = pool.submit(get_sector_peers_kpis, sector, resolved_ticker)
         hist_future = pool.submit(fetch_historical_kpis, resolved_ticker)
         sentiment_future = pool.submit(fetch_sentiment, resolved_ticker)

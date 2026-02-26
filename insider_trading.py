@@ -8,7 +8,7 @@ import os
 import time
 import threading
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import requests
 
@@ -66,7 +66,7 @@ def fetch_insider_trading(ticker: str) -> dict | None:
         return None
 
     # Filter to last N days, open-market buys (P) and sells (S)
-    cutoff = (datetime.utcnow() - timedelta(days=LOOKBACK_DAYS)).strftime("%Y-%m-%d")
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=LOOKBACK_DAYS)).strftime("%Y-%m-%d")
     # Transaction codes: P = open-market purchase, S = open-market sale
     # Exclude: M (option exercise), A (grant/award), G (gift), etc.
     open_market_codes = {"P", "S"}
