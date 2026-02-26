@@ -448,7 +448,16 @@
             cursor: pointer;
         }
 
-        .kpi-table tbody tr.kpi-disabled {
+        .kpi-table tbody tr.kpi-disabled > td:not(.kpi-name-cell) {
+            opacity: 0.3;
+        }
+
+        .kpi-table tbody tr.kpi-disabled > td.col-toggle {
+            opacity: 1;
+        }
+
+        .kpi-table tbody tr.kpi-disabled > td.kpi-name-cell > .kpi-name,
+        .kpi-table tbody tr.kpi-disabled > td.kpi-name-cell > .kpi-weight {
             opacity: 0.3;
         }
 
