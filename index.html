@@ -326,6 +326,130 @@
             transition: width 1s ease-out;
         }
 
+        /* Sentiment Card */
+        .sentiment-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .sentiment-card h4 {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .sentiment-card .insufficient {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+
+        .sentiment-body {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .sentiment-gauge {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .sentiment-bar-track {
+            height: 10px;
+            border-radius: 5px;
+            background: linear-gradient(to right, var(--red), var(--yellow) 50%, var(--green));
+            position: relative;
+            margin-bottom: 0.5rem;
+        }
+
+        .sentiment-marker {
+            position: absolute;
+            top: -3px;
+            width: 4px;
+            height: 16px;
+            border-radius: 2px;
+            transform: translateX(-50%);
+        }
+
+        .sentiment-marker.company {
+            background: var(--text);
+            box-shadow: 0 0 4px rgba(255,255,255,0.5);
+        }
+
+        .sentiment-marker.sector {
+            background: var(--accent);
+            opacity: 0.7;
+        }
+
+        .sentiment-legend {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: var(--text-dim);
+        }
+
+        .sentiment-labels {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.4rem;
+            font-size: 0.75rem;
+        }
+
+        .sentiment-labels span {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: var(--text-dim);
+        }
+
+        .sentiment-labels .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .buzz-section {
+            text-align: center;
+            min-width: 100px;
+        }
+
+        .buzz-value {
+            font-family: var(--mono);
+            font-size: 1.6rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+
+        .buzz-label {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 0.2rem;
+        }
+
+        .buzz-bright { color: var(--accent); }
+        .buzz-muted { color: var(--text-muted); }
+        .buzz-dim { color: var(--text-dim); }
+
+        .sentiment-meta {
+            flex: 1;
+            min-width: 160px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .sentiment-meta strong {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
         /* KPI Table */
         .kpi-section h3 {
             font-family: var(--mono);
@@ -886,6 +1010,68 @@
                 ? `${safeTicker} vs. ${safeIndustry} (Industry)`
                 : `${safeTicker} vs. ${safeSector} (Sector)`;
 
+            let sentimentHtml = '';
+            const s = data.sentiment;
+            if (s && s.available) {
+                if (!s.sufficient_data) {
+                    sentimentHtml = `
+                        <div class="sentiment-card">
+                            <h4>News Sentiment</h4>
+                            <p class="insufficient">Insufficient data (${parseInt(s.articles_this_week)} article${s.articles_this_week === 1 ? '' : 's'} this week -- need 5+)</p>
+                        </div>`;
+                } else {
+                    const bullPct = (s.bullish_pct * 100).toFixed(0);
+                    const bearPct = (s.bearish_pct * 100).toFixed(0);
+                    const markerPos = (s.bullish_pct * 100).toFixed(1);
+
+                    const sectorMarker = s.sector_avg_bullish != null
+                        ? `<div class="sentiment-marker sector" style="left:${(s.sector_avg_bullish * 100).toFixed(1)}%" title="Sector avg: ${(s.sector_avg_bullish * 100).toFixed(0)}% bullish"></div>`
+                        : '';
+
+                    const sectorLabel = s.sector_avg_bullish != null
+                        ? `<span><span class="dot" style="background:var(--accent)"></span> Sector avg (${(s.sector_avg_bullish * 100).toFixed(0)}%)</span>`
+                        : '';
+
+                    const buzzRatio = s.buzz_ratio;
+                    const buzzClass = buzzRatio > 1.5 ? 'buzz-bright' : buzzRatio >= 0.7 ? 'buzz-muted' : 'buzz-dim';
+                    const buzzText = buzzRatio.toFixed(2) + 'x';
+
+                    const sectorScoreComp = s.company_news_score != null && s.sector_avg_news_score != null
+                        ? `News score: <strong>${s.company_news_score.toFixed(2)}</strong> vs sector <strong>${s.sector_avg_news_score.toFixed(2)}</strong>`
+                        : '';
+
+                    sentimentHtml = `
+                        <div class="sentiment-card">
+                            <h4>News Sentiment</h4>
+                            <div class="sentiment-body">
+                                <div class="sentiment-gauge">
+                                    <div class="sentiment-bar-track">
+                                        <div class="sentiment-marker company" style="left:${markerPos}%" title="${bullPct}% bullish"></div>
+                                        ${sectorMarker}
+                                    </div>
+                                    <div class="sentiment-legend">
+                                        <span>Bearish (${bearPct}%)</span>
+                                        <span>Bullish (${bullPct}%)</span>
+                                    </div>
+                                    <div class="sentiment-labels">
+                                        <span><span class="dot" style="background:var(--text)"></span> ${escapeHtml(safeTicker)}</span>
+                                        ${sectorLabel}
+                                    </div>
+                                </div>
+                                <div class="buzz-section">
+                                    <div class="buzz-value ${buzzClass}">${escapeHtml(buzzText)}</div>
+                                    <div class="buzz-label">vs normal volume</div>
+                                </div>
+                                <div class="sentiment-meta">
+                                    Articles this week: <strong>${parseInt(s.articles_this_week)}</strong><br>
+                                    Weekly average: <strong>${Number(s.weekly_avg).toFixed(1)}</strong><br>
+                                    ${sectorScoreComp}
+                                </div>
+                            </div>
+                        </div>`;
+                }
+            }
+
             resultsEl.innerHTML = `
                 <div class="stock-header">
                     <div class="stock-info">
@@ -938,6 +1124,8 @@
                     </div>
                     ${trendBarHtml}
                 </div>
+
+                ${sentimentHtml}
 
                 <div class="kpi-section">
                     <h3>KPI Comparison -- ${comparisonLabel}
