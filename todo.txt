@@ -1,0 +1,18 @@
+Improve sentiment keyword scoring
+----------------------------------
+Current approach uses flat keyword sets (bullish/bearish) matched against
+individual words in headlines. This misses context:
+  - "falls short of record highs" scores neutral (bullish + bearish words cancel)
+  - Negation is ignored ("not profitable" matches "profitable" as bullish)
+  - No weighting (strong signals like "crash" equal to mild ones like "risk")
+
+Options:
+  1. VADER (nltk.sentiment) -- rule-based, no model download, handles negation
+     and intensifiers out of the box. Lightweight, good fit.
+  2. Bigram/trigram patterns -- e.g. "falls short" = bearish, "beats expectations"
+     = bullish. Manual but precise for financial headlines.
+  3. FinBERT or similar transformer -- highest accuracy but heavy dependency,
+     slow inference, overkill for a side indicator.
+
+Recommendation: start with VADER, fall back to current keywords if nltk
+is not installed.

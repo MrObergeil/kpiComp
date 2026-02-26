@@ -8,7 +8,7 @@ import re
 import time
 import threading
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import requests
 
@@ -86,7 +86,7 @@ def fetch_sentiment(ticker: str) -> dict | None:
             if now - entry["ts"] < entry["ttl"]:
                 return entry["data"]
 
-    today = datetime.utcnow().date()
+    today = datetime.now(timezone.utc).date()
     week_ago = today - timedelta(days=7)
 
     try:
@@ -133,6 +133,8 @@ def fetch_sentiment(ticker: str) -> dict | None:
     total_scored = bullish + bearish + neutral
     bull_pct = bullish / total_scored if total_scored else 0.0
     bear_pct = bearish / total_scored if total_scored else 0.0
+    opinionated = bullish + bearish
+    bull_bear_ratio = bullish / opinionated if opinionated else 0.5
 
     result = {
         "available": True,
@@ -140,6 +142,7 @@ def fetch_sentiment(ticker: str) -> dict | None:
         "bullish_pct": round(bull_pct, 3),
         "bearish_pct": round(bear_pct, 3),
         "neutral_pct": round(1.0 - bull_pct - bear_pct, 3),
+        "bull_bear_ratio": round(bull_bear_ratio, 3),
         "buzz_ratio": None,  # no baseline available from free API
         "articles_this_week": count,
         "weekly_avg": None,  # not available from free API
