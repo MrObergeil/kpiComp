@@ -5,3 +5,4 @@ venv/
 .env
 *.db
 *:Zone.Identifier
+logs/

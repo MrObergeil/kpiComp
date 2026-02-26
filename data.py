@@ -52,10 +52,15 @@ def _nearest_close(history: pd.DataFrame, date) -> Optional[float]:
     return float(history.iloc[idx]["Close"])
 
 
-def fetch_historical_kpis(ticker_str: str) -> dict[str, Optional[float]]:
+def _date_str(date) -> str:
+    """Convert a date/timestamp to ISO date string for sorting."""
+    return str(date.date()) if hasattr(date, 'date') else str(date)
+
+
+def fetch_historical_kpis(ticker_str: str) -> dict:
     """
-    Compute 5-year average KPIs from historical financial statements.
-    Returns a dict with same keys as extract_kpis(), values are 5Y averages.
+    Compute historical KPI data from financial statements.
+    Returns {"averages": {key: float|None}, "yearly": {key: [(date_str, value), ...]}}.
     """
     global _historical_cache
     now = time.time()
@@ -64,10 +69,11 @@ def fetch_historical_kpis(ticker_str: str) -> dict[str, Optional[float]]:
     if cache_key in _historical_cache:
         cached = _historical_cache[cache_key]
         if now - cached["timestamp"] < CACHE_TTL_SECONDS:
-            return cached["kpis"]
+            return cached["data"]
 
     from rating import get_kpi_keys
-    result = {k: None for k in get_kpi_keys()}
+    keys = get_kpi_keys()
+    result = {"averages": {k: None for k in keys}, "yearly": {k: [] for k in keys}}
 
     try:
         t = yf.Ticker(ticker_str)
@@ -75,17 +81,26 @@ def fetch_historical_kpis(ticker_str: str) -> dict[str, Optional[float]]:
         bs = t.balance_sheet
         hist = t.history(period="6y")
 
+        cf = None
+        try:
+            cf = t.cashflow
+        except Exception as e:
+            logger.debug(f"Cashflow unavailable for {ticker_str}: {e}")
+
         if fin is None or fin.empty or bs is None or bs.empty or hist.empty:
             logger.warning(f"Historical data unavailable for {ticker_str}")
-            _historical_cache[cache_key] = {"kpis": result, "timestamp": now}
+            _historical_cache[cache_key] = {"data": result, "timestamp": now}
             return result
 
         dates = sorted(fin.columns)
+        yearly = result["yearly"]
 
-        yearly = {k: [] for k in result}
         revenues_by_date = {}
+        net_incomes_by_date = {}
+        pe_by_date = {}
 
         for date in dates:
+            ds = _date_str(date)
             close = _nearest_close(hist, date)
             if close is None or close <= 0:
                 continue
@@ -102,46 +117,72 @@ def fetch_historical_kpis(ticker_str: str) -> dict[str, Optional[float]]:
 
             mcap = shares * close if shares else None
 
-            # P/E — skip negative earnings (negative P/E averages are misleading)
+            # Track net income for PEG calculation
+            if net_income is not None:
+                net_incomes_by_date[date] = net_income
+
+            # P/E — skip negative earnings
             if mcap and net_income and net_income > 0:
-                yearly["trailingPE"].append(mcap / net_income)
+                pe = mcap / net_income
+                yearly["trailingPE"].append((ds, pe))
+                pe_by_date[date] = pe
 
             # P/B
             if mcap and equity and equity > 0:
-                yearly["priceToBook"].append(mcap / equity)
+                yearly["priceToBook"].append((ds, mcap / equity))
 
             # EV/EBITDA
             if mcap and ebitda and ebitda > 0:
                 ev = mcap + (debt or 0) - (cash or 0)
-                yearly["enterpriseToEbitda"].append(ev / ebitda)
+                yearly["enterpriseToEbitda"].append((ds, ev / ebitda))
 
             # D/E (yfinance reports as percentage-like, e.g. 81.86)
             if debt is not None and equity and equity > 0:
-                yearly["debtToEquity"].append((debt / equity) * 100)
+                yearly["debtToEquity"].append((ds, (debt / equity) * 100))
 
             # ROE
             if net_income is not None and equity and equity > 0:
-                yearly["returnOnEquity"].append(net_income / equity)
+                yearly["returnOnEquity"].append((ds, net_income / equity))
 
             # Profit Margin
             if net_income is not None and revenue and revenue > 0:
-                yearly["profitMargins"].append(net_income / revenue)
+                yearly["profitMargins"].append((ds, net_income / revenue))
 
             # Current Ratio
             if current_assets and current_liab and current_liab > 0:
-                yearly["currentRatio"].append(current_assets / current_liab)
+                yearly["currentRatio"].append((ds, current_assets / current_liab))
 
-            # Store revenue for growth calc
+            # Revenue tracking
             if revenue:
                 revenues_by_date[date] = revenue
 
+            # FCF Yield
+            if cf is not None and not cf.empty and mcap and mcap > 0:
+                fcf = _safe_get(cf, "Free Cash Flow", date)
+                if fcf is not None:
+                    yearly["fcfYield"].append((ds, fcf / mcap))
+
         # Revenue Growth — YoY from sorted revenues
-        sorted_dates = sorted(revenues_by_date.keys())
-        for i in range(1, len(sorted_dates)):
-            prev_rev = revenues_by_date[sorted_dates[i - 1]]
-            curr_rev = revenues_by_date[sorted_dates[i]]
+        sorted_rev_dates = sorted(revenues_by_date.keys())
+        for i in range(1, len(sorted_rev_dates)):
+            prev_rev = revenues_by_date[sorted_rev_dates[i - 1]]
+            curr_rev = revenues_by_date[sorted_rev_dates[i]]
+            ds = _date_str(sorted_rev_dates[i])
             if prev_rev and prev_rev > 0:
-                yearly["revenueGrowth"].append((curr_rev - prev_rev) / prev_rev)
+                yearly["revenueGrowth"].append((ds, (curr_rev - prev_rev) / prev_rev))
+
+        # PEG Ratio — from P/E and YoY earnings growth
+        sorted_ni_dates = sorted(net_incomes_by_date.keys())
+        for i in range(1, len(sorted_ni_dates)):
+            date = sorted_ni_dates[i]
+            prev_date = sorted_ni_dates[i - 1]
+            ni = net_incomes_by_date[date]
+            prev_ni = net_incomes_by_date[prev_date]
+            pe = pe_by_date.get(date)
+            if pe is not None and pe > 0 and prev_ni > 0 and ni > 0:
+                growth_pct = ((ni - prev_ni) / abs(prev_ni)) * 100
+                if growth_pct > 0:
+                    yearly["pegRatio"].append((_date_str(date), pe / growth_pct))
 
         # Dividend yield — sum dividends per fiscal year / close price
         try:
@@ -159,19 +200,19 @@ def fetch_historical_kpis(ticker_str: str) -> dict[str, Optional[float]]:
                     mask = (divs.index >= year_start) & (divs.index <= d)
                     annual_div = divs[mask].sum()
                     if annual_div >= 0:
-                        yearly["dividendYield"].append(annual_div / close)
-        except Exception:
-            pass
+                        yearly["dividendYield"].append((_date_str(date), annual_div / close))
+        except Exception as e:
+            logger.debug(f"Dividend data unavailable for {ticker_str}: {e}")
 
-        # Average each KPI
+        # Compute averages from yearly data
         for key, values in yearly.items():
             if values:
-                result[key] = sum(values) / len(values)
+                result["averages"][key] = sum(v for _, v in values) / len(values)
 
     except Exception as e:
         logger.warning(f"Failed to fetch historical KPIs for {ticker_str}: {e}")
 
-    _historical_cache[cache_key] = {"kpis": result, "timestamp": now}
+    _historical_cache[cache_key] = {"data": result, "timestamp": now}
     return result
 
 
@@ -206,8 +247,8 @@ def _try_fetch(ticker: str) -> Optional[dict]:
         info = yf.Ticker(ticker).info
         if info and info.get("regularMarketPrice") is not None:
             return info
-    except Exception:
-        pass
+    except Exception as e:
+        logger.debug(f"Fetch failed for {ticker}: {e}")
     return None
 
 
@@ -266,6 +307,7 @@ def get_sector_peers_kpis(sector: str, exclude_ticker: str = "") -> list[dict[st
     """
     Get KPIs for all S&P 500 stocks in the given sector.
     Uses caching to avoid redundant API calls within a session.
+    Tags each peer with _ticker and _industry.
     """
     global _sector_cache
 
@@ -285,6 +327,7 @@ def get_sector_peers_kpis(sector: str, exclude_ticker: str = "") -> list[dict[st
     # Fetch sector peers
     logger.info(f"Fetching sector data for '{sector}' from S&P 500...")
     all_kpis = []
+    fetch_start = time.monotonic()
 
     for ticker in SP500_TICKERS:
         try:
@@ -293,6 +336,7 @@ def get_sector_peers_kpis(sector: str, exclude_ticker: str = "") -> list[dict[st
             if info and info.get("sector", "").lower().strip() == cache_key:
                 kpis = extract_kpis(info)
                 kpis["_ticker"] = ticker
+                kpis["_industry"] = info.get("industry", "")
                 all_kpis.append(kpis)
                 logger.info(f"  Fetched {ticker} ({len(all_kpis)} peers so far)")
         except Exception as e:
@@ -305,46 +349,34 @@ def get_sector_peers_kpis(sector: str, exclude_ticker: str = "") -> list[dict[st
         "timestamp": now,
     }
 
-    logger.info(f"Cached {len(all_kpis)} peers for sector '{sector}'")
+    fetch_ms = round((time.monotonic() - fetch_start) * 1000)
+    logger.info(
+        f"Cached {len(all_kpis)} peers for sector '{sector}' in {fetch_ms}ms",
+        extra={"duration_ms": fetch_ms},
+    )
 
     if exclude_ticker:
         return [k for k in all_kpis if k.get("_ticker", "").upper() != exclude_ticker.upper()]
     return all_kpis
 
 
+def get_industry_peers_kpis(peers_kpis: list[dict], industry: str) -> list[dict]:
+    """Filter sector peers to those in the same industry."""
+    if not industry:
+        return []
+    industry_lower = industry.lower().strip()
+    return [k for k in peers_kpis if k.get("_industry", "").lower().strip() == industry_lower]
+
+
 def analyze_stock(ticker: str) -> dict:
     """
     Full analysis pipeline for a single stock ticker.
 
-    Returns a structured dict with all data needed for the frontend:
-    {
-        "ticker": str,
-        "company_name": str,
-        "sector": str,
-        "industry": str,
-        "stock_kpis": dict,
-        "sector_averages": dict,
-        "sector_peer_count": int,
-        "rating": dict (from calculate_rating),
-        "kpi_comparison": [
-            {
-                "key": str,
-                "display_name": str,
-                "stock_value": str (formatted),
-                "sector_avg": str (formatted),
-                "difference": str (formatted),
-                "stock_raw": float | None,
-                "sector_raw": float | None,
-                "lower_is_better": bool,
-                "kpi_score": dict,
-            },
-            ...
-        ]
-    }
+    Returns a structured dict with all data needed for the frontend.
     """
     from rating import (
         KPI_CONFIGS, extract_kpis, compute_sector_averages,
-        calculate_rating, format_kpi_value,
+        calculate_rating, format_kpi_value, compute_sector_thresholds,
     )
 
     # 1. Fetch stock data (may auto-resolve exchange suffix)
@@ -364,11 +396,26 @@ def analyze_stock(ticker: str) -> dict:
     peers_kpis = get_sector_peers_kpis(sector, exclude_ticker=resolved_ticker)
     sector_averages = compute_sector_averages(peers_kpis)
 
-    # 4. Fetch historical KPI averages
-    historical_averages = fetch_historical_kpis(resolved_ticker)
+    # 3b. Industry-level comparison
+    industry_peers = get_industry_peers_kpis(peers_kpis, industry) if industry else []
+    industry_averages = compute_sector_averages(industry_peers) if len(industry_peers) >= 5 else None
+    industry_peer_count = len(industry_peers)
 
-    # 5. Calculate rating
-    rating = calculate_rating(stock_kpis, sector_averages)
+    # 3c. Dynamic sector thresholds
+    sector_thresholds = compute_sector_thresholds(peers_kpis)
+
+    # 4. Fetch historical KPI data (averages + yearly)
+    historical_data = fetch_historical_kpis(resolved_ticker)
+    historical_averages = historical_data["averages"]
+    historical_yearly = historical_data["yearly"]
+
+    # 5. Calculate rating with all dimensions
+    rating = calculate_rating(
+        stock_kpis, sector_averages,
+        industry_averages=industry_averages,
+        sector_thresholds=sector_thresholds,
+        historical_yearly=historical_yearly,
+    )
 
     # 6. Build comparison table
     kpi_comparison = []
@@ -376,8 +423,9 @@ def analyze_stock(ticker: str) -> dict:
         stock_val = stock_kpis.get(cfg.key)
         sector_val = sector_averages.get(cfg.key)
         hist_val = historical_averages.get(cfg.key)
+        industry_val = industry_averages.get(cfg.key) if industry_averages else None
 
-        # Calculate difference
+        # Calculate difference (vs sector)
         if stock_val is not None and sector_val is not None:
             diff = stock_val - sector_val
             if cfg.format_as_pct:
@@ -395,9 +443,11 @@ def analyze_stock(ticker: str) -> dict:
             "weight": f"{cfg.weight * 100:.0f}%",
             "stock_value": format_kpi_value(cfg.key, stock_val),
             "sector_avg": format_kpi_value(cfg.key, sector_val),
+            "industry_avg": format_kpi_value(cfg.key, industry_val),
             "difference": diff_str,
             "stock_raw": stock_val,
             "sector_raw": sector_val,
+            "industry_raw": industry_val,
             "diff_raw": diff,
             "lower_is_better": cfg.lower_is_better,
             "kpi_score": kpi_score,
@@ -417,6 +467,8 @@ def analyze_stock(ticker: str) -> dict:
         "stock_kpis": stock_kpis,
         "sector_averages": sector_averages,
         "sector_peer_count": len(peers_kpis),
+        "industry_peer_count": industry_peer_count,
+        "industry_comparison_active": industry_averages is not None,
         "rating": rating,
         "kpi_comparison": kpi_comparison,
     }

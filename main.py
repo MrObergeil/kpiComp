@@ -6,22 +6,41 @@ Provides both:
   - A REST API endpoint for programmatic access
 """
 
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.responses import HTMLResponse, JSONResponse
+import time
 import logging
 import traceback
+from typing import Optional
+
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.responses import HTMLResponse, JSONResponse
+from pydantic import BaseModel
+
+from logging_config import setup_logging
+
+setup_logging()
+logger = logging.getLogger(__name__)
 
 from data import analyze_stock, clear_cache
-
-# Configure logging
-logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
-logger = logging.getLogger(__name__)
 
 app = FastAPI(
     title="Stock Rater",
     description="Rate stocks on a 1-10 value scale based on financial KPIs, with sector comparison.",
     version="1.0.0",
 )
+
+
+# --- Middleware ---
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    start = time.monotonic()
+    response = await call_next(request)
+    duration_ms = round((time.monotonic() - start) * 1000)
+    logger.info(
+        f"{request.method} {request.url.path} -> {response.status_code}",
+        extra={"duration_ms": duration_ms, "status_code": response.status_code},
+    )
+    return response
 
 
 # --- REST API ---
@@ -51,6 +70,27 @@ async def api_clear_cache():
     """Clear the sector data cache."""
     clear_cache()
     return {"status": "ok", "message": "Cache cleared."}
+
+
+# --- Frontend Log Endpoint ---
+
+class FrontendLog(BaseModel):
+    level: str
+    message: str
+    context: dict = {}
+    url: Optional[str] = None
+    userAgent: Optional[str] = None
+    ts: Optional[str] = None
+
+frontend_logger = logging.getLogger("frontend")
+
+@app.post("/api/log")
+async def receive_frontend_log(log: FrontendLog):
+    log_level = getattr(logging, log.level.upper(), logging.INFO)
+    extra = {"source": "frontend"}
+    extra.update(log.context)
+    frontend_logger.log(log_level, log.message, extra=extra)
+    return {"status": "ok"}
 
 
 # --- Web Interface ---
