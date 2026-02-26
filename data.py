@@ -71,7 +71,6 @@ def fetch_historical_kpis(ticker_str: str) -> dict:
         if now - cached["timestamp"] < CACHE_TTL_SECONDS:
             return cached["data"]
 
-    from rating import get_kpi_keys
     keys = get_kpi_keys()
     result = {"averages": {k: None for k in keys}, "yearly": {k: [] for k in keys}}
 
@@ -259,6 +258,9 @@ def get_stock_info(ticker: str) -> dict:
     Returns (info_dict, resolved_ticker) or raises ValueError.
     """
     clean = ticker.upper().strip()
+
+    if not clean or len(clean) > 20 or not all(c.isalnum() or c in '.-' for c in clean):
+        raise ValueError(f"Invalid ticker format: '{ticker}'")
 
     # If ticker already has a suffix, just try it directly
     if "." in clean:

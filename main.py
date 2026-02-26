@@ -6,9 +6,11 @@ Provides both:
   - A REST API endpoint for programmatic access
 """
 
+import asyncio
 import time
 import logging
 import traceback
+from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI, Request, HTTPException
@@ -56,7 +58,7 @@ async def api_analyze(ticker: str):
       - overall rating (1-10) with breakdown
     """
     try:
-        result = analyze_stock(ticker)
+        result = await asyncio.to_thread(analyze_stock, ticker)
         return JSONResponse(content=result)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -98,5 +100,6 @@ async def receive_frontend_log(log: FrontendLog):
 @app.get("/", response_class=HTMLResponse)
 async def index():
     """Serve the single-page web interface."""
-    with open("index.html", "r") as f:
+    index_path = Path(__file__).parent / "index.html"
+    with open(index_path, "r") as f:
         return HTMLResponse(content=f.read())

@@ -668,6 +668,14 @@
             });
         });
 
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        let currentController = null;
+
         const tickerInput = document.getElementById('tickerInput');
         const analyzeBtn = document.getElementById('analyzeBtn');
         const loadingEl = document.getElementById('loading');
@@ -694,8 +702,11 @@
             loadingEl.classList.add('active');
             analyzeBtn.disabled = true;
 
+            if (currentController) currentController.abort();
+            currentController = new AbortController();
+
             try {
-                const resp = await fetch(`/api/analyze/${encodeURIComponent(ticker)}`);
+                const resp = await fetch(`/api/analyze/${encodeURIComponent(ticker)}`, { signal: currentController.signal });
                 const data = await resp.json();
 
                 if (!resp.ok) {
@@ -704,6 +715,7 @@
 
                 renderResults(data);
             } catch (err) {
+                if (err.name === 'AbortError') return;
                 showError(err.message || 'Something went wrong. Please try again.');
                 logToServer('error', 'API fetch failed', { ticker: ticker, error: err.message });
             } finally {
@@ -783,7 +795,7 @@
                     : '--';
                 const hasScore = combined !== null && combined !== undefined;
                 const tooltip = kpi.description
-                    ? `<span class="kpi-tooltip">${kpi.description}</span>`
+                    ? `<span class="kpi-tooltip">${escapeHtml(kpi.description)}</span>`
                     : '';
 
                 const rowClass = flag === 'excluded' ? 'kpi-excluded'
@@ -795,13 +807,13 @@
 
                 let scoreTooltipText = '';
                 if (flagReason) {
-                    scoreTooltipText = `${flag === 'excluded' ? 'Excluded' : 'Penalized'}: ${flagReason}`;
+                    scoreTooltipText = `${flag === 'excluded' ? 'Excluded' : 'Penalized'}: ${escapeHtml(flagReason)}`;
                 } else if (hasScore && combined === 0) {
                     scoreTooltipText = 'Value is beyond the worst threshold for this metric';
                 }
                 const flagTooltip = scoreTooltipText
                     ? `<span class="score-flag-tooltip">${scoreTooltipText}</span>`
-                    : '';
+                    : '';  // scoreTooltipText already escaped above
 
                 const industryCol = hasIndustry
                     ? `<td>${kpi.industry_avg || 'N/A'}</td>`
@@ -815,7 +827,7 @@
                                 onchange="recalculate()">
                         </td>
                         <td class="kpi-name-cell">
-                            <span class="kpi-name">${kpi.display_name}</span>
+                            <span class="kpi-name">${escapeHtml(kpi.display_name)}</span>
                             <span class="kpi-weight">${kpi.weight}</span>
                             ${tooltip}
                         </td>
@@ -823,7 +835,7 @@
                         <td>${kpi.historical_avg || 'N/A'}</td>
                         <td>${kpi.sector_avg}</td>
                         ${industryCol}
-                        <td class="${diffClass}">${kpi.difference}</td>
+                        <td class="${diffClass}">${escapeHtml(kpi.difference)}</td>
                         <td>${getTrendIndicator(trend)}</td>
                         <td>
                             <span class="kpi-score-cell">
@@ -838,7 +850,7 @@
 
             const industryTh = hasIndustry ? '<th>Industry Avg</th>' : '';
             const industryMeta = hasIndustry
-                ? `<span class="industry-active">${data.industry_peer_count} industry peers (active)</span>`
+                ? `<span class="industry-active">${escapeHtml(String(data.industry_peer_count))} industry peers (active)</span>`
                 : (data.industry_peer_count > 0
                     ? `<span>${data.industry_peer_count} industry peers (need 5+)</span>`
                     : '');
@@ -865,17 +877,22 @@
                         </div>
                     </div>`;
 
+            const safeTicker = escapeHtml(data.ticker);
+            const safeCompany = escapeHtml(data.company_name);
+            const safeSector = escapeHtml(data.sector);
+            const safeIndustry = escapeHtml(data.industry);
+
             const comparisonLabel = hasIndustry
-                ? `${data.ticker} vs. ${data.industry} (Industry)`
-                : `${data.ticker} vs. ${data.sector} (Sector)`;
+                ? `${safeTicker} vs. ${safeIndustry} (Industry)`
+                : `${safeTicker} vs. ${safeSector} (Sector)`;
 
             resultsEl.innerHTML = `
                 <div class="stock-header">
                     <div class="stock-info">
-                        <h2><span class="ticker">${data.ticker}</span> -- ${data.company_name}</h2>
+                        <h2><span class="ticker">${safeTicker}</span> -- ${safeCompany}</h2>
                         <div class="stock-meta">
-                            <span>${data.sector}</span>
-                            <span>${data.industry}</span>
+                            <span>${safeSector}</span>
+                            <span>${safeIndustry}</span>
                             <span>${data.sector_peer_count} S&P 500 peers</span>
                             ${industryMeta}
                         </div>
@@ -932,7 +949,7 @@
                                 <tr>
                                     <th class="col-toggle"></th>
                                     <th>KPI</th>
-                                    <th>${data.ticker}</th>
+                                    <th>${safeTicker}</th>
                                     <th>5Y Avg</th>
                                     <th>Sector Avg</th>
                                     ${industryTh}
