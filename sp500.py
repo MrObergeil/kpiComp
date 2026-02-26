@@ -1,57 +1,86 @@
 """
-S&P 500 ticker list with sector mapping.
-Source: Wikipedia S&P 500 list (as of 2025).
-This list is used to find sector peers for comparison.
+S&P 500 tickers organized by sector.
+Source: Yahoo Finance sector data (as of Feb 2026).
+Used to find sector peers for comparison without fetching all 500 tickers.
 """
 
-SP500_TICKERS = [
-    "AAPL", "ABBV", "ABT", "ACN", "ADBE", "ADI", "ADM", "ADP", "ADSK", "AEE",
-    "AEP", "AES", "AFL", "AIG", "AIZ", "AJG", "AKAM", "ALB", "ALGN", "ALK",
-    "ALL", "ALLE", "AMAT", "AMCR", "AMD", "AME", "AMGN", "AMP", "AMT", "AMZN",
-    "ANET", "ANSS", "AON", "AOS", "APA", "APD", "APH", "APTV", "ARE", "ATO",
-    "ATVI", "AVB", "AVGO", "AVY", "AWK", "AXP", "AZO", "BA", "BAC", "BAX",
-    "BBWI", "BBY", "BDX", "BEN", "BF.B", "BIO", "BIIB", "BK", "BKNG", "BKR",
-    "BLK", "BMY", "BR", "BRK.B", "BRO", "BSX", "BWA", "BXP", "C", "CAG",
-    "CAH", "CARR", "CAT", "CB", "CBOE", "CBRE", "CCI", "CCL", "CDAY", "CDNS",
-    "CDW", "CE", "CEG", "CF", "CFG", "CHD", "CHRW", "CHTR", "CI", "CINF",
-    "CL", "CLX", "CMA", "CMCSA", "CME", "CMG", "CMI", "CMS", "CNC", "CNP",
-    "COF", "COO", "COP", "COST", "CPB", "CPRT", "CPT", "CRL", "CRM", "CSCO",
-    "CSGP", "CSX", "CTAS", "CTLT", "CTRA", "CTSH", "CTVA", "CVS", "CVX", "CZR",
-    "D", "DAL", "DD", "DE", "DFS", "DG", "DGX", "DHI", "DHR", "DIS",
-    "DISH", "DLR", "DLTR", "DOV", "DOW", "DPZ", "DRI", "DTE", "DUK", "DVA",
-    "DVN", "DXC", "DXCM", "EA", "EBAY", "ECL", "ED", "EFX", "EIX", "EL",
-    "EMN", "EMR", "ENPH", "EOG", "EPAM", "EQIX", "EQR", "EQT", "ES", "ESS",
-    "ETN", "ETR", "ETSY", "EVRG", "EW", "EXC", "EXPD", "EXPE", "EXR", "F",
-    "FANG", "FAST", "FBHS", "FCX", "FDS", "FDX", "FE", "FFIV", "FIS", "FISV",
-    "FITB", "FLT", "FMC", "FOX", "FOXA", "FRC", "FRT", "FTNT", "FTV", "GD",
-    "GE", "GILD", "GIS", "GL", "GLW", "GM", "GNRC", "GOOG", "GOOGL", "GPC",
-    "GPN", "GRMN", "GS", "GWW", "HAL", "HAS", "HBAN", "HCA", "HD", "HOLX",
-    "HON", "HPE", "HPQ", "HRL", "HSIC", "HST", "HSY", "HUM", "HWM", "IBM",
-    "ICE", "IDXX", "IEX", "IFF", "ILMN", "INCY", "INTC", "INTU", "INVH", "IP",
-    "IPG", "IQV", "IR", "IRM", "ISRG", "IT", "ITW", "IVZ", "J", "JBHT",
-    "JCI", "JKHY", "JNJ", "JNPR", "JPM", "K", "KDP", "KEY", "KEYS", "KHC",
-    "KIM", "KLAC", "KMB", "KMI", "KMX", "KO", "KR", "L", "LDOS", "LEN",
-    "LH", "LHX", "LIN", "LKQ", "LLY", "LMT", "LNC", "LNT", "LOW", "LRCX",
-    "LUMN", "LUV", "LVS", "LW", "LYB", "LYV", "MA", "MAA", "MAR", "MAS",
-    "MCD", "MCHP", "MCK", "MCO", "MDLZ", "MDT", "MET", "META", "MGM", "MHK",
-    "MKC", "MKTX", "MLM", "MMC", "MMM", "MNST", "MO", "MOH", "MOS", "MPC",
-    "MPWR", "MRK", "MRNA", "MRO", "MS", "MSCI", "MSFT", "MSI", "MTB", "MTCH",
-    "MTD", "MU", "NCLH", "NDAQ", "NDSN", "NEE", "NEM", "NFLX", "NI", "NKE",
-    "NOC", "NOW", "NRG", "NSC", "NTAP", "NTRS", "NUE", "NVDA", "NVR", "NWL",
-    "NWS", "NWSA", "NXPI", "O", "ODFL", "OGN", "OKE", "OMC", "ON", "ORCL",
-    "ORLY", "OTIS", "OXY", "PARA", "PAYC", "PAYX", "PCAR", "PCG", "PEAK", "PEG",
-    "PEP", "PFE", "PFG", "PG", "PGR", "PH", "PHM", "PKG", "PKI", "PLD",
-    "PM", "PNC", "PNR", "PNW", "POOL", "PPG", "PPL", "PRU", "PSA", "PSX",
-    "PTC", "PVH", "PWR", "PXD", "PYPL", "QCOM", "QRVO", "RCL", "RE", "REG",
-    "REGN", "RF", "RHI", "RJF", "RL", "RMD", "ROK", "ROL", "ROP", "ROST",
-    "RSG", "RTX", "SBAC", "SBNY", "SBUX", "SCHW", "SEE", "SHW", "SIVB", "SJM",
-    "SLB", "SNA", "SNPS", "SO", "SPG", "SPGI", "SRE", "STE", "STT", "STX",
-    "STZ", "SWK", "SWKS", "SYF", "SYK", "SYY", "T", "TAP", "TDG", "TDY",
-    "TECH", "TEL", "TER", "TFC", "TFX", "TGT", "TJX", "TMO", "TMUS", "TPR",
-    "TRGP", "TRMB", "TROW", "TRV", "TSCO", "TSLA", "TSN", "TT", "TTWO", "TXN",
-    "TXT", "TYL", "UAL", "UDR", "UHS", "ULTA", "UNH", "UNP", "UPS", "URI",
-    "USB", "V", "VFC", "VICI", "VLO", "VMC", "VNO", "VRSK", "VRSN", "VRTX",
-    "VTR", "VTRS", "VZ", "WAB", "WAT", "WBA", "WBD", "WDC", "WEC", "WELL",
-    "WFC", "WHR", "WM", "WMB", "WMT", "WRB", "WRK", "WST", "WTW", "WY",
-    "WYNN", "XEL", "XOM", "XRAY", "XYL", "YUM", "ZBH", "ZBRA", "ZION", "ZTS",
-]
+SP500_BY_SECTOR = {
+    "Basic Materials": [
+        "ALB", "APD", "CE", "CF", "CTVA", "DD", "DOW", "ECL", "EMN", "FCX",
+        "FMC", "IFF", "LIN", "LYB", "MLM", "MOS", "NEM", "NUE", "PPG", "SHW",
+        "VMC",
+    ],
+    "Communication Services": [
+        "CHTR", "CMCSA", "DIS", "EA", "FOX", "FOXA", "GOOG", "GOOGL", "LUMN",
+        "LYV", "META", "MTCH", "NFLX", "NWS", "NWSA", "OMC", "T", "TMUS",
+        "TTWO", "VZ", "WBD",
+    ],
+    "Consumer Cyclical": [
+        "AMCR", "AMZN", "APTV", "AVY", "AZO", "BBWI", "BBY", "BKNG", "BWA",
+        "CCL", "CMG", "CZR", "DHI", "DPZ", "DRI", "EBAY", "ETSY", "EXPE", "F",
+        "GM", "GPC", "HAS", "HD", "IP", "KMX", "LEN", "LKQ", "LOW", "LVS",
+        "MAR", "MCD", "MGM", "MHK", "NCLH", "NKE", "NVR", "ORLY", "PHM", "PKG",
+        "PVH", "RCL", "RL", "ROL", "ROST", "SBUX", "SEE", "TJX", "TPR", "TSCO",
+        "TSLA", "ULTA", "VFC", "WHR", "WYNN", "YUM",
+    ],
+    "Consumer Defensive": [
+        "ADM", "CAG", "CHD", "CL", "CLX", "COST", "CPB", "DG", "DLTR", "EL",
+        "GIS", "HRL", "HSY", "KDP", "KHC", "KMB", "KO", "KR", "LW", "MDLZ",
+        "MKC", "MNST", "MO", "NWL", "PEP", "PG", "PM", "SJM", "STZ", "SYY",
+        "TAP", "TGT", "TSN", "WMT",
+    ],
+    "Energy": [
+        "APA", "BKR", "COP", "CTRA", "CVX", "DVN", "EOG", "EQT", "FANG", "HAL",
+        "KMI", "MPC", "OKE", "OXY", "PSX", "SLB", "TRGP", "VLO", "WMB", "XOM",
+    ],
+    "Financial Services": [
+        "AFL", "AIG", "AIZ", "AJG", "ALL", "AMP", "AON", "AXP", "BAC", "BEN",
+        "BK", "BLK", "BRO", "C", "CB", "CBOE", "CFG", "CINF", "CMA", "CME",
+        "COF", "FDS", "FITB", "GL", "GS", "HBAN", "ICE", "IVZ", "JPM", "KEY",
+        "L", "LNC", "MA", "MCO", "MET", "MKTX", "MMC", "MS", "MSCI", "MTB",
+        "NDAQ", "NTRS", "PFG", "PGR", "PNC", "PRU", "PYPL", "RF", "RJF", "SBNY",
+        "SCHW", "SPGI", "STT", "SYF", "TFC", "TROW", "TRV", "USB", "V", "WFC",
+        "WRB", "WTW", "ZION",
+    ],
+    "Healthcare": [
+        "ABBV", "ABT", "ALGN", "AMGN", "BAX", "BDX", "BIIB", "BIO", "BMY",
+        "BSX", "CAH", "CI", "CNC", "COO", "CRL", "CVS", "DGX", "DHR", "DVA",
+        "DXCM", "EW", "GILD", "HCA", "HOLX", "HSIC", "HUM", "IDXX", "ILMN",
+        "INCY", "IQV", "ISRG", "JNJ", "LH", "LLY", "MCK", "MDT", "MOH", "MRK",
+        "MRNA", "MTD", "OGN", "PFE", "REGN", "RMD", "STE", "SYK", "TECH", "TFX",
+        "TMO", "UHS", "UNH", "VRTX", "VTRS", "WAT", "WST", "XRAY", "ZBH", "ZTS",
+    ],
+    "Industrials": [
+        "ALK", "ALLE", "AME", "AOS", "BA", "CARR", "CAT", "CHRW", "CMI", "CPRT",
+        "CSX", "CTAS", "DAL", "DE", "DOV", "EFX", "EMR", "ETN", "EXPD", "FAST",
+        "FDX", "GD", "GE", "GNRC", "GPN", "GWW", "HON", "HWM", "IEX", "IR",
+        "ITW", "J", "JBHT", "JCI", "LHX", "LMT", "LUV", "MAS", "MMM", "NDSN",
+        "NOC", "NSC", "ODFL", "OTIS", "PCAR", "PH", "PNR", "POOL", "PWR", "RHI",
+        "ROK", "RSG", "RTX", "SNA", "SWK", "TDG", "TT", "TXT", "UAL", "UNP",
+        "UPS", "URI", "VRSK", "WAB", "WM", "XYL",
+    ],
+    "Real Estate": [
+        "AMT", "ARE", "AVB", "BXP", "CBRE", "CCI", "CPT", "CSGP", "DLR", "EQIX",
+        "EQR", "ESS", "EXR", "FRT", "HST", "INVH", "IRM", "KIM", "MAA", "O",
+        "PLD", "PSA", "REG", "SBAC", "SPG", "UDR", "VICI", "VNO", "VTR", "WELL",
+        "WY",
+    ],
+    "Technology": [
+        "AAPL", "ACN", "ADBE", "ADI", "ADP", "ADSK", "AKAM", "AMAT", "AMD",
+        "ANET", "APH", "AVGO", "BR", "CDNS", "CDW", "CRM", "CSCO", "CTSH", "DXC",
+        "ENPH", "EPAM", "FFIV", "FIS", "FTNT", "FTV", "GLW", "GRMN", "HPE",
+        "HPQ", "IBM", "INTC", "INTU", "IT", "JKHY", "KEYS", "KLAC", "LDOS",
+        "LRCX", "MCHP", "MPWR", "MSFT", "MSI", "MU", "NOW", "NTAP", "NVDA",
+        "NXPI", "ON", "ORCL", "PAYC", "PAYX", "PTC", "QCOM", "QRVO", "ROP",
+        "SNPS", "STX", "SWKS", "TDY", "TEL", "TER", "TRMB", "TXN", "TYL",
+        "VRSN", "WDC", "ZBRA",
+    ],
+    "Utilities": [
+        "AEE", "AEP", "AES", "ATO", "AWK", "CEG", "CMS", "CNP", "D", "DTE",
+        "DUK", "ED", "EIX", "ES", "ETR", "EVRG", "EXC", "FE", "LNT", "NEE",
+        "NI", "NRG", "PCG", "PEG", "PNW", "PPL", "SO", "SRE", "WEC", "XEL",
+    ],
+}
+
+# Flat list for backward compatibility
+SP500_TICKERS = [t for tickers in SP500_BY_SECTOR.values() for t in tickers]

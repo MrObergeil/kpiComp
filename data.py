@@ -6,12 +6,15 @@ Includes session-level caching for sector peer data.
 import yfinance as yf
 import pandas as pd
 from typing import Optional
-from functools import lru_cache
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import threading
 import time
 import logging
 
-from sp500 import SP500_TICKERS
+from sp500 import SP500_BY_SECTOR
 from rating import extract_kpis, compute_sector_averages, get_kpi_keys
+from sentiment import fetch_sentiment
+from sentiment import clear_cache as _clear_sentiment_cache
 
 logger = logging.getLogger(__name__)
 
@@ -20,7 +23,9 @@ logger = logging.getLogger(__name__)
 # Cache structure: { sector_name: { "kpis": [...], "timestamp": float } }
 _sector_cache: dict[str, dict] = {}
 _historical_cache: dict[str, dict] = {}
+_cache_lock = threading.Lock()
 CACHE_TTL_SECONDS = 3600  # 1 hour
+PEER_FETCH_WORKERS = 10
 
 
 def clear_cache():
@@ -28,6 +33,7 @@ def clear_cache():
     global _sector_cache, _historical_cache
     _sector_cache = {}
     _historical_cache = {}
+    _clear_sentiment_cache()
 
 
 def _safe_get(df, label, col):
@@ -62,14 +68,14 @@ def fetch_historical_kpis(ticker_str: str) -> dict:
     Compute historical KPI data from financial statements.
     Returns {"averages": {key: float|None}, "yearly": {key: [(date_str, value), ...]}}.
     """
-    global _historical_cache
     now = time.time()
     cache_key = ticker_str.upper()
 
-    if cache_key in _historical_cache:
-        cached = _historical_cache[cache_key]
-        if now - cached["timestamp"] < CACHE_TTL_SECONDS:
-            return cached["data"]
+    with _cache_lock:
+        if cache_key in _historical_cache:
+            cached = _historical_cache[cache_key]
+            if now - cached["timestamp"] < CACHE_TTL_SECONDS:
+                return cached["data"]
 
     keys = get_kpi_keys()
     result = {"averages": {k: None for k in keys}, "yearly": {k: [] for k in keys}}
@@ -88,7 +94,8 @@ def fetch_historical_kpis(ticker_str: str) -> dict:
 
         if fin is None or fin.empty or bs is None or bs.empty or hist.empty:
             logger.warning(f"Historical data unavailable for {ticker_str}")
-            _historical_cache[cache_key] = {"data": result, "timestamp": now}
+            with _cache_lock:
+                _historical_cache[cache_key] = {"data": result, "timestamp": now}
             return result
 
         dates = sorted(fin.columns)
@@ -211,7 +218,8 @@ def fetch_historical_kpis(ticker_str: str) -> dict:
     except Exception as e:
         logger.warning(f"Failed to fetch historical KPIs for {ticker_str}: {e}")
 
-    _historical_cache[cache_key] = {"data": result, "timestamp": now}
+    with _cache_lock:
+        _historical_cache[cache_key] = {"data": result, "timestamp": now}
     return result
 
 
@@ -305,51 +313,63 @@ def get_stock_name(info: dict) -> str:
     return info.get("shortName") or info.get("longName") or "Unknown"
 
 
+def _fetch_peer_kpis(ticker: str) -> Optional[dict]:
+    """Fetch KPIs for a single peer ticker. Returns dict or None on failure."""
+    try:
+        info = yf.Ticker(ticker).info
+        if info and info.get("regularMarketPrice") is not None:
+            kpis = extract_kpis(info)
+            kpis["_ticker"] = ticker
+            kpis["_industry"] = info.get("industry", "")
+            return kpis
+    except Exception as e:
+        logger.warning(f"  Skipping {ticker}: {e}")
+    return None
+
+
 def get_sector_peers_kpis(sector: str, exclude_ticker: str = "") -> list[dict[str, Optional[float]]]:
     """
     Get KPIs for all S&P 500 stocks in the given sector.
-    Uses caching to avoid redundant API calls within a session.
-    Tags each peer with _ticker and _industry.
+    Uses sector map for direct lookup + thread pool for parallel fetching.
     """
-    global _sector_cache
-
     cache_key = sector.lower().strip()
     now = time.time()
 
-    # Check cache
-    if cache_key in _sector_cache:
-        cached = _sector_cache[cache_key]
-        if now - cached["timestamp"] < CACHE_TTL_SECONDS:
-            logger.info(f"Using cached sector data for '{sector}' ({len(cached['kpis'])} peers)")
-            kpis = cached["kpis"]
-            if exclude_ticker:
-                return [k for k in kpis if k.get("_ticker", "").upper() != exclude_ticker.upper()]
-            return kpis
+    with _cache_lock:
+        if cache_key in _sector_cache:
+            cached = _sector_cache[cache_key]
+            if now - cached["timestamp"] < CACHE_TTL_SECONDS:
+                logger.info(f"Using cached sector data for '{sector}' ({len(cached['kpis'])} peers)")
+                kpis = cached["kpis"]
+                if exclude_ticker:
+                    return [k for k in kpis if k.get("_ticker", "").upper() != exclude_ticker.upper()]
+                return kpis
 
-    # Fetch sector peers
-    logger.info(f"Fetching sector data for '{sector}' from S&P 500...")
-    all_kpis = []
+    # Look up sector tickers directly from map (no need to iterate all 500)
+    sector_tickers = SP500_BY_SECTOR.get(sector, [])
+    if not sector_tickers:
+        # Fallback: try case-insensitive match
+        for s, tickers in SP500_BY_SECTOR.items():
+            if s.lower().strip() == cache_key:
+                sector_tickers = tickers
+                break
+
+    logger.info(f"Fetching sector data for '{sector}' ({len(sector_tickers)} tickers)...")
     fetch_start = time.monotonic()
 
-    for ticker in SP500_TICKERS:
-        try:
-            stock = yf.Ticker(ticker)
-            info = stock.info
-            if info and info.get("sector", "").lower().strip() == cache_key:
-                kpis = extract_kpis(info)
-                kpis["_ticker"] = ticker
-                kpis["_industry"] = info.get("industry", "")
-                all_kpis.append(kpis)
-                logger.info(f"  Fetched {ticker} ({len(all_kpis)} peers so far)")
-        except Exception as e:
-            logger.warning(f"  Skipping {ticker}: {e}")
-            continue
+    all_kpis = []
+    with ThreadPoolExecutor(max_workers=PEER_FETCH_WORKERS) as pool:
+        futures = {pool.submit(_fetch_peer_kpis, t): t for t in sector_tickers}
+        for future in as_completed(futures):
+            result = future.result()
+            if result is not None:
+                all_kpis.append(result)
 
-    # Store in cache
-    _sector_cache[cache_key] = {
-        "kpis": all_kpis,
-        "timestamp": now,
-    }
+    with _cache_lock:
+        _sector_cache[cache_key] = {
+            "kpis": all_kpis,
+            "timestamp": now,
+        }
 
     fetch_ms = round((time.monotonic() - fetch_start) * 1000)
     logger.info(
@@ -394,8 +414,15 @@ def analyze_stock(ticker: str) -> dict:
     # 2. Extract stock KPIs
     stock_kpis = extract_kpis(info)
 
-    # 3. Get sector peers and compute averages
-    peers_kpis = get_sector_peers_kpis(sector, exclude_ticker=resolved_ticker)
+    # 3. Fetch sector peers, historical KPIs, and sentiment in parallel
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        peers_future = pool.submit(get_sector_peers_kpis, sector, resolved_ticker)
+        hist_future = pool.submit(fetch_historical_kpis, resolved_ticker)
+        sentiment_future = pool.submit(fetch_sentiment, resolved_ticker)
+        peers_kpis = peers_future.result()
+        historical_data = hist_future.result()
+        sentiment_data = sentiment_future.result()
+
     sector_averages = compute_sector_averages(peers_kpis)
 
     # 3b. Industry-level comparison
@@ -406,8 +433,7 @@ def analyze_stock(ticker: str) -> dict:
     # 3c. Dynamic sector thresholds
     sector_thresholds = compute_sector_thresholds(peers_kpis)
 
-    # 4. Fetch historical KPI data (averages + yearly)
-    historical_data = fetch_historical_kpis(resolved_ticker)
+    # 4. Unpack historical data
     historical_averages = historical_data["averages"]
     historical_yearly = historical_data["yearly"]
 
