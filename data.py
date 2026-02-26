@@ -27,18 +27,76 @@ def clear_cache():
     _sector_cache = {}
 
 
+EXCHANGE_SUFFIXES = [
+    ".L",    # London
+    ".TO",   # Toronto
+    ".AX",   # Australia
+    ".DE",   # Germany (XETRA)
+    ".PA",   # Paris
+    ".AS",   # Amsterdam
+    ".MI",   # Milan
+    ".MC",   # Madrid
+    ".SW",   # Swiss
+    ".HK",   # Hong Kong
+    ".SI",   # Singapore
+    ".KS",   # Korea
+    ".TW",   # Taiwan
+    ".ST",   # Stockholm
+    ".CO",   # Copenhagen
+    ".HE",   # Helsinki
+    ".OL",   # Oslo
+    ".TA",   # Tel Aviv
+    ".SA",   # Sao Paulo
+    ".NS",   # NSE India
+    ".BO",   # BSE India
+]
+
+
+def _try_fetch(ticker: str) -> Optional[dict]:
+    """Try fetching info for a ticker, return info dict or None."""
+    try:
+        info = yf.Ticker(ticker).info
+        if info and info.get("regularMarketPrice") is not None:
+            return info
+    except Exception:
+        pass
+    return None
+
+
 def get_stock_info(ticker: str) -> dict:
     """
     Fetch stock info from Yahoo Finance.
-    Returns the info dict or raises an exception.
+    If the bare ticker fails, tries common exchange suffixes.
+    Returns (info_dict, resolved_ticker) or raises ValueError.
     """
-    stock = yf.Ticker(ticker.upper().strip())
-    info = stock.info
+    clean = ticker.upper().strip()
 
-    if not info or info.get("regularMarketPrice") is None:
+    # If ticker already has a suffix, just try it directly
+    if "." in clean:
+        info = _try_fetch(clean)
+        if info:
+            return info
         raise ValueError(f"Could not retrieve data for ticker '{ticker}'. Please check the symbol.")
 
-    return info
+    # Try bare ticker first
+    info = _try_fetch(clean)
+    if info:
+        return info
+
+    # Auto-resolve: try exchange suffixes
+    logger.info(f"Bare ticker '{clean}' failed, trying exchange suffixes...")
+    for suffix in EXCHANGE_SUFFIXES:
+        candidate = clean + suffix
+        info = _try_fetch(candidate)
+        if info:
+            logger.info(f"Resolved '{clean}' -> '{candidate}'")
+            return info
+
+    raise ValueError(
+        f"Could not retrieve data for ticker '{ticker}'. "
+        f"Tried bare ticker and {len(EXCHANGE_SUFFIXES)} exchange suffixes. "
+        f"Please check the symbol or try with an explicit suffix (e.g. {ticker}.L for London)."
+    )
 
 
 def get_stock_sector(info: dict) -> Optional[str]:
@@ -141,8 +199,9 @@ def analyze_stock(ticker: str) -> dict:
         calculate_rating, format_kpi_value,
     )
 
-    # 1. Fetch stock data
+    # 1. Fetch stock data (may auto-resolve exchange suffix)
     info = get_stock_info(ticker)
+    resolved_ticker = info.get("symbol", ticker.upper().strip())
     company_name = get_stock_name(info)
     sector = get_stock_sector(info)
     industry = get_stock_industry(info)
@@ -154,7 +213,7 @@ def analyze_stock(ticker: str) -> dict:
     stock_kpis = extract_kpis(info)
 
     # 3. Get sector peers and compute averages
-    peers_kpis = get_sector_peers_kpis(sector, exclude_ticker=ticker)
+    peers_kpis = get_sector_peers_kpis(sector, exclude_ticker=resolved_ticker)
     sector_averages = compute_sector_averages(peers_kpis)
 
     # 4. Calculate rating
@@ -192,7 +251,7 @@ def analyze_stock(ticker: str) -> dict:
         })
 
     return {
-        "ticker": ticker.upper(),
+        "ticker": resolved_ticker,
         "company_name": company_name,
         "sector": sector,
         "industry": industry or "N/A",
