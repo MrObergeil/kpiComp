@@ -403,6 +403,71 @@
             flex-shrink: 0;
         }
 
+        /* KPI Tooltips */
+        .kpi-name-cell {
+            position: relative;
+            cursor: help;
+        }
+
+        .kpi-tooltip {
+            display: none;
+            position: absolute;
+            left: 0;
+            bottom: calc(100% + 6px);
+            background: #1e293b;
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            line-height: 1.5;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-accent);
+            max-width: 280px;
+            width: max-content;
+            z-index: 10;
+            pointer-events: none;
+            font-family: var(--sans);
+        }
+
+        .kpi-name-cell:hover .kpi-tooltip {
+            display: block;
+        }
+
+        /* KPI Toggle Checkboxes */
+        .kpi-table thead th.col-toggle,
+        .kpi-table tbody td.col-toggle {
+            text-align: center;
+            width: 36px;
+            padding-left: 0.4rem;
+            padding-right: 0.2rem;
+        }
+
+        .kpi-toggle {
+            accent-color: var(--accent);
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+        }
+
+        .kpi-table tbody tr.kpi-disabled {
+            opacity: 0.3;
+        }
+
+        .reset-kpis {
+            font-size: 0.75rem;
+            color: var(--accent);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--mono);
+            float: right;
+            margin-top: -0.3rem;
+            display: none;
+        }
+
+        .reset-kpis:hover {
+            text-decoration: underline;
+        }
+
         /* Algorithm Explanation */
         .algo-info {
             margin-top: 2rem;
@@ -604,6 +669,8 @@
             const progress = (rating - 1) / 9; // 0 to 1
             const dashoffset = circumference * (1 - progress);
 
+            window._stockData = data;
+
             let kpiRows = data.kpi_comparison.map(kpi => {
                 const diffClass = getDiffClass(kpi.diff_raw, kpi.lower_is_better);
                 const combined = kpi.kpi_score?.combined;
@@ -611,14 +678,25 @@
                 const scoreText = combined !== null && combined !== undefined
                     ? (combined * 10).toFixed(1)
                     : '—';
+                const hasScore = combined !== null && combined !== undefined;
+                const tooltip = kpi.description
+                    ? `<span class="kpi-tooltip">${kpi.description}</span>`
+                    : '';
 
                 return `
-                    <tr>
-                        <td>
+                    <tr data-kpi-key="${kpi.key}">
+                        <td class="col-toggle">
+                            <input type="checkbox" class="kpi-toggle" data-kpi-key="${kpi.key}"
+                                ${hasScore ? 'checked' : 'checked disabled'}
+                                onchange="recalculate()">
+                        </td>
+                        <td class="kpi-name-cell">
                             <span class="kpi-name">${kpi.display_name}</span>
                             <span class="kpi-weight">${kpi.weight}</span>
+                            ${tooltip}
                         </td>
                         <td>${kpi.stock_value}</td>
+                        <td>${kpi.historical_avg || 'N/A'}</td>
                         <td>${kpi.sector_avg}</td>
                         <td class="${diffClass}">${kpi.difference}</td>
                         <td>
@@ -683,12 +761,16 @@
                 </div>
 
                 <div class="kpi-section">
-                    <h3>KPI Comparison — ${data.ticker} vs. ${data.sector} Sector Median</h3>
+                    <h3>KPI Comparison — ${data.ticker} vs. ${data.sector} Sector Median
+                        <button class="reset-kpis" id="resetKpis" onclick="resetKpis()">reset</button>
+                    </h3>
                     <table class="kpi-table">
                         <thead>
                             <tr>
+                                <th class="col-toggle"></th>
                                 <th>KPI</th>
                                 <th>${data.ticker}</th>
+                                <th>5Y Avg</th>
                                 <th>Sector Avg</th>
                                 <th>Difference</th>
                                 <th>Score</th>
@@ -714,6 +796,102 @@
                     });
                 }, 50);
             });
+        }
+
+        function recalculate() {
+            const data = window._stockData;
+            if (!data) return;
+
+            const checkboxes = document.querySelectorAll('.kpi-toggle');
+            const enabledKeys = new Set();
+            let anyUnchecked = false;
+
+            checkboxes.forEach(cb => {
+                const row = cb.closest('tr');
+                if (cb.checked) {
+                    enabledKeys.add(cb.dataset.kpiKey);
+                    row.classList.remove('kpi-disabled');
+                } else {
+                    anyUnchecked = true;
+                    row.classList.add('kpi-disabled');
+                }
+            });
+
+            const resetBtn = document.getElementById('resetKpis');
+            if (resetBtn) resetBtn.style.display = anyUnchecked ? 'inline' : 'none';
+
+            let sumAbs = 0, sumRel = 0, totalWeight = 0;
+
+            for (const kpi of data.kpi_comparison) {
+                if (!enabledKeys.has(kpi.key)) continue;
+                const s = kpi.kpi_score;
+                if (s.combined === null || s.combined === undefined) continue;
+
+                sumAbs += s.absolute * kpi.weight_raw;
+                sumRel += s.relative * kpi.weight_raw;
+                totalWeight += kpi.weight_raw;
+            }
+
+            if (totalWeight === 0) {
+                updateRatingDisplay(null, null, null);
+                return;
+            }
+
+            const absNorm = sumAbs / totalWeight;
+            const relNorm = sumRel / totalWeight;
+            const overallRaw = 0.40 * absNorm + 0.60 * relNorm;
+
+            const newRating = Math.round((1.0 + overallRaw * 9.0) * 10) / 10;
+            const newAbs = Math.round((1.0 + absNorm * 9.0) * 10) / 10;
+            const newRel = Math.round((1.0 + relNorm * 9.0) * 10) / 10;
+
+            updateRatingDisplay(newRating, newAbs, newRel);
+        }
+
+        function updateRatingDisplay(rating, absScore, relScore) {
+            const radius = 42;
+            const circumference = 2 * Math.PI * radius;
+
+            const ratingVal = resultsEl.querySelector('.rating-value');
+            const ring = resultsEl.querySelector('.score-ring');
+            const ratingLabel = resultsEl.querySelector('.rating-label');
+            const scoreBars = resultsEl.querySelectorAll('.score-bar-item');
+
+            if (rating === null) {
+                ratingVal.textContent = '—';
+                ratingVal.style.color = 'var(--text-dim)';
+                ring.style.strokeDashoffset = circumference;
+                ring.style.stroke = 'var(--text-dim)';
+                ratingLabel.textContent = 'No KPIs Selected';
+                scoreBars.forEach(bar => {
+                    bar.querySelector('.score-num').textContent = '—/10';
+                    bar.querySelector('.score-bar-fill').style.width = '0%';
+                });
+                return;
+            }
+
+            const color = getRatingColor(rating);
+            ratingVal.textContent = rating;
+            ratingVal.style.color = color;
+            ring.style.stroke = color;
+            ring.style.strokeDashoffset = circumference * (1 - (rating - 1) / 9);
+            ratingLabel.textContent = getRatingLabel(rating);
+
+            const scores = [absScore, relScore];
+            scoreBars.forEach((bar, i) => {
+                const s = scores[i];
+                bar.querySelector('.score-num').textContent = s + '/10';
+                const fill = bar.querySelector('.score-bar-fill');
+                fill.style.width = ((s - 1) / 9 * 100) + '%';
+                fill.style.background = getRatingColor(s);
+            });
+        }
+
+        function resetKpis() {
+            document.querySelectorAll('.kpi-toggle').forEach(cb => {
+                if (!cb.disabled) cb.checked = true;
+            });
+            recalculate();
         }
     </script>
 </body>

@@ -45,6 +45,7 @@ class KPIConfig:
     abs_worst: float
     format_as_pct: bool = False  # Display as percentage
     format_decimals: int = 2
+    description: str = ""
 
 
 KPI_CONFIGS = [
@@ -52,55 +53,65 @@ KPI_CONFIGS = [
         key="trailingPE", display_name="P/E Ratio (TTM)",
         weight=0.15, lower_is_better=True,
         abs_best=5.0, abs_worst=60.0,
+        description="Price / trailing 12-month earnings. Lower means you're paying less per dollar of profit.",
     ),
     KPIConfig(
         key="forwardPE", display_name="Forward P/E",
         weight=0.12, lower_is_better=True,
         abs_best=5.0, abs_worst=50.0,
+        description="Price / estimated future earnings. Based on analyst forecasts for the next 12 months.",
     ),
     KPIConfig(
         key="priceToBook", display_name="P/B Ratio",
         weight=0.10, lower_is_better=True,
         abs_best=0.5, abs_worst=20.0,
+        description="Market price / book value per share. Below 1.0 suggests the stock trades below its net asset value.",
     ),
     KPIConfig(
         key="enterpriseToEbitda", display_name="EV/EBITDA",
         weight=0.12, lower_is_better=True,
         abs_best=3.0, abs_worst=40.0,
+        description="Enterprise value / EBITDA. Accounts for debt, useful for comparing companies with different capital structures.",
     ),
     KPIConfig(
         key="debtToEquity", display_name="Debt/Equity",
         weight=0.10, lower_is_better=True,
         abs_best=0.0, abs_worst=300.0,
+        description="Total debt / shareholder equity. Higher means more leverage and financial risk.",
     ),
     KPIConfig(
         key="returnOnEquity", display_name="ROE",
         weight=0.12, lower_is_better=False,
         abs_best=0.40, abs_worst=-0.10,
         format_as_pct=True,
+        description="Net income / shareholder equity. Measures how efficiently the company turns equity into profit.",
     ),
     KPIConfig(
         key="profitMargins", display_name="Profit Margin",
         weight=0.10, lower_is_better=False,
         abs_best=0.40, abs_worst=-0.10,
         format_as_pct=True,
+        description="Net income / revenue. Shows how much of each dollar earned the company keeps as profit.",
     ),
     KPIConfig(
         key="revenueGrowth", display_name="Revenue Growth",
         weight=0.09, lower_is_better=False,
         abs_best=0.50, abs_worst=-0.20,
         format_as_pct=True,
+        description="Year-over-year revenue change. Measures top-line momentum and market demand.",
     ),
     KPIConfig(
         key="currentRatio", display_name="Current Ratio",
         weight=0.05, lower_is_better=False,
         abs_best=3.0, abs_worst=0.3,
+        description="Current assets / current liabilities. Above 1.0 means the company can cover its short-term obligations.",
     ),
     KPIConfig(
         key="dividendYield", display_name="Dividend Yield",
         weight=0.05, lower_is_better=False,
         abs_best=0.06, abs_worst=0.0,
         format_as_pct=True,
+        description="Annual dividends / share price. Higher yield means more income returned to shareholders.",
     ),
 ]
 
