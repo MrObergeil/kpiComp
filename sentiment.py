@@ -76,6 +76,8 @@ def fetch_sentiment(ticker: str) -> dict | None:
         return None
 
     key = ticker.upper().strip()
+    # Finnhub uses bare tickers -- strip exchange suffixes like .L, .TO
+    finnhub_sym = key.split(".")[0] if "." in key else key
     now = time.time()
 
     with _cache_lock:
@@ -91,7 +93,7 @@ def fetch_sentiment(ticker: str) -> dict | None:
         resp = requests.get(
             FINNHUB_URL,
             params={
-                "symbol": key,
+                "symbol": finnhub_sym,
                 "from": week_ago.isoformat(),
                 "to": today.isoformat(),
                 "token": api_key,
