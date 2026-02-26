@@ -21,6 +21,7 @@ ERROR_TTL = 300   # 5 minutes for failures
 _cache: dict[str, dict] | None = None  # {TICKER: entry} when populated
 _cache_ts: float = 0
 _cache_ok: bool = False
+_refreshing: bool = False
 _cache_lock = threading.Lock()
 
 
@@ -80,17 +81,23 @@ def clear_cache():
 
 def fetch_reddit_buzz(ticker: str) -> dict | None:
     """Look up Reddit buzz for a ticker. Returns flat dict or None."""
-    global _cache_ts, _cache_ok
+    global _cache_ts, _cache_ok, _refreshing
     key = ticker.upper().strip()
     bare = key.split(".")[0] if "." in key else key
     now = time.time()
 
     with _cache_lock:
         ttl = CACHE_TTL if _cache_ok else ERROR_TTL
-        needs_refresh = now - _cache_ts >= ttl
+        needs_refresh = now - _cache_ts >= ttl and not _refreshing
+        if needs_refresh:
+            _refreshing = True
 
     if needs_refresh:
-        _refresh_cache()
+        try:
+            _refresh_cache()
+        finally:
+            with _cache_lock:
+                _refreshing = False
 
     with _cache_lock:
         if _cache is None:

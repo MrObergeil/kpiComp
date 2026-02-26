@@ -278,7 +278,7 @@ def get_stock_info(ticker: str) -> dict:
     """
     Fetch stock info from Yahoo Finance.
     If the bare ticker fails, tries common exchange suffixes.
-    Returns (info_dict, resolved_ticker) or raises ValueError.
+    Returns info dict or raises ValueError.
     """
     clean = ticker.upper().strip()
 
@@ -428,6 +428,7 @@ def analyze_stock(ticker: str) -> dict:
 
     # 2. Extract stock KPIs
     stock_kpis = extract_kpis(info)
+    current_price = info.get("currentPrice") or info.get("regularMarketPrice")
 
     # 3. Fetch sector peers, historical KPIs, and sentiment in parallel
     with ThreadPoolExecutor(max_workers=8) as pool:
@@ -437,7 +438,7 @@ def analyze_stock(ticker: str) -> dict:
         reddit_future = pool.submit(fetch_reddit_buzz, resolved_ticker)
         insider_future = pool.submit(fetch_insider_trading, resolved_ticker)
         analyst_future = pool.submit(fetch_analyst_ratings, resolved_ticker)
-        options_future = pool.submit(fetch_options_sentiment, resolved_ticker)
+        options_future = pool.submit(fetch_options_sentiment, resolved_ticker, current_price)
         trends_future = pool.submit(fetch_google_trends, resolved_ticker)
         peers_kpis = peers_future.result()
         historical_data = hist_future.result()

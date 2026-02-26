@@ -89,9 +89,9 @@ def fetch_insider_trading(ticker: str) -> dict | None:
             "price": txn.get("transactionPrice"),
         }
 
-        if code == "P" or change > 0:
+        if code == "P":
             buys.append(entry)
-        elif code == "S" or change < 0:
+        elif code == "S":
             sells.append(entry)
 
     # Detect cluster buys: 3+ unique insiders buying within the window

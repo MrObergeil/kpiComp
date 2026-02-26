@@ -1197,7 +1197,13 @@
 
             try {
                 const resp = await fetch(`/api/analyze/${encodeURIComponent(ticker)}`, { signal: currentController.signal });
-                const data = await resp.json();
+
+                let data;
+                try {
+                    data = await resp.json();
+                } catch (parseErr) {
+                    throw new Error(`Server error (HTTP ${resp.status}). Please try again.`);
+                }
 
                 if (!resp.ok) {
                     throw new Error(data.detail || 'Analysis failed.');

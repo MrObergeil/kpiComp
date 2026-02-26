@@ -9,6 +9,7 @@ import threading
 import logging
 from datetime import datetime, timezone
 
+import pandas as pd
 import yfinance as yf
 
 logger = logging.getLogger(__name__)
@@ -37,8 +38,15 @@ def _find_nearest_monthly(expirations: tuple) -> str | None:
     return expirations[0] if expirations else None
 
 
-def fetch_options_sentiment(ticker: str) -> dict | None:
-    """Fetch options chain and compute P/C ratio + IV. Returns flat dict or None."""
+def _safe_int_sum(series: pd.Series) -> int:
+    """Sum a pandas Series, treating NaN as 0, and return int."""
+    total = series.sum(min_count=1)
+    return 0 if pd.isna(total) else int(total)
+
+
+def fetch_options_sentiment(ticker: str, current_price: float | None = None) -> dict | None:
+    """Fetch options chain and compute P/C ratio + IV. Returns flat dict or None.
+    If current_price is provided, skips the expensive t.info call."""
     key = ticker.upper().strip()
     bare = key.split(".")[0] if "." in key else key
     now = time.time()
@@ -68,9 +76,10 @@ def fetch_options_sentiment(ticker: str) -> dict | None:
         calls = chain.calls
         puts = chain.puts
 
-        # Current price for ATM detection
-        info = t.info
-        current_price = info.get("currentPrice") or info.get("regularMarketPrice")
+        # Current price for ATM detection — use caller-provided price if available
+        if not current_price:
+            info = t.info
+            current_price = info.get("currentPrice") or info.get("regularMarketPrice")
         if not current_price:
             with _cache_lock:
                 _cache[key] = {"data": None, "ts": now, "ttl": ERROR_TTL}
@@ -83,12 +92,8 @@ def fetch_options_sentiment(ticker: str) -> dict | None:
         return None
 
     # Aggregate put/call volume
-    call_volume = calls["volume"].sum() if "volume" in calls.columns else 0
-    put_volume = puts["volume"].sum() if "volume" in puts.columns else 0
-
-    # Handle NaN
-    call_volume = int(call_volume) if call_volume == call_volume else 0
-    put_volume = int(put_volume) if put_volume == put_volume else 0
+    call_volume = _safe_int_sum(calls["volume"]) if "volume" in calls.columns else 0
+    put_volume = _safe_int_sum(puts["volume"]) if "volume" in puts.columns else 0
 
     pc_ratio = round(put_volume / call_volume, 3) if call_volume > 0 else None
 
@@ -101,11 +106,8 @@ def fetch_options_sentiment(ticker: str) -> dict | None:
             atm_iv = round(calls_clean.loc[atm_idx, "impliedVolatility"] * 100, 1)
 
     # Open interest totals
-    call_oi = int(calls["openInterest"].sum()) if "openInterest" in calls.columns else 0
-    put_oi = int(puts["openInterest"].sum()) if "openInterest" in puts.columns else 0
-    # Handle NaN
-    call_oi = call_oi if call_oi == call_oi else 0
-    put_oi = put_oi if put_oi == put_oi else 0
+    call_oi = _safe_int_sum(calls["openInterest"]) if "openInterest" in calls.columns else 0
+    put_oi = _safe_int_sum(puts["openInterest"]) if "openInterest" in puts.columns else 0
 
     pc_oi_ratio = round(put_oi / call_oi, 3) if call_oi > 0 else None
 
