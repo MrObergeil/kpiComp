@@ -540,6 +540,7 @@ def analyze_stock(ticker: str) -> dict:
     return _sanitize_for_json({
         "ticker": resolved_ticker,
         "company_name": company_name,
+        "current_price": current_price,
         "sector": sector,
         "industry": industry or "N/A",
         "stock_kpis": stock_kpis,

@@ -1057,6 +1057,66 @@
             text-decoration: none;
         }
 
+        /* Stock Price */
+        .stock-price {
+            font-family: var(--mono);
+            font-size: 1.1rem;
+            color: var(--accent);
+            margin-top: 0.2rem;
+        }
+
+        /* Recent Searches */
+        .recent-searches {
+            display: flex;
+            gap: 0.4rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: -1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .recent-chip {
+            font-family: var(--mono);
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 0.2rem 0.65rem;
+            cursor: pointer;
+            transition: border-color 0.2s, color 0.2s;
+        }
+
+        .recent-chip:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .recent-clear {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.2rem 0.3rem;
+            opacity: 0.6;
+        }
+
+        .recent-clear:hover { opacity: 1; }
+
+        /* Sentiment Grid */
+        .sentiment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0 1.5rem;
+        }
+
+        .sentiment-grid > .sentiment-card,
+        .sentiment-grid > .insider-card {
+            grid-column: 1 / -1;
+        }
+
         /* Responsive */
         @media (max-width: 640px) {
             .stock-header {
@@ -1073,6 +1133,10 @@
             .kpi-table tbody td {
                 padding: 0.5rem 0.3rem;
             }
+
+            .score-bars { flex-direction: column; }
+            .sentiment-grid { grid-template-columns: 1fr; }
+            .indicator-body { gap: 1rem; }
         }
     </style>
 </head>
@@ -1094,6 +1158,8 @@
             >
             <button class="search-btn" id="analyzeBtn" onclick="analyze()">Analyze</button>
         </div>
+
+        <div class="recent-searches" id="recentSearches"></div>
 
         <div class="error-msg" id="errorMsg" role="alert"></div>
 
@@ -1187,6 +1253,7 @@
             logToServer('info', 'ticker_search', { ticker: ticker });
 
             // Reset UI
+            document.title = 'Stock Rater -- Value Analysis';
             errorEl.classList.remove('active');
             resultsEl.classList.remove('active');
             loadingEl.classList.add('active');
@@ -1210,6 +1277,8 @@
                 }
 
                 renderResults(data);
+                history.replaceState(null, '', `?ticker=${encodeURIComponent(ticker)}`);
+                addRecent(ticker);
             } catch (err) {
                 if (err.name === 'AbortError') return;
                 showError(err.message || 'Something went wrong. Please try again.');
@@ -1744,6 +1813,7 @@
                 <div class="stock-header">
                     <div class="stock-info">
                         <h2><span class="ticker">${safeTicker}</span> -- ${safeCompany}</h2>
+                        <div class="stock-price">$${data.current_price != null ? Number(data.current_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'N/A'}</div>
                         <div class="stock-meta">
                             <span>${safeSector}</span>
                             <span>${safeIndustry}</span>
@@ -1793,13 +1863,15 @@
                     ${trendBarHtml}
                 </div>
 
-                ${sentimentHtml}
-                ${redditBuzzHtml}
-                ${shortInterestHtml}
-                ${insiderHtml}
-                ${analystHtml}
-                ${optionsHtml}
-                ${trendsHtml}
+                <div class="sentiment-grid">
+                    ${sentimentHtml}
+                    ${redditBuzzHtml}
+                    ${shortInterestHtml}
+                    ${insiderHtml}
+                    ${analystHtml}
+                    ${optionsHtml}
+                    ${trendsHtml}
+                </div>
 
                 <div class="kpi-section">
                     <h3>KPI Comparison -- ${comparisonLabel}
@@ -1829,6 +1901,7 @@
             `;
 
             resultsEl.classList.add('active');
+            document.title = `${data.ticker} -- Stock Rater`;
 
             // Animate the ring and bars after render
             requestAnimationFrame(() => {
@@ -1960,6 +2033,41 @@
             });
             recalculate();
         }
+
+        // --- Recent Searches ---
+        function getRecent() {
+            try { return JSON.parse(localStorage.getItem('recentTickers') || '[]'); }
+            catch(e) { return []; }
+        }
+        function addRecent(ticker) {
+            let recent = getRecent().filter(t => t !== ticker);
+            recent.unshift(ticker);
+            localStorage.setItem('recentTickers', JSON.stringify(recent.slice(0, 8)));
+            renderRecent();
+        }
+        function renderRecent() {
+            const el = document.getElementById('recentSearches');
+            const recent = getRecent();
+            if (!recent.length) { el.innerHTML = ''; return; }
+            el.innerHTML = recent.map(t =>
+                `<span class="recent-chip" onclick="tickerInput.value='${escapeHtml(t)}';analyze()">${escapeHtml(t)}</span>`
+            ).join('') + '<button class="recent-clear" onclick="clearRecent()" title="Clear history">x</button>';
+        }
+        function clearRecent() {
+            localStorage.removeItem('recentTickers');
+            renderRecent();
+        }
+        renderRecent();
+
+        // --- Auto-analyze from URL param ---
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const urlTicker = params.get('ticker');
+            if (urlTicker) {
+                tickerInput.value = urlTicker;
+                analyze();
+            }
+        })();
     </script>
 </body>
 </html>
