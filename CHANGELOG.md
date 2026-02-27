@@ -3,7 +3,9 @@
 ## 2026-02-27
 
 ### Added
-- Ticker autocomplete with ~9.7K US + European tickers (SEC EDGAR + pytickersymbols)
+- Ticker autocomplete with ~14.9K US + European + Korean + Chinese tickers (SEC EDGAR + pytickersymbols + financedatabase)
+- Korean (KOSPI/KOSDAQ) and Chinese (Shanghai/Shenzhen) market tickers with English company names
+- `.KQ`, `.SS`, `.SZ` exchange suffixes for auto-resolve in data.py
 - `scripts/build_tickers.py` build script to regenerate ticker data
 - `GET /api/tickers` endpoint with 24h cache header
 - Client-side typeahead: prefix match on ticker, substring match on company name

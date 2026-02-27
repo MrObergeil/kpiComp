@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-Build data/tickers.json from SEC EDGAR (US) + pytickersymbols (Europe).
+Build data/tickers.json from SEC EDGAR (US) + pytickersymbols (Europe) + financedatabase (Asia).
 
 Usage: python scripts/build_tickers.py
-Output: data/tickers.json  (~12K entries, ~1.5MB)
+Output: data/tickers.json
 
-Dependencies (build-time only): pytickersymbols, requests
+Dependencies (build-time only): pytickersymbols, financedatabase, requests
 """
 
 import json
@@ -84,6 +84,47 @@ def fetch_eu_tickers() -> dict[str, dict]:
     return tickers
 
 
+def fetch_asian_tickers() -> dict[str, dict]:
+    """Fetch Korean + Chinese tickers via financedatabase. Returns {ticker: {t, n, e}}."""
+    try:
+        import financedatabase as fd
+    except ImportError:
+        print("WARNING: financedatabase not installed, skipping Asian tickers.")
+        print("  Install with: pip install financedatabase")
+        return {}
+
+    print("Fetching Asian tickers via financedatabase...")
+    equities = fd.Equities()
+
+    exchange_labels = {
+        "KSC": "KOSPI", "KOE": "KOSDAQ",
+        "SHH": "Shanghai", "SHZ": "Shenzhen",
+    }
+
+    # Only include tickers actually listed on the local exchanges
+    country_exchanges = {
+        "South Korea": {"KSC", "KOE"},
+        "China": {"SHH", "SHZ"},
+    }
+
+    tickers = {}
+    for country in ["South Korea", "China"]:
+        df = equities.select(country=country)
+        allowed = country_exchanges[country]
+        for yahoo_ticker, row in df.iterrows():
+            name = row.get("name")
+            raw_exchange = row.get("exchange", "")
+            if not isinstance(raw_exchange, str) or raw_exchange not in allowed:
+                continue
+            if not yahoo_ticker or not isinstance(name, str) or not name:
+                continue
+            exchange = exchange_labels.get(raw_exchange, raw_exchange)
+            tickers[yahoo_ticker] = {"t": yahoo_ticker, "n": name, "e": exchange}
+
+    print(f"  -> {len(tickers)} Asian tickers")
+    return tickers
+
+
 def _suffix_to_exchange(suffix: str) -> str:
     mapping = {
         ".L": "LSE", ".IL": "LSE",
@@ -120,9 +161,10 @@ def _title_case(name: str) -> str:
 def main():
     us = fetch_us_tickers()
     eu = fetch_eu_tickers()
+    asia = fetch_asian_tickers()
 
     # Merge: US takes priority on duplicates
-    merged = {**eu, **us}
+    merged = {**asia, **eu, **us}
 
     result = sorted(merged.values(), key=lambda x: x["t"])
     print(f"Total: {len(result)} tickers")

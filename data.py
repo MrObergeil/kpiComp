@@ -263,7 +263,10 @@ EXCHANGE_SUFFIXES = [
     ".SW",   # Swiss
     ".HK",   # Hong Kong
     ".SI",   # Singapore
-    ".KS",   # Korea
+    ".KS",   # Korea (KOSPI)
+    ".KQ",   # Korea (KOSDAQ)
+    ".SS",   # Shanghai
+    ".SZ",   # Shenzhen
     ".TW",   # Taiwan
     ".ST",   # Stockholm
     ".CO",   # Copenhagen
