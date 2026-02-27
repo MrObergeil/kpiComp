@@ -8,6 +8,7 @@
 - `.KQ`, `.SS`, `.SZ` exchange suffixes for auto-resolve in data.py
 - `scripts/build_tickers.py` build script to regenerate ticker data
 - `GET /api/tickers` endpoint with 24h cache header
+- GitHub Actions workflow for monthly automated ticker data refresh
 - Client-side typeahead: prefix match on ticker, substring match on company name
 - Keyboard navigation (Arrow Up/Down, Enter, Escape) in autocomplete dropdown
 - Bumped ticker input maxlength to 20 for European tickers (e.g. BARC.L)
