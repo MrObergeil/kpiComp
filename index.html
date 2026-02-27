@@ -199,6 +199,9 @@
             font-family: var(--mono);
             font-size: 1.5rem;
             font-weight: 500;
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
         }
 
         .stock-info h2 .ticker {
@@ -1062,7 +1065,7 @@
             font-family: var(--mono);
             font-size: 1.1rem;
             color: var(--accent);
-            margin-top: 0.2rem;
+            margin-left: auto;
         }
 
         /* Recent Searches */
@@ -1812,8 +1815,7 @@
             resultsEl.innerHTML = `
                 <div class="stock-header">
                     <div class="stock-info">
-                        <h2><span class="ticker">${safeTicker}</span> -- ${safeCompany}</h2>
-                        <div class="stock-price">$${data.current_price != null ? Number(data.current_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'N/A'}</div>
+                        <h2><span class="ticker">${safeTicker}</span> -- ${safeCompany} <span class="stock-price">$${data.current_price != null ? Number(data.current_price).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2}) : 'N/A'}</span></h2>
                         <div class="stock-meta">
                             <span>${safeSector}</span>
                             <span>${safeIndustry}</span>
@@ -1863,16 +1865,6 @@
                     ${trendBarHtml}
                 </div>
 
-                <div class="sentiment-grid">
-                    ${sentimentHtml}
-                    ${redditBuzzHtml}
-                    ${shortInterestHtml}
-                    ${insiderHtml}
-                    ${analystHtml}
-                    ${optionsHtml}
-                    ${trendsHtml}
-                </div>
-
                 <div class="kpi-section">
                     <h3>KPI Comparison -- ${comparisonLabel}
                         <button class="reset-kpis" id="resetKpis" onclick="resetKpis()">reset</button>
@@ -1897,6 +1889,16 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div class="sentiment-grid">
+                    ${sentimentHtml}
+                    ${redditBuzzHtml}
+                    ${shortInterestHtml}
+                    ${insiderHtml}
+                    ${analystHtml}
+                    ${optionsHtml}
+                    ${trendsHtml}
                 </div>
             `;
 
