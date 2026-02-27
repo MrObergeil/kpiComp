@@ -3,6 +3,8 @@
 ## 2026-02-27
 
 ### Changed
+- KPI table moved above sentiment indicator cards
+- Stock price displayed inline with ticker/company name instead of separate row
 - Replaced AGENTS.md with CLAUDE.md (Claude Code compatible config)
 - Moved todo.txt content to GitHub issue #1
 - NaN/Inf sanitization for JSON API responses
