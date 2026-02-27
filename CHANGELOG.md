@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-02-27
+
+### Changed
+- Replaced AGENTS.md with CLAUDE.md (Claude Code compatible config)
+- Moved todo.txt content to GitHub issue #1
+- NaN/Inf sanitization for JSON API responses
+- Headline + summary scoring for sentiment (headline matches weighted 2x)
+- Trainable keyword overrides via `train_data/news_keywords.json`
+- Log-level validation on frontend log endpoint
+
+### Added
+- Sentiment training UI and API routes (`/train`, `/api/train/*`)
+- Shares outstanding displayed in short interest card
+- `current_price` field in API response
+
+### Removed
+- AGENTS.md, todo.txt, unused `None` fields from sentiment response
+
 ## 2026-02-26
 
 ### Added (UX)
