@@ -2,6 +2,14 @@
 
 ## 2026-02-27
 
+### Added
+- Ticker autocomplete with ~9.7K US + European tickers (SEC EDGAR + pytickersymbols)
+- `scripts/build_tickers.py` build script to regenerate ticker data
+- `GET /api/tickers` endpoint with 24h cache header
+- Client-side typeahead: prefix match on ticker, substring match on company name
+- Keyboard navigation (Arrow Up/Down, Enter, Escape) in autocomplete dropdown
+- Bumped ticker input maxlength to 20 for European tickers (e.g. BARC.L)
+
 ### Changed
 - KPI table moved above sentiment indicator cards
 - Stock price displayed inline with ticker/company name instead of separate row

@@ -131,6 +131,56 @@
             cursor: not-allowed;
         }
 
+        /* --- Autocomplete --- */
+        .search-wrapper {
+            position: relative;
+        }
+        .ac-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-top: 4px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            z-index: 100;
+            max-height: 320px;
+            overflow-y: auto;
+        }
+        .ac-dropdown.active { display: block; }
+        .ac-item {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            gap: 0.75rem;
+            align-items: baseline;
+        }
+        .ac-item:hover, .ac-item.selected {
+            background: var(--bg-card-hover);
+        }
+        .ac-ticker {
+            font-family: var(--mono);
+            color: var(--accent);
+            font-weight: 500;
+            min-width: 70px;
+        }
+        .ac-name {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .ac-exchange {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            margin-left: auto;
+            white-space: nowrap;
+        }
+
         /* --- Loading --- */
         .loading {
             display: none;
@@ -1151,14 +1201,18 @@
         </header>
 
         <div class="search-section">
-            <input
-                type="text"
-                class="search-input"
-                id="tickerInput"
-                placeholder="Enter ticker (e.g. AAPL)"
-                maxlength="10"
-                autofocus
-            >
+            <div class="search-wrapper">
+                <input
+                    type="text"
+                    class="search-input"
+                    id="tickerInput"
+                    placeholder="Enter ticker (e.g. AAPL)"
+                    maxlength="20"
+                    autocomplete="off"
+                    autofocus
+                >
+                <div class="ac-dropdown" id="autocompleteDropdown"></div>
+            </div>
             <button class="search-btn" id="analyzeBtn" onclick="analyze()">Analyze</button>
         </div>
 
@@ -1240,10 +1294,99 @@
         const loadingEl = document.getElementById('loading');
         const errorEl = document.getElementById('errorMsg');
         const resultsEl = document.getElementById('results');
+        const acDropdown = document.getElementById('autocompleteDropdown');
 
-        // Enter key triggers analysis
+        // --- Autocomplete ---
+        let allTickers = [];
+        let acSelectedIdx = -1;
+        let acDebounceTimer = null;
+
+        fetch('/api/tickers')
+            .then(r => r.json())
+            .then(data => { allTickers = data; })
+            .catch(() => {});
+
+        function filterTickers(query) {
+            if (!query || query.length < 1) return [];
+            const q = query.toUpperCase();
+            const tickerMatches = [];
+            const nameMatches = [];
+            for (const item of allTickers) {
+                if (item.t.startsWith(q)) {
+                    tickerMatches.push(item);
+                    if (tickerMatches.length >= 8) break;
+                } else if (item.n.toUpperCase().includes(q)) {
+                    nameMatches.push(item);
+                }
+            }
+            return tickerMatches.concat(nameMatches).slice(0, 8);
+        }
+
+        function showAcDropdown(results) {
+            if (!results.length) { hideAcDropdown(); return; }
+            acSelectedIdx = -1;
+            acDropdown.innerHTML = results.map((r, i) =>
+                `<div class="ac-item" data-idx="${i}" data-ticker="${escapeHtml(r.t)}">` +
+                    `<span class="ac-ticker">${escapeHtml(r.t)}</span>` +
+                    `<span class="ac-name">${escapeHtml(r.n)}</span>` +
+                    `<span class="ac-exchange">${escapeHtml(r.e)}</span>` +
+                `</div>`
+            ).join('');
+            acDropdown.classList.add('active');
+        }
+
+        function hideAcDropdown() {
+            acDropdown.classList.remove('active');
+            acSelectedIdx = -1;
+        }
+
+        function selectAcItem(ticker) {
+            tickerInput.value = ticker;
+            hideAcDropdown();
+            analyze();
+        }
+
+        tickerInput.addEventListener('input', () => {
+            clearTimeout(acDebounceTimer);
+            acDebounceTimer = setTimeout(() => {
+                const q = tickerInput.value.trim();
+                showAcDropdown(filterTickers(q));
+            }, 80);
+        });
+
         tickerInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') analyze();
+            const items = acDropdown.querySelectorAll('.ac-item');
+            const isOpen = acDropdown.classList.contains('active');
+
+            if (e.key === 'ArrowDown' && isOpen) {
+                e.preventDefault();
+                acSelectedIdx = Math.min(acSelectedIdx + 1, items.length - 1);
+                items.forEach((el, i) => el.classList.toggle('selected', i === acSelectedIdx));
+            } else if (e.key === 'ArrowUp' && isOpen) {
+                e.preventDefault();
+                acSelectedIdx = Math.max(acSelectedIdx - 1, 0);
+                items.forEach((el, i) => el.classList.toggle('selected', i === acSelectedIdx));
+            } else if (e.key === 'Enter') {
+                if (isOpen && acSelectedIdx >= 0 && items[acSelectedIdx]) {
+                    e.preventDefault();
+                    selectAcItem(items[acSelectedIdx].dataset.ticker);
+                } else {
+                    hideAcDropdown();
+                    analyze();
+                }
+            } else if (e.key === 'Escape') {
+                hideAcDropdown();
+            }
+        });
+
+        acDropdown.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            const item = e.target.closest('.ac-item');
+            if (item) selectAcItem(item.dataset.ticker);
+        });
+
+        tickerInput.addEventListener('blur', () => {
+            setTimeout(hideAcDropdown, 150);
         });
 
         async function analyze() {

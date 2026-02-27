@@ -7,6 +7,7 @@ Provides both:
 """
 
 import asyncio
+import json
 import time
 import logging
 from pathlib import Path
@@ -30,6 +31,14 @@ app = FastAPI(
     version="1.0.0",
 )
 app.include_router(train_router)
+
+# --- Ticker autocomplete data (loaded once at startup) ---
+_tickers_path = Path(__file__).parent / "data" / "tickers.json"
+_tickers_data: list = []
+if _tickers_path.exists():
+    with open(_tickers_path) as f:
+        _tickers_data = json.load(f)
+    logger.info(f"Loaded {len(_tickers_data)} tickers for autocomplete")
 
 
 # --- Middleware ---
@@ -73,6 +82,15 @@ async def api_clear_cache():
     """Clear the sector data cache."""
     clear_cache()
     return {"status": "ok", "message": "Cache cleared."}
+
+
+@app.get("/api/tickers")
+async def api_tickers():
+    """Return full ticker list for client-side autocomplete."""
+    return JSONResponse(
+        content=_tickers_data,
+        headers={"Cache-Control": "public, max-age=86400"},
+    )
 
 
 # --- Frontend Log Endpoint ---
