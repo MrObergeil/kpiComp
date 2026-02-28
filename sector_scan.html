@@ -682,39 +682,48 @@ industryMS.setDisabled(true);
 
 // --- Init: fetch sectors ---
 (async function init() {
-    const res = await fetch('/api/taxonomy/sectors');
-    const sectors = await res.json();
-    sectorMS.setOptions(sectors.map(s => ({
-        value: s.sector,
-        label: s.sector,
-        count: s.count,
-    })));
+    try {
+        const res = await fetch('/api/taxonomy/sectors');
+        const sectors = await res.json();
+        sectorMS.setOptions(sectors.map(s => ({
+            value: s.sector,
+            label: s.sector,
+            count: s.count,
+        })));
+    } catch (e) {
+        console.error('Failed to fetch sectors:', e);
+    }
 })();
 
 // --- Sector change: fetch industries ---
 async function onSectorChange(selected) {
     industryMS.setOptions([]);
+    industryMS.setDisabled(true);
     const gen = ++sectorFetchGen;
 
     if (selected.length === 0) {
-        industryMS.setDisabled(true);
         scanBtn.disabled = true;
         return;
     }
 
     scanBtn.disabled = false;
 
-    const params = new URLSearchParams();
-    selected.forEach(s => params.append('sectors', s));
-    const res = await fetch(`/api/taxonomy/industries-multi?${params}`);
-    if (gen !== sectorFetchGen) return; // stale response, discard
-    const industries = await res.json();
-    industryMS.setOptions(industries.map(i => ({
-        value: i.industry,
-        label: i.industry,
-        count: i.count,
-    })));
-    industryMS.setDisabled(false);
+    try {
+        const params = new URLSearchParams();
+        selected.forEach(s => params.append('sectors', s));
+        const res = await fetch(`/api/taxonomy/industries-multi?${params}`);
+        if (gen !== sectorFetchGen) return;
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const industries = await res.json();
+        industryMS.setOptions(industries.map(i => ({
+            value: i.industry,
+            label: i.industry,
+            count: i.count,
+        })));
+    } catch (e) {
+        console.error('Failed to fetch industries:', e);
+    }
+    if (gen === sectorFetchGen) industryMS.setDisabled(false);
 }
 
 // --- Region toggle ---
