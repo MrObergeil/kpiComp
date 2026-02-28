@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-02-28 — Expand European Ticker Coverage
+
+### Changed
+- `build_tickers.py`: merged `fetch_asian_tickers()` into `fetch_fd_tickers()` — now pulls European equities from financedatabase in addition to Asian markets
+- Filters to primary exchanges only (PAR, AMS, LSE, FRA, MIL, MCE, STO, CPH, HEL, OSL, EBS, VIE, ATH, PRA, BRU, LIS) — excludes OTC pink sheets, German regional exchanges, and duplicate listings
+- Ticker count: ~14.9K → ~19.8K (+~5K European equities from 19 countries)
+- Fixes stocks like ETL.PA (Eutelsat) not appearing in autocomplete because they weren't in any pytickersymbols index
+
 ## 2026-02-28 — Multi-Ticker Dedup & Sentiment Merging
 
 ### Added

@@ -1707,7 +1707,7 @@
         let acSelectedIdx = -1;
         let acDebounceTimer = null;
 
-        fetch('/api/tickers')
+        fetch('/api/tickers?v=' + Date.now())
             .then(r => r.json())
             .then(data => { allTickers = data; })
             .catch(() => {});

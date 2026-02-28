@@ -91,32 +91,64 @@ def fetch_eu_tickers() -> dict[str, dict]:
     return tickers
 
 
-def fetch_asian_tickers() -> dict[str, dict]:
-    """Fetch Korean + Chinese tickers via financedatabase. Returns {ticker: {t, n, e}}."""
+def fetch_fd_tickers() -> dict[str, dict]:
+    """Fetch Asian + European tickers via financedatabase. Returns {ticker: {t, n, e}}."""
     try:
         import financedatabase as fd
     except ImportError:
-        logger.warning("financedatabase not installed, skipping Asian tickers (pip install financedatabase)")
+        logger.warning("financedatabase not installed, skipping Asian/EU tickers (pip install financedatabase)")
         return {}
 
-    logger.info("Fetching Asian tickers via financedatabase...")
+    logger.info("Fetching Asian + European tickers via financedatabase...")
     equities = fd.Equities()
 
+    # Map financedatabase exchange codes to display labels
     exchange_labels = {
+        # Asia
         "KSC": "KOSPI", "KOE": "KOSDAQ",
         "SHH": "Shanghai", "SHZ": "Shenzhen",
+        # Europe — primary exchanges only
+        "PAR": "Euronext Paris", "AMS": "Euronext Amsterdam",
+        "BRU": "Euronext Brussels", "LIS": "Euronext Lisbon",
+        "LSE": "LSE", "FRA": "Frankfurt",
+        "MIL": "Borsa Italiana", "MCE": "BME Madrid",
+        "STO": "Nasdaq Stockholm", "CPH": "Nasdaq Copenhagen",
+        "HEL": "Nasdaq Helsinki", "OSL": "Oslo Bors",
+        "EBS": "SIX Swiss", "VIE": "Vienna",
+        "ATH": "Athens", "PRA": "Prague",
     }
 
-    # Only include tickers actually listed on the local exchanges
+    # country -> set of allowed exchange codes (primary exchanges, no OTC/regionals)
     country_exchanges = {
         "South Korea": {"KSC", "KOE"},
         "China": {"SHH", "SHZ"},
+        "France": {"PAR"},
+        "Germany": {"FRA"},
+        "United Kingdom": {"LSE"},
+        "Netherlands": {"AMS"},
+        "Belgium": {"BRU"},
+        "Portugal": {"LIS"},
+        "Italy": {"MIL"},
+        "Spain": {"MCE"},
+        "Sweden": {"STO"},
+        "Denmark": {"CPH"},
+        "Finland": {"HEL"},
+        "Norway": {"OSL"},
+        "Switzerland": {"EBS"},
+        "Austria": {"VIE"},
+        "Greece": {"ATH"},
+        "Czech Republic": {"PRA"},
+        "Ireland": {"LSE"},
+        "Luxembourg": {"PAR"},
+        "Poland": set(),  # WSE not in financedatabase
     }
 
     tickers = {}
-    for country in ["South Korea", "China"]:
+    for country, allowed in country_exchanges.items():
+        if not allowed:
+            continue
         df = equities.select(country=country)
-        allowed = country_exchanges[country]
+        count = 0
         for yahoo_ticker, row in df.iterrows():
             name = row.get("name")
             raw_exchange = row.get("exchange", "")
@@ -126,8 +158,11 @@ def fetch_asian_tickers() -> dict[str, dict]:
                 continue
             exchange = exchange_labels.get(raw_exchange, raw_exchange)
             tickers[yahoo_ticker] = {"t": yahoo_ticker, "n": name, "e": exchange}
+            count += 1
+        if count:
+            logger.debug("  %s: %d tickers", country, count)
 
-    logger.info("-> %d Asian tickers", len(tickers))
+    logger.info("-> %d Asian+EU tickers", len(tickers))
     return tickers
 
 
@@ -167,10 +202,10 @@ def _title_case(name: str) -> str:
 def main():
     us = fetch_us_tickers()
     eu = fetch_eu_tickers()
-    asia = fetch_asian_tickers()
+    fd_tickers = fetch_fd_tickers()
 
-    # Merge: US takes priority on duplicates
-    merged = {**asia, **eu, **us}
+    # Merge: pytickersymbols EU > financedatabase, US EDGAR takes top priority
+    merged = {**fd_tickers, **eu, **us}
 
     result = sorted(merged.values(), key=lambda x: x["t"])
     logger.info("Total: %d tickers", len(result))
