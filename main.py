@@ -6,6 +6,9 @@ Provides both:
   - A REST API endpoint for programmatic access
 """
 
+from dotenv import load_dotenv
+load_dotenv()
+
 import asyncio
 import json
 import time

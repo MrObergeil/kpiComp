@@ -1159,6 +1159,97 @@
 
         .recent-clear:hover { opacity: 1; }
 
+        /* Composite Sentiment */
+        .composite-sentiment {
+            grid-column: 1 / -1;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .composite-sentiment h4 {
+            font-family: var(--mono);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .composite-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .confidence-badge {
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            font-weight: 400;
+        }
+
+        .composite-bar-track {
+            position: relative;
+            height: 8px;
+            border-radius: 4px;
+            background: linear-gradient(to right, var(--red), var(--yellow) 50%, var(--green));
+            opacity: 0.7;
+        }
+
+        .composite-marker {
+            position: absolute;
+            top: -4px;
+            width: 3px;
+            height: 16px;
+            background: var(--text);
+            border-radius: 2px;
+            transform: translateX(-50%);
+            box-shadow: 0 0 4px rgba(0,0,0,0.5);
+        }
+
+        .composite-legend {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            color: var(--text-dim);
+            margin-top: 0.4rem;
+        }
+
+        .composite-score-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .composite-breakdown {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .composite-chip {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            padding: 0.25rem 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-dim);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .chip-weight {
+            font-size: 0.6rem;
+            opacity: 0.5;
+        }
+
         /* Sentiment Grid */
         .sentiment-grid {
             display: grid;
@@ -1820,6 +1911,39 @@
             return 'Very Expensive';
         }
 
+        function buildCompositeHtml(cs) {
+            if (!cs) return '';
+            const markerPct = ((cs.score + 1) / 2 * 100).toFixed(1);
+            const scoreColor = cs.score > 0.1 ? 'var(--green)'
+                             : cs.score < -0.1 ? 'var(--red)'
+                             : 'var(--yellow)';
+            const chipColor = s => s > 0.1 ? 'var(--green)' : s < -0.1 ? 'var(--red)' : 'var(--yellow)';
+            const chips = cs.breakdown
+                .filter(b => b.available)
+                .map(b => `<span class="composite-chip" style="border-color:${chipColor(b.mapped_score)}">
+                    ${b.name}: <strong style="color:${chipColor(b.mapped_score)}">${b.mapped_score > 0 ? '+' : ''}${b.mapped_score.toFixed(2)}</strong>
+                    <span class="chip-weight">${(b.effective_weight * 100).toFixed(0)}%</span>
+                </span>`).join('');
+            const sign = cs.score > 0 ? '+' : '';
+            return `<div class="composite-sentiment">
+                <h4>Composite Sentiment
+                    <span class="composite-label" style="color:${scoreColor}">${cs.label}</span>
+                    <span class="confidence-badge">${cs.confidence} confidence (${cs.indicators_used}/${cs.indicators_total})</span>
+                </h4>
+                <div class="composite-gauge">
+                    <div class="composite-bar-track">
+                        <div class="composite-marker" style="left:${markerPct}%"></div>
+                    </div>
+                    <div class="composite-legend">
+                        <span>Bearish</span>
+                        <span class="composite-score-value" style="color:${scoreColor}">${sign}${cs.score.toFixed(2)}</span>
+                        <span>Bullish</span>
+                    </div>
+                </div>
+                <div class="composite-breakdown">${chips}</div>
+            </div>`;
+        }
+
         function getDiffClass(diffRaw, lowerIsBetter) {
             if (diffRaw === null || diffRaw === undefined) return 'diff-neutral';
             if (lowerIsBetter) {
@@ -2478,6 +2602,7 @@
                 </div>
 
                 <div class="sentiment-grid">
+                    ${buildCompositeHtml(data.sentiment_score)}
                     ${sentimentHtml}
                     ${redditBuzzHtml}
                     ${shortInterestHtml}

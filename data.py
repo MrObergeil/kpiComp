@@ -29,6 +29,7 @@ from google_trends import fetch_google_trends
 from google_trends import clear_cache as _clear_trends_cache
 import stock_db
 from peers import resolve_peers
+from sentiment_score import compute_composite_sentiment
 import peer_groups
 
 logger = logging.getLogger(__name__)
@@ -607,6 +608,13 @@ def analyze_stock(
         for k in peers_kpis
     ]
 
+    composite_sentiment = compute_composite_sentiment({
+        "sentiment": sentiment_data,
+        "insider_trading": insider_data,
+        "analyst_ratings": analyst_data,
+        "options_sentiment": options_data,
+    })
+
     return _sanitize_for_json({
         "ticker": resolved_ticker,
         "company_name": company_name,
@@ -627,6 +635,7 @@ def analyze_stock(
         "analyst_ratings": analyst_data,
         "options_sentiment": options_data,
         "google_trends": trends_data,
+        "sentiment_score": composite_sentiment,
         "peer_selection": peer_selection,
         "peer_metadata": peer_metadata,
         "historical_yearly": historical_data["yearly"],
