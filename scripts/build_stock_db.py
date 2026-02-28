@@ -293,40 +293,54 @@ def build():
 
     # Enrich via yfinance in parallel batches
     stocks = {}
-    batch_size = 20
-    workers = 10
-    failed = 0
+    batch_size = 10
+    workers = 5
     total = len(all_tickers)
 
-    for batch_start in range(0, total, batch_size):
-        batch = all_tickers[batch_start:batch_start + batch_size]
-        batch_num = batch_start // batch_size + 1
-        total_batches = (total + batch_size - 1) // batch_size
-        logger.info("Batch %d/%d (%d-%d/%d)", batch_num, total_batches, batch_start + 1, min(batch_start + batch_size, total), total)
+    def enrich_batch(tickers_to_process, pass_label=""):
+        batch_failed = []
+        for batch_start in range(0, len(tickers_to_process), batch_size):
+            batch = tickers_to_process[batch_start:batch_start + batch_size]
+            batch_num = batch_start // batch_size + 1
+            total_batches = (len(tickers_to_process) + batch_size - 1) // batch_size
+            logger.info("%sBatch %d/%d (%d-%d/%d)", pass_label, batch_num, total_batches,
+                        batch_start + 1, min(batch_start + batch_size, len(tickers_to_process)),
+                        len(tickers_to_process))
 
-        with ThreadPoolExecutor(max_workers=workers) as pool:
-            futures = {}
-            for t in batch:
-                hint = ticker_hints.get(t, {}).get("n", "")
-                futures[pool.submit(enrich_ticker, t, hint)] = t
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                futures = {}
+                for t in batch:
+                    hint = ticker_hints.get(t, {}).get("n", "")
+                    futures[pool.submit(enrich_ticker, t, hint)] = t
 
-            for future in as_completed(futures):
-                ticker = futures[future]
-                result = future.result()
-                if result:
-                    result["indices"] = sorted(ticker_indices[ticker])
-                    stocks[ticker] = result
-                    logger.debug("OK  %s: %s / %s", ticker, result['sector'], result['industry'])
-                else:
-                    failed += 1
-                    logger.warning("FAIL %s", ticker)
+                for future in as_completed(futures):
+                    ticker = futures[future]
+                    result = future.result()
+                    if result:
+                        result["indices"] = sorted(ticker_indices[ticker])
+                        stocks[ticker] = result
+                        logger.debug("OK  %s: %s / %s", ticker, result['sector'], result['industry'])
+                    else:
+                        batch_failed.append(ticker)
 
-        # Rate limit between batches
-        if batch_start + batch_size < total:
-            time.sleep(1)
+            if batch_start + batch_size < len(tickers_to_process):
+                time.sleep(2)
+        return batch_failed
+
+    # Pass 1
+    failed_tickers = enrich_batch(all_tickers, "P1 ")
+    logger.info("Pass 1: %d OK, %d failed", len(stocks), len(failed_tickers))
+
+    # Pass 2: retry failures with longer delays
+    if failed_tickers:
+        logger.info("Pass 2: retrying %d failed tickers...", len(failed_tickers))
+        time.sleep(5)
+        still_failed = enrich_batch(failed_tickers, "P2 ")
+        logger.info("Pass 2: recovered %d, %d still failed", len(failed_tickers) - len(still_failed), len(still_failed))
+        failed_tickers = still_failed
 
     logger.info("=== Results ===")
-    logger.info("Enriched: %d / %d (%d failed)", len(stocks), total, failed)
+    logger.info("Enriched: %d / %d (%d failed)", len(stocks), total, len(failed_tickers))
 
     # Write output
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
