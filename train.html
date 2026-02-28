@@ -51,11 +51,32 @@
         }
 
         .container {
-            max-width: 1060px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 2rem 1.5rem;
             position: relative;
             z-index: 1;
+        }
+
+        .main-layout {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 1rem;
+        }
+
+        @media (max-width: 900px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+            }
+            .sidebar {
+                position: static;
+            }
         }
 
         /* Header */
@@ -286,7 +307,7 @@
 
         .keywords-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             gap: 1.5rem;
             margin-bottom: 1rem;
         }
@@ -433,15 +454,33 @@
         <button id="fetchBtn" class="btn btn-accent">Fetch Articles</button>
     </div>
 
-    <div id="articlesSection">
-        <div class="status-msg" id="articlesStatus">Enter a ticker to fetch articles</div>
-        <div id="articlesHeader" class="articles-header" style="display:none;"></div>
-        <div id="articleList" class="article-list"></div>
-    </div>
+    <div class="main-layout">
+        <div>
+            <div id="articlesSection">
+                <div class="status-msg" id="articlesStatus">Enter a ticker to fetch articles</div>
+                <div id="articlesHeader" class="articles-header" style="display:none;"></div>
+                <div id="articleList" class="article-list"></div>
+            </div>
 
-    <div id="keywordsSection">
-        <div class="section-title">Keyword Management</div>
-        <div class="keywords-grid">
+            <div class="feedback-log">
+                <button class="feedback-toggle" id="feedbackToggle">Feedback Log</button>
+                <table class="feedback-table" id="feedbackTable">
+                    <thead>
+                        <tr>
+                            <th>Ticker</th>
+                            <th>Headline</th>
+                            <th>Computed</th>
+                            <th>Correct</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="feedbackBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="sidebar" id="keywordsSection">
+            <div class="section-title">Keyword Management</div>
             <div class="kw-column bullish">
                 <h3>Bullish Keywords</h3>
                 <div id="bullishList" class="kw-list"></div>
@@ -450,7 +489,7 @@
                     <button class="btn" onclick="addKeyword('bullish')">+</button>
                 </div>
             </div>
-            <div class="kw-column bearish">
+            <div class="kw-column bearish" style="margin-top: 1rem;">
                 <h3>Bearish Keywords</h3>
                 <div id="bearishList" class="kw-list"></div>
                 <div class="kw-add-row">
@@ -458,27 +497,11 @@
                     <button class="btn" onclick="addKeyword('bearish')">+</button>
                 </div>
             </div>
+            <div class="keyword-actions">
+                <button id="saveKwBtn" class="btn btn-accent">Save Keywords</button>
+                <button id="resetKwBtn" class="btn">Reset to Defaults</button>
+            </div>
         </div>
-        <div class="keyword-actions">
-            <button id="saveKwBtn" class="btn btn-accent">Save Keywords</button>
-            <button id="resetKwBtn" class="btn">Reset to Defaults</button>
-        </div>
-    </div>
-
-    <div class="feedback-log">
-        <button class="feedback-toggle" id="feedbackToggle">Feedback Log</button>
-        <table class="feedback-table" id="feedbackTable">
-            <thead>
-                <tr>
-                    <th>Ticker</th>
-                    <th>Headline</th>
-                    <th>Computed</th>
-                    <th>Correct</th>
-                    <th>Time</th>
-                </tr>
-            </thead>
-            <tbody id="feedbackBody"></tbody>
-        </table>
     </div>
 </div>
 

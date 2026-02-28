@@ -69,6 +69,27 @@ def _get_effective_keywords() -> tuple[set[str], set[str]]:
     return bullish, bearish
 
 
+def _is_relevant(headline: str, summary: str, ticker: str, company_name: str = "") -> bool:
+    """Check if article actually mentions the ticker or company."""
+    text = f"{headline} {summary}".lower()
+    # Always match on ticker (strip exchange suffix)
+    base_ticker = ticker.split(".")[0].lower()
+    if base_ticker in text:
+        return True
+    if company_name:
+        # Match on first word of company name (e.g. "Apple" from "Apple Inc.")
+        # and full name minus common suffixes
+        name_lower = company_name.lower()
+        for suffix in (" inc.", " inc", " corp.", " corp", " ltd.", " ltd",
+                       " plc", " se", " ag", " sa", " nv", " co.", " co",
+                       ", inc.", ", inc", " corporation", " limited", " group"):
+            name_lower = name_lower.replace(suffix, "")
+        name_lower = name_lower.strip()
+        if name_lower and name_lower in text:
+            return True
+    return False
+
+
 def _score_article(headline: str, summary: str, bullish: set, bearish: set) -> tuple[float, dict]:
     """Score an article from headline + summary. Headline matches weighted 2x.
     Returns (score, {"bullish": [...], "bearish": [...]})."""
@@ -143,7 +164,7 @@ def _fetch_raw_articles(ticker: str) -> list | None:
     return articles
 
 
-def fetch_sentiment(ticker: str) -> dict | None:
+def fetch_sentiment(ticker: str, company_name: str = "") -> dict | None:
     """Fetch company news and compute sentiment. Returns flat dict or None."""
     key = ticker.upper().strip()
     now = time.time()
@@ -159,14 +180,18 @@ def fetch_sentiment(ticker: str) -> dict | None:
     if articles is None:
         return None
 
-    count = len(articles)
+    # Filter to articles that actually mention the company
+    relevant = [a for a in articles
+                if _is_relevant(a.get("headline", ""), a.get("summary", ""), key, company_name)]
+
+    count = len(relevant)
     sufficient = count >= MIN_ARTICLES
     bullish_kw, bearish_kw = _get_effective_keywords()
 
     bullish = 0
     bearish = 0
     neutral = 0
-    for art in articles:
+    for art in relevant:
         score, _ = _score_article(art.get("headline", ""), art.get("summary", ""), bullish_kw, bearish_kw)
         if score > 0:
             bullish += 1
@@ -200,12 +225,17 @@ def fetch_sentiment(ticker: str) -> dict | None:
     return result
 
 
-def fetch_articles(ticker: str) -> list | None:
+def fetch_articles(ticker: str, company_name: str = "") -> list | None:
     """Fetch and score individual articles for the training UI.
     Returns list of scored article dicts or None."""
     articles = _fetch_raw_articles(ticker)
     if articles is None:
         return None
+
+    key = ticker.upper().strip()
+    if company_name:
+        articles = [a for a in articles
+                    if _is_relevant(a.get("headline", ""), a.get("summary", ""), key, company_name)]
 
     bullish_kw, bearish_kw = _get_effective_keywords()
     scored = []

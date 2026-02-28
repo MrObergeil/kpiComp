@@ -494,7 +494,7 @@ def analyze_stock(
         else:
             peers_future = pool.submit(get_sector_peers_kpis, sector, resolved_ticker)
         hist_future = pool.submit(fetch_historical_kpis, resolved_ticker)
-        sentiment_future = pool.submit(fetch_sentiment, resolved_ticker)
+        sentiment_future = pool.submit(fetch_sentiment, resolved_ticker, company_name)
         reddit_future = pool.submit(fetch_reddit_buzz, resolved_ticker)
         insider_future = pool.submit(fetch_insider_trading, resolved_ticker)
         analyst_future = pool.submit(fetch_analyst_ratings, resolved_ticker)
