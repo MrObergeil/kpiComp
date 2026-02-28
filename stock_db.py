@@ -111,6 +111,21 @@ def get_industries(sector: str) -> list[dict]:
     return [{"industry": k, "count": v} for k, v in sorted(counts.items())]
 
 
+def get_industries_multi(sectors: list[str]) -> list[dict]:
+    """Get union of industries across multiple sectors, with stock counts."""
+    sectors_lower = {s.lower().strip() for s in sectors}
+    db = _load_db()
+    counts: dict[str, int] = {}
+    for s in db.values():
+        if (s.get("sector") or "").lower().strip() in sectors_lower:
+            ind = s.get("industry")
+            if ind:
+                counts[ind] = counts.get(ind, 0) + 1
+    result = [{"industry": k, "count": v} for k, v in sorted(counts.items())]
+    logger.debug("get_industries_multi: %d sectors -> %d industries", len(sectors), len(result))
+    return result
+
+
 def get_all_tickers() -> list[str]:
     """Get all tickers in the database."""
     return list(_load_db().keys())

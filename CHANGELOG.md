@@ -1,5 +1,14 @@
 # Changelog
 
+## 2026-02-28 — Multi-Select Sector & Industry Filters
+
+### Changed
+- **Sector scan**: sector and industry pickers are now multi-select dropdowns — scan across multiple sectors/industries in one pass
+- `sector_scan.py`: `sector`/`industry` params replaced with comma-separated `sectors`/`industries`, unions results by ticker
+- `sector_scan.html`: custom `MultiSelect` dropdown component with checkboxes, All/None actions, click-outside-to-close
+- `main.py`: new `GET /api/taxonomy/industries-multi` endpoint accepting comma-separated sectors
+- `stock_db.py`: new `get_industries_multi()` returns union of industries across sectors
+
 ## 2026-02-28 — Sector Scan
 
 ### Added

@@ -112,32 +112,92 @@
             margin-bottom: 1.5rem;
         }
 
-        .controls select {
+        /* Multi-select dropdown */
+        .multi-select {
+            position: relative;
+            min-width: 200px;
+        }
+
+        .ms-trigger {
             font-family: var(--mono);
             font-size: 0.9rem;
-            padding: 0.6rem 1rem;
+            padding: 0.6rem 2rem 0.6rem 1rem;
             background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 8px;
             color: var(--text);
-            outline: none;
             cursor: pointer;
-            min-width: 180px;
-            appearance: none;
+            width: 100%;
+            text-align: left;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 0.75rem center;
-            padding-right: 2rem;
         }
 
-        .controls select:focus {
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px var(--accent-glow);
+        .ms-trigger:hover { border-color: var(--border-accent); }
+        .ms-trigger.open { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+        .ms-trigger.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+
+        .ms-dropdown {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-accent);
+            border-radius: 8px;
+            max-height: 280px;
+            overflow-y: auto;
+            z-index: 50;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
         }
 
-        .controls select:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
+        .ms-dropdown.open { display: block; }
+
+        .ms-actions {
+            display: flex;
+            gap: 0.75rem;
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--mono);
+            font-size: 0.7rem;
+        }
+
+        .ms-actions a {
+            color: var(--accent);
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .ms-actions a:hover { text-decoration: underline; }
+
+        .ms-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.4rem 0.75rem;
+            cursor: pointer;
+            transition: background 0.1s;
+            font-size: 0.85rem;
+        }
+
+        .ms-option:hover { background: var(--bg-card-hover); }
+
+        .ms-option input[type="checkbox"] {
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .ms-option .ms-label { flex: 1; color: var(--text); }
+
+        .ms-option .ms-count {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
         }
 
         .region-toggle {
@@ -381,7 +441,7 @@
         /* Responsive */
         @media (max-width: 700px) {
             .controls { flex-direction: column; align-items: stretch; }
-            .controls select { min-width: auto; }
+            .multi-select { min-width: auto; }
             .container { padding: 1rem; }
             header h1 { font-size: 1.3rem; }
             .nav-links { position: static; justify-content: center; margin-bottom: 0.75rem; }
@@ -400,12 +460,8 @@
         </header>
 
         <div class="controls">
-            <select id="sectorSelect" title="Select sector">
-                <option value="">Select sector...</option>
-            </select>
-            <select id="industrySelect" disabled title="Select industry">
-                <option value="">(all industries)</option>
-            </select>
+            <div id="sectorSelect" class="multi-select"></div>
+            <div id="industrySelect" class="multi-select"></div>
             <div class="region-toggle">
                 <button class="region-btn active" data-region="global">Global</button>
                 <button class="region-btn" data-region="us">US</button>
@@ -455,26 +511,152 @@ const KPI_COLS = [
     { key: 'pegRatio', label: 'PEG', fmt: v => v?.toFixed(2) ?? '-', default: true },
 ];
 
+// --- MultiSelect component ---
+class MultiSelect {
+    constructor(container, { placeholder, onChange }) {
+        this.container = container;
+        this.placeholder = placeholder;
+        this.onChange = onChange;
+        this.options = []; // [{value, label, count}]
+        this.selected = new Set();
+        this._disabled = false;
+        this._open = false;
+        this._render();
+        document.addEventListener('click', e => {
+            if (this._open && !this.container.contains(e.target)) this.close();
+        });
+        document.addEventListener('keydown', e => {
+            if (this._open && e.key === 'Escape') this.close();
+        });
+    }
+
+    _render() {
+        this.container.innerHTML = '';
+        this.trigger = document.createElement('button');
+        this.trigger.className = 'ms-trigger' + (this._disabled ? ' disabled' : '');
+        this.trigger.type = 'button';
+        this.trigger.textContent = this.placeholder;
+        this.trigger.addEventListener('click', () => {
+            if (this._disabled) return;
+            this._open ? this.close() : this.open();
+        });
+
+        this.dropdown = document.createElement('div');
+        this.dropdown.className = 'ms-dropdown';
+
+        this.container.appendChild(this.trigger);
+        this.container.appendChild(this.dropdown);
+    }
+
+    setOptions(options) {
+        this.options = options;
+        this.selected.clear();
+        this._updateDropdown();
+        this._updateTrigger();
+    }
+
+    _updateDropdown() {
+        this.dropdown.innerHTML = '';
+
+        const actions = document.createElement('div');
+        actions.className = 'ms-actions';
+        const allLink = document.createElement('a');
+        allLink.textContent = 'All';
+        allLink.addEventListener('click', e => { e.preventDefault(); this.selectAll(); });
+        const noneLink = document.createElement('a');
+        noneLink.textContent = 'None';
+        noneLink.addEventListener('click', e => { e.preventDefault(); this.selectNone(); });
+        actions.appendChild(allLink);
+        actions.appendChild(noneLink);
+        this.dropdown.appendChild(actions);
+
+        this.options.forEach(opt => {
+            const row = document.createElement('label');
+            row.className = 'ms-option';
+            const cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.checked = this.selected.has(opt.value);
+            cb.addEventListener('change', () => {
+                if (cb.checked) this.selected.add(opt.value);
+                else this.selected.delete(opt.value);
+                this._updateTrigger();
+                this.onChange(this.getSelected());
+            });
+            const label = document.createElement('span');
+            label.className = 'ms-label';
+            label.textContent = opt.label;
+            const count = document.createElement('span');
+            count.className = 'ms-count';
+            count.textContent = opt.count;
+            row.appendChild(cb);
+            row.appendChild(label);
+            row.appendChild(count);
+            this.dropdown.appendChild(row);
+        });
+    }
+
+    _updateTrigger() {
+        const n = this.selected.size;
+        if (n === 0) this.trigger.textContent = this.placeholder;
+        else if (n === 1) this.trigger.textContent = [...this.selected][0];
+        else this.trigger.textContent = `${n} selected`;
+    }
+
+    open() {
+        if (this._disabled || this.options.length === 0) return;
+        this._open = true;
+        this.trigger.classList.add('open');
+        this.dropdown.classList.add('open');
+    }
+
+    close() {
+        this._open = false;
+        this.trigger.classList.remove('open');
+        this.dropdown.classList.remove('open');
+    }
+
+    selectAll() {
+        this.options.forEach(o => this.selected.add(o.value));
+        this._updateDropdown();
+        this._updateTrigger();
+        this.onChange(this.getSelected());
+    }
+
+    selectNone() {
+        this.selected.clear();
+        this._updateDropdown();
+        this._updateTrigger();
+        this.onChange(this.getSelected());
+    }
+
+    getSelected() { return [...this.selected]; }
+
+    setDisabled(v) {
+        this._disabled = v;
+        this.trigger.classList.toggle('disabled', v);
+        if (v) this.close();
+    }
+}
+
 // --- State ---
 let scanData = null;
 let sortKey = 'score';
 let sortAsc = false;
 let visibleCols = {};
 let selectedRegion = null;
+let activeScanES = null;       // double-scan guard
+let sectorFetchGen = 0;        // race condition guard for industry fetch
 
 // Load column prefs from localStorage
 const stored = localStorage.getItem('sectorScan_columns');
 if (stored) {
     try { visibleCols = JSON.parse(stored); } catch(e) {}
 }
-// Fill defaults for any missing keys
 KPI_COLS.forEach(c => {
     if (!(c.key in visibleCols)) visibleCols[c.key] = c.default;
 });
 
 // --- DOM refs ---
-const sectorSel = document.getElementById('sectorSelect');
-const industrySel = document.getElementById('industrySelect');
 const scanBtn = document.getElementById('scanBtn');
 const progressSection = document.getElementById('progress');
 const progressBar = document.getElementById('progressBar');
@@ -486,41 +668,54 @@ const tableHead = document.getElementById('tableHead');
 const tableBody = document.getElementById('tableBody');
 const emptyState = document.getElementById('emptyState');
 
+// --- Multi-select instances ---
+const sectorMS = new MultiSelect(document.getElementById('sectorSelect'), {
+    placeholder: 'Select sectors...',
+    onChange: onSectorChange,
+});
+
+const industryMS = new MultiSelect(document.getElementById('industrySelect'), {
+    placeholder: '(all industries)',
+    onChange: () => {},
+});
+industryMS.setDisabled(true);
+
 // --- Init: fetch sectors ---
 (async function init() {
     const res = await fetch('/api/taxonomy/sectors');
     const sectors = await res.json();
-    sectors.forEach(s => {
-        const opt = document.createElement('option');
-        opt.value = s.sector;
-        opt.textContent = `${s.sector} (${s.count})`;
-        sectorSel.appendChild(opt);
-    });
+    sectorMS.setOptions(sectors.map(s => ({
+        value: s.sector,
+        label: s.sector,
+        count: s.count,
+    })));
 })();
 
 // --- Sector change: fetch industries ---
-sectorSel.addEventListener('change', async () => {
-    const sector = sectorSel.value;
-    industrySel.innerHTML = '<option value="">(all industries)</option>';
+async function onSectorChange(selected) {
+    industryMS.setOptions([]);
+    const gen = ++sectorFetchGen;
 
-    if (!sector) {
-        industrySel.disabled = true;
+    if (selected.length === 0) {
+        industryMS.setDisabled(true);
         scanBtn.disabled = true;
         return;
     }
 
     scanBtn.disabled = false;
 
-    const res = await fetch(`/api/taxonomy/industries?sector=${encodeURIComponent(sector)}`);
+    const params = new URLSearchParams();
+    selected.forEach(s => params.append('sectors', s));
+    const res = await fetch(`/api/taxonomy/industries-multi?${params}`);
+    if (gen !== sectorFetchGen) return; // stale response, discard
     const industries = await res.json();
-    industries.forEach(i => {
-        const opt = document.createElement('option');
-        opt.value = i.industry;
-        opt.textContent = `${i.industry} (${i.count})`;
-        industrySel.appendChild(opt);
-    });
-    industrySel.disabled = false;
-});
+    industryMS.setOptions(industries.map(i => ({
+        value: i.industry,
+        label: i.industry,
+        count: i.count,
+    })));
+    industryMS.setDisabled(false);
+}
 
 // --- Region toggle ---
 document.querySelectorAll('.region-btn').forEach(btn => {
@@ -535,9 +730,15 @@ document.querySelectorAll('.region-btn').forEach(btn => {
 scanBtn.addEventListener('click', startScan);
 
 function startScan() {
-    const sector = sectorSel.value;
-    if (!sector) return;
-    const industry = industrySel.value || null;
+    const sectors = sectorMS.getSelected();
+    if (sectors.length === 0) return;
+    const industries = industryMS.getSelected();
+
+    // Close any active scan
+    if (activeScanES) {
+        activeScanES.close();
+        activeScanES = null;
+    }
 
     scanBtn.disabled = true;
     scanBtn.textContent = 'Scanning...';
@@ -549,11 +750,21 @@ function startScan() {
     progressBar.style.width = '0%';
     progressLabel.textContent = '0 / 0';
 
-    let url = `/sector-scan/api/stream?sector=${encodeURIComponent(sector)}`;
-    if (industry) url += `&industry=${encodeURIComponent(industry)}`;
-    if (selectedRegion) url += `&region=${encodeURIComponent(selectedRegion)}`;
+    const params = new URLSearchParams();
+    sectors.forEach(s => params.append('sectors', s));
+    industries.forEach(i => params.append('industries', i));
+    if (selectedRegion) params.append('region', selectedRegion);
 
-    const es = new EventSource(url);
+    const es = new EventSource(`/sector-scan/api/stream?${params}`);
+    activeScanES = es;
+
+    function scanDone() {
+        es.close();
+        activeScanES = null;
+        progressSection.classList.remove('active');
+        scanBtn.disabled = false;
+        scanBtn.textContent = 'Scan';
+    }
 
     es.addEventListener('start', e => {
         const d = JSON.parse(e.data);
@@ -575,19 +786,8 @@ function startScan() {
         renderTable();
     });
 
-    es.addEventListener('done', () => {
-        es.close();
-        progressSection.classList.remove('active');
-        scanBtn.disabled = false;
-        scanBtn.textContent = 'Scan';
-    });
-
-    es.onerror = () => {
-        es.close();
-        progressSection.classList.remove('active');
-        scanBtn.disabled = false;
-        scanBtn.textContent = 'Scan';
-    };
+    es.addEventListener('done', scanDone);
+    es.onerror = scanDone;
 }
 
 // --- Stats ---
@@ -630,7 +830,10 @@ function renderTable() {
         if (va == null && vb == null) return 0;
         if (va == null) return 1;
         if (vb == null) return -1;
-        return sortAsc ? va - vb : vb - va;
+        let cmp;
+        if (typeof va === 'string') cmp = va.localeCompare(vb);
+        else cmp = va - vb;
+        return sortAsc ? cmp : -cmp;
     });
 
     // Build header

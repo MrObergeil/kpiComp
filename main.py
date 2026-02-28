@@ -246,6 +246,14 @@ async def api_industries(sector: str = Query(..., description="Sector name")):
     return stock_db.get_industries(sector)
 
 
+@app.get("/api/taxonomy/industries-multi")
+async def api_industries_multi(sectors: list[str] = Query(..., description="Sector names (repeated param)")):
+    """List industries across multiple sectors."""
+    sector_list = [s.strip() for s in sectors if s.strip()]
+    logger.debug("Industries-multi request: %d sectors", len(sector_list))
+    return stock_db.get_industries_multi(sector_list)
+
+
 @app.get("/api/stocks")
 async def api_stocks(
     sector: Optional[str] = Query(None),

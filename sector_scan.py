@@ -38,12 +38,34 @@ async def sector_scan_page():
 
 @router.get("/sector-scan/api/stream")
 async def sector_scan_stream(
-    sector: str = Query(..., description="Sector name"),
-    industry: str = Query(None, description="Industry name (optional)"),
+    sectors: list[str] = Query(..., description="Sector names (repeated param)"),
+    industries: list[str] = Query(None, description="Industry names (repeated param, optional)"),
     region: str = Query(None, description="Region filter: us, europe"),
 ):
-    stocks = stock_db.query_stocks(sector=sector, industry=industry, region=region)
-    tickers = [s["ticker"] for s in stocks if s.get("ticker")]
+    sector_list = [s.strip() for s in sectors if s.strip()]
+    industry_set = None
+    if industries:
+        industry_set = {i.strip().lower() for i in industries if i.strip()}
+
+    logger.info(
+        "Sector scan: sectors=%s, industries=%s, region=%s",
+        sector_list, list(industry_set) if industry_set else None, region,
+    )
+
+    # Union stocks across all selected sectors, dedup by ticker
+    seen = {}
+    for sec in sector_list:
+        for s in stock_db.query_stocks(sector=sec, region=region):
+            t = s.get("ticker")
+            if not t or t in seen:
+                continue
+            if industry_set and (s.get("industry") or "").lower().strip() not in industry_set:
+                continue
+            seen[t] = s
+
+    stocks = list(seen.values())
+    tickers = [s["ticker"] for s in stocks]
+    logger.info("Sector scan: %d stocks matched across %d sectors", len(tickers), len(sector_list))
 
     async def generate():
         total = len(tickers)
@@ -53,7 +75,7 @@ async def sector_scan_stream(
             yield {"event": "done", "data": json.dumps({"message": "No stocks found"})}
             return
 
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         all_kpis = []
         ticker_meta = {}  # ticker -> {name, industry, market_cap}
         failed = []
@@ -105,6 +127,7 @@ async def sector_scan_stream(
         elapsed = round(time.monotonic() - t0, 1)
 
         if not all_kpis:
+            logger.warning("Sector scan: all %d stocks failed to fetch in %.1fs", total, elapsed)
             yield {"event": "done", "data": json.dumps({
                 "message": "All stocks failed to fetch",
                 "elapsed": elapsed,
@@ -139,6 +162,11 @@ async def sector_scan_stream(
             scored.append(row)
 
         scored.sort(key=lambda r: r["score"], reverse=True)
+
+        logger.info(
+            "Sector scan complete: %d scored, %d failed in %.1fs",
+            len(scored), len(failed), elapsed,
+        )
 
         yield {
             "event": "result",
