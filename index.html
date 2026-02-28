@@ -231,6 +231,7 @@
         /* --- Results --- */
         .results {
             display: none;
+            transition: opacity 0.2s ease;
         }
 
         .results.active { display: block; }
@@ -1170,6 +1171,275 @@
             grid-column: 1 / -1;
         }
 
+        /* Region Toggle */
+        .region-toggle {
+            display: inline-flex;
+            gap: 0;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .region-btn {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            padding: 0.35rem 0.8rem;
+            background: var(--bg-card);
+            border: none;
+            border-right: 1px solid var(--border);
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .region-btn:last-child { border-right: none; }
+
+        .region-btn.active {
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .region-btn:hover:not(.active) {
+            color: var(--text-muted);
+            background: var(--bg-card-hover);
+        }
+
+        /* Peer badges clickable */
+        .peer-badge {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .peer-badge:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        /* Peer Modal */
+        .peer-modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 5vh;
+        }
+        .peer-modal-overlay.active {
+            display: flex;
+        }
+
+        .peer-modal {
+            background: var(--bg);
+            border: 1px solid var(--border-accent);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .peer-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .peer-modal-header h3 {
+            font-family: var(--mono);
+            font-size: 0.95rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .peer-modal-close {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        .peer-modal-close:hover { color: var(--text); }
+
+        .peer-modal-toolbar {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .peer-search {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            padding: 0.4rem 0.7rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--text);
+            outline: none;
+            flex: 1;
+            min-width: 120px;
+        }
+        .peer-search:focus { border-color: var(--accent); }
+
+        .peer-action-btn {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            padding: 0.35rem 0.7rem;
+            border-radius: 6px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--bg-card);
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .peer-action-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .peer-action-btn.primary {
+            background: var(--accent-glow);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        .peer-modal-body {
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .peer-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .peer-table thead th {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-dim);
+            padding: 0.5rem 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--bg);
+        }
+
+        .peer-table tbody td {
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .peer-table tbody tr:hover { background: var(--bg-card-hover); }
+
+        .peer-table .peer-ticker {
+            font-family: var(--mono);
+            color: var(--accent);
+            cursor: pointer;
+        }
+        .peer-table .peer-ticker:hover { text-decoration: underline; }
+
+        .peer-table .peer-cap {
+            font-family: var(--mono);
+            text-align: right;
+            color: var(--text-muted);
+        }
+
+        .peer-modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 1.25rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* Sparkline in KPI table */
+        .kpi-sparkline {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .kpi-sparkline svg {
+            width: 50px;
+            height: 18px;
+        }
+        .kpi-sparkline svg polyline {
+            fill: none;
+            stroke: var(--text-dim);
+            stroke-width: 1.5;
+        }
+        .kpi-sparkline.trend-up svg polyline { stroke: var(--green); }
+        .kpi-sparkline.trend-down svg polyline { stroke: var(--red); }
+
+        /* Expandable KPI row */
+        .kpi-yearly-detail {
+            display: none;
+        }
+        .kpi-yearly-detail.active {
+            display: table-row;
+        }
+        .kpi-yearly-detail td {
+            padding: 0.4rem 0.5rem 0.6rem;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            font-family: var(--mono);
+            border-bottom: 1px solid var(--border);
+        }
+        .kpi-yearly-values {
+            display: flex;
+            gap: 0.3rem;
+            flex-wrap: wrap;
+        }
+        .kpi-yearly-values span {
+            background: var(--bg-card);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        /* KPI row clickable for expand */
+        .kpi-table tbody tr[data-kpi-key] {
+            cursor: pointer;
+        }
+
+        /* Score breakdown tooltip */
+        .rating-display {
+            position: relative;
+        }
+        .rating-tooltip {
+            display: none;
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1e293b;
+            border: 1px solid var(--border-accent);
+            border-radius: 6px;
+            padding: 0.5rem 0.75rem;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            z-index: 10;
+        }
+        .rating-display:hover .rating-tooltip {
+            display: block;
+        }
+
+        /* Diff percentage coloring */
+        .diff-pct-positive { color: var(--green); }
+        .diff-pct-negative { color: var(--red); }
+
         /* Responsive */
         @media (max-width: 640px) {
             .stock-header {
@@ -1197,7 +1467,7 @@
     <div class="container">
         <header>
             <h1>$ stock-rater</h1>
-            <p>Value analysis on a 1-10 scale, benchmarked against S&P 500 sector peers</p>
+            <p>Value analysis on a 1-10 scale, benchmarked against sector peers</p>
         </header>
 
         <div class="search-section">
@@ -1230,6 +1500,42 @@
             <!-- Populated by JS -->
         </div>
 
+        <!-- Peer Selection Modal -->
+        <div class="peer-modal-overlay" id="peerModal">
+            <div class="peer-modal">
+                <div class="peer-modal-header">
+                    <h3 id="peerModalTitle">Peer Selection</h3>
+                    <button class="peer-modal-close" onclick="closePeerModal()">&times;</button>
+                </div>
+                <div class="peer-modal-toolbar">
+                    <input type="text" class="peer-search" id="peerSearch" placeholder="Filter peers..." oninput="filterPeerTable()">
+                    <button class="peer-action-btn" onclick="selectAllPeers()">All</button>
+                    <button class="peer-action-btn" onclick="selectNonePeers()">None</button>
+                    <button class="peer-action-btn primary" onclick="applyPeers()">Recalculate</button>
+                    <button class="peer-action-btn" onclick="savePeerSet()">Save as Custom</button>
+                    <button class="peer-action-btn" id="clearCustomBtn" onclick="clearCustomPeers()" style="display:none">Clear Custom</button>
+                </div>
+                <div class="peer-modal-body">
+                    <table class="peer-table">
+                        <thead>
+                            <tr>
+                                <th style="width:30px"><input type="checkbox" id="peerSelectAll" onchange="toggleAllPeers(this.checked)"></th>
+                                <th>Ticker</th>
+                                <th>Company</th>
+                                <th>Industry</th>
+                                <th style="text-align:right">Market Cap</th>
+                            </tr>
+                        </thead>
+                        <tbody id="peerTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="peer-modal-footer">
+                    <span id="peerSelectedCount">0 selected</span>
+                    <span id="peerModalInfo"></span>
+                </div>
+            </div>
+        </div>
+
         <details class="algo-info">
             <summary>How the rating works</summary>
             <p>
@@ -1238,9 +1544,9 @@
                 Each KPI receives three sub-scores: an <strong>absolute score</strong> (how does the value
                 compare to dynamic sector-relative thresholds based on the 20th/80th percentile of peers?),
                 a <strong>relative score</strong> (how does it compare to the industry or sector median among
-                S&amp;P 500 peers?), and a <strong>trend score</strong> (is the metric improving or deteriorating
-                based on annual financial statements?). The final rating is a weighted combination: 30% absolute
-                + 50% relative + 20% trend. When trend data is unavailable for a KPI, its weight redistributes
+                peers?), and a <strong>trend score</strong> (is the metric improving or deteriorating
+                based on annual financial statements?). The final rating is a weighted combination: 35% absolute
+                + 55% relative + 10% trend. When trend data is unavailable for a KPI, its weight redistributes
                 proportionally across absolute and relative. When industry peers are available (5+), the relative
                 score uses industry comparison instead of the broader sector. Some KPIs with negative values are
                 excluded (e.g. negative P/E) or penalized (e.g. negative book value), depending on whether the
@@ -1295,6 +1601,15 @@
         const errorEl = document.getElementById('errorMsg');
         const resultsEl = document.getElementById('results');
         const acDropdown = document.getElementById('autocompleteDropdown');
+
+        // --- App State ---
+        const appState = {
+            ticker: null,
+            data: null,
+            region: null,       // null = global, 'us', 'europe'
+            customPeers: null,  // array of tickers or null
+            expandedKpis: new Set(),
+        };
 
         // --- Autocomplete ---
         let allTickers = [];
@@ -1389,8 +1704,8 @@
             setTimeout(hideAcDropdown, 150);
         });
 
-        async function analyze() {
-            const ticker = tickerInput.value.trim().toUpperCase();
+        async function analyze(overrideTicker, { soft = false } = {}) {
+            const ticker = (overrideTicker || tickerInput.value).trim().toUpperCase();
             if (!ticker) {
                 showError('Please enter a stock ticker.');
                 return;
@@ -1398,18 +1713,29 @@
 
             logToServer('info', 'ticker_search', { ticker: ticker });
 
-            // Reset UI
-            document.title = 'Stock Rater -- Value Analysis';
-            errorEl.classList.remove('active');
-            resultsEl.classList.remove('active');
-            loadingEl.classList.add('active');
+            if (!soft) {
+                document.title = 'Stock Rater -- Value Analysis';
+                errorEl.classList.remove('active');
+                resultsEl.classList.remove('active');
+                loadingEl.classList.add('active');
+            }
             analyzeBtn.disabled = true;
 
             if (currentController) currentController.abort();
             currentController = new AbortController();
 
             try {
-                const resp = await fetch(`/api/analyze/${encodeURIComponent(ticker)}`, { signal: currentController.signal });
+                let url = `/api/analyze/${encodeURIComponent(ticker)}`;
+                const params = [];
+                if (appState.customPeers && appState.customPeers.length) {
+                    params.push(`peers=${appState.customPeers.map(encodeURIComponent).join(',')}`);
+                }
+                if (appState.region) {
+                    params.push(`region=${encodeURIComponent(appState.region)}`);
+                }
+                if (params.length) url += '?' + params.join('&');
+
+                const resp = await fetch(url, { signal: currentController.signal });
 
                 let data;
                 try {
@@ -1422,8 +1748,12 @@
                     throw new Error(data.detail || 'Analysis failed.');
                 }
 
+                appState.ticker = data.ticker;
+                appState.data = data;
+                appState.expandedKpis = new Set();
+
                 renderResults(data);
-                history.replaceState(null, '', `?ticker=${encodeURIComponent(ticker)}`);
+                updateShareUrl();
                 addRecent(ticker);
             } catch (err) {
                 if (err.name === 'AbortError') return;
@@ -1432,6 +1762,41 @@
             } finally {
                 loadingEl.classList.remove('active');
                 analyzeBtn.disabled = false;
+            }
+        }
+
+        function updateShareUrl() {
+            const ticker = appState.ticker;
+            if (!ticker) return;
+            const params = new URLSearchParams();
+            params.set('ticker', ticker);
+            if (appState.customPeers && appState.customPeers.length) {
+                params.set('peers', appState.customPeers.join(','));
+            }
+            if (appState.region) {
+                params.set('region', appState.region);
+            }
+            history.replaceState(null, '', '?' + params.toString());
+        }
+
+        function setRegion(rgn) {
+            appState.region = rgn;
+            document.querySelectorAll('.region-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.region === (rgn || 'global'));
+            });
+            if (appState.ticker) {
+                tickerInput.value = appState.ticker;
+                // Smooth transition: keep current results visible, dim the page, refetch
+                resultsEl.style.opacity = '0.5';
+                resultsEl.style.pointerEvents = 'none';
+                updateShareUrl();
+                analyze(null, { soft: true }).then(() => {
+                    resultsEl.style.opacity = '';
+                    resultsEl.style.pointerEvents = '';
+                }).catch(() => {
+                    resultsEl.style.opacity = '';
+                    resultsEl.style.pointerEvents = '';
+                });
             }
         }
 
@@ -1478,12 +1843,50 @@
             return '<span class="trend-flat">&#x2192;</span>';
         }
 
+        function buildSparklineSvg(yearlyData, lowerIsBetter) {
+            if (!yearlyData || yearlyData.length < 2) return '<span class="kpi-sparkline"><svg viewBox="0 0 50 18"></svg></span>';
+            const sorted = [...yearlyData].sort((a, b) => a[0].localeCompare(b[0]));
+            const vals = sorted.map(d => d[1]);
+            const maxV = Math.max(...vals);
+            const minV = Math.min(...vals);
+            const range = maxV - minV || 1;
+            const w = 50, h = 16, pad = 1;
+            const coords = vals.map((v, i) => {
+                const x = pad + (i / (vals.length - 1)) * (w - 2 * pad);
+                const y = pad + (1 - (v - minV) / range) * (h - 2 * pad);
+                return `${x.toFixed(1)},${y.toFixed(1)}`;
+            }).join(' ');
+            // Determine trend: compare last vs first half
+            const mid = Math.floor(vals.length / 2);
+            const firstHalf = vals.slice(0, mid).reduce((a, b) => a + b, 0) / mid;
+            const secondHalf = vals.slice(mid).reduce((a, b) => a + b, 0) / (vals.length - mid);
+            let trend = secondHalf > firstHalf ? (lowerIsBetter ? 'trend-down' : 'trend-up') : secondHalf < firstHalf ? (lowerIsBetter ? 'trend-up' : 'trend-down') : '';
+            return `<span class="kpi-sparkline ${trend}"><svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><polyline points="${coords}" /></svg></span>`;
+        }
+
+        function formatYearlyValues(yearlyData, formatAsPct, decimals) {
+            if (!yearlyData || !yearlyData.length) return '';
+            const sorted = [...yearlyData].sort((a, b) => a[0].localeCompare(b[0]));
+            return sorted.map(([date, val]) => {
+                const year = date.substring(0, 4);
+                const formatted = formatAsPct ? (val * 100).toFixed(decimals) + '%' : val.toFixed(decimals);
+                return `<span>${year}: ${formatted}</span>`;
+            }).join('');
+        }
+
+        function formatMarketCap(val) {
+            if (!val) return '--';
+            if (val >= 1e12) return '$' + (val / 1e12).toFixed(1) + 'T';
+            if (val >= 1e9) return '$' + (val / 1e9).toFixed(1) + 'B';
+            if (val >= 1e6) return '$' + (val / 1e6).toFixed(0) + 'M';
+            return '$' + val.toLocaleString();
+        }
+
         function renderResults(data) {
             const rating = data.rating.overall_rating;
             const color = getRatingColor(rating);
             const label = getRatingLabel(rating);
 
-            // SVG ring calculation
             const radius = 42;
             const circumference = 2 * Math.PI * radius;
             const progress = (rating - 1) / 9;
@@ -1492,6 +1895,7 @@
             window._stockData = data;
 
             const hasIndustry = data.industry_comparison_active;
+            const yearly = data.historical_yearly || {};
 
             let kpiRows = data.kpi_comparison.map(kpi => {
                 const diffClass = getDiffClass(kpi.diff_raw, kpi.lower_is_better);
@@ -1530,9 +1934,25 @@
                     ? `<td>${kpi.industry_avg || 'N/A'}</td>`
                     : '';
 
+                // Sparkline from yearly data
+                const kpiYearly = yearly[kpi.key] || [];
+                const sparkline = buildSparklineSvg(kpiYearly, kpi.lower_is_better);
+
+                // Diff with percentage and color
+                let diffHtml = escapeHtml(kpi.difference);
+                if (kpi.diff_raw !== null && kpi.diff_raw !== undefined && kpi.sector_raw && kpi.sector_raw !== 0) {
+                    const pctDiff = ((kpi.diff_raw / Math.abs(kpi.sector_raw)) * 100).toFixed(0);
+                    const pctBetter = kpi.lower_is_better ? kpi.diff_raw < 0 : kpi.diff_raw > 0;
+                    const pctClass = pctBetter ? 'diff-pct-positive' : 'diff-pct-negative';
+                    diffHtml = `<span class="${pctClass}">${escapeHtml(kpi.difference)} (${pctDiff > 0 ? '+' : ''}${pctDiff}%)</span>`;
+                }
+
+                // Format yearly values for expandable row
+                const yearlyHtml = formatYearlyValues(kpiYearly, kpi.key.includes('Margin') || kpi.key.includes('Yield') || kpi.key === 'returnOnEquity' || kpi.key === 'revenueGrowth' || kpi.key === 'profitMargins' || kpi.key === 'dividendYield' || kpi.key === 'fcfYield', 2);
+
                 return `
-                    <tr data-kpi-key="${kpi.key}" class="${rowClass}">
-                        <td class="col-toggle">
+                    <tr data-kpi-key="${kpi.key}" class="${rowClass}" onclick="toggleKpiDetail('${kpi.key}')">
+                        <td class="col-toggle" onclick="event.stopPropagation()">
                             <input type="checkbox" class="kpi-toggle" data-kpi-key="${kpi.key}"
                                 ${checkboxAttrs}
                                 onchange="recalculate()">
@@ -1546,14 +1966,20 @@
                         <td>${kpi.historical_avg || 'N/A'}</td>
                         <td>${kpi.sector_avg}</td>
                         ${industryCol}
-                        <td class="${diffClass}">${escapeHtml(kpi.difference)}</td>
-                        <td>${getTrendIndicator(trend)}</td>
+                        <td>${diffHtml}</td>
+                        <td>${sparkline}</td>
                         <td>
                             <span class="kpi-score-cell">
                                 <span class="kpi-score-dot" style="background:${dotColor}"></span>
                                 ${scoreText}
                                 ${flagTooltip}
                             </span>
+                        </td>
+                    </tr>
+                    <tr class="kpi-yearly-detail" data-detail-key="${kpi.key}">
+                        <td></td>
+                        <td colspan="${hasIndustry ? 8 : 7}">
+                            <div class="kpi-yearly-values">${yearlyHtml || '<span>No historical data</span>'}</div>
                         </td>
                     </tr>
                 `;
@@ -1955,6 +2381,17 @@
                     </div>`;
             }
 
+            const ps = data.peer_selection;
+            const peerLabel = ps
+                ? `<span class="peer-badge" onclick="openPeerModal()">${ps.count} ${ps.level === 'custom' ? 'custom' : ps.level} peers${ps.region ? ' (' + escapeHtml(ps.region) + ')' : ''}</span>`
+                : `<span class="peer-badge" onclick="openPeerModal()">${data.sector_peer_count} S&P 500 peers</span>`;
+
+            const customBadge = ps && ps.is_custom ? ' <span style="color:var(--accent);font-size:0.75rem">(custom)</span>' : '';
+
+            const scoreTooltip = `<div class="rating-tooltip">Abs: ${data.rating.absolute_score} | Rel: ${data.rating.relative_score} | Trend: ${data.rating.trend_score != null ? data.rating.trend_score : '--'}</div>`;
+
+            const regionActive = appState.region || 'global';
+
             resultsEl.innerHTML = `
                 <div class="stock-header">
                     <div class="stock-info">
@@ -1962,7 +2399,7 @@
                         <div class="stock-meta">
                             <span>${safeSector}</span>
                             <span>${safeIndustry}</span>
-                            <span>${data.sector_peer_count} S&P 500 peers</span>
+                            ${peerLabel}${customBadge}
                             ${industryMeta}
                         </div>
                     </div>
@@ -1981,6 +2418,7 @@
                         </div>
                         <div class="rating-label">${label}</div>
                         <div class="rating-sub">1 = expensive / 10 = cheap</div>
+                        ${scoreTooltip}
                     </div>
                 </div>
 
@@ -2009,6 +2447,11 @@
                 </div>
 
                 <div class="kpi-section">
+                    <div class="region-toggle">
+                        <button class="region-btn ${regionActive === 'global' ? 'active' : ''}" data-region="global" onclick="setRegion(null)">Global</button>
+                        <button class="region-btn ${regionActive === 'us' ? 'active' : ''}" data-region="us" onclick="setRegion('us')">US</button>
+                        <button class="region-btn ${regionActive === 'europe' ? 'active' : ''}" data-region="europe" onclick="setRegion('europe')">Europe</button>
+                    </div>
                     <h3>KPI Comparison -- ${comparisonLabel}
                         <button class="reset-kpis" id="resetKpis" onclick="resetKpis()">reset</button>
                     </h3>
@@ -2083,7 +2526,7 @@
             const resetBtn = document.getElementById('resetKpis');
             if (resetBtn) resetBtn.style.display = anyUnchecked ? 'inline' : 'none';
 
-            const AW = 0.30, RW = 0.50, TW = 0.20;
+            const AW = 0.35, RW = 0.55, TW = 0.10;
             let sumAbs = 0, sumRel = 0, sumTrend = 0;
             let totalWeight = 0, trendWeight = 0;
 
@@ -2204,10 +2647,162 @@
         }
         renderRecent();
 
+        // --- KPI row expand/collapse ---
+        function toggleKpiDetail(key) {
+            const detailRow = document.querySelector(`tr.kpi-yearly-detail[data-detail-key="${key}"]`);
+            if (detailRow) {
+                detailRow.classList.toggle('active');
+                if (detailRow.classList.contains('active')) {
+                    appState.expandedKpis.add(key);
+                } else {
+                    appState.expandedKpis.delete(key);
+                }
+            }
+        }
+
+        // --- Peer Modal ---
+        let _peerModalData = [];     // full peer list for modal
+        let _peerSelected = new Set(); // currently selected peer tickers
+
+        function openPeerModal() {
+            const data = appState.data;
+            if (!data) return;
+
+            const modal = document.getElementById('peerModal');
+            document.getElementById('peerModalTitle').textContent = `Peers for ${data.ticker}`;
+
+            // Build peer list from metadata
+            _peerModalData = (data.peer_metadata || []).slice();
+            _peerSelected = new Set((data.peer_selection ? data.peer_selection.tickers : []) || _peerModalData.map(p => p.ticker));
+
+            // Show clear custom button if custom peers active
+            const clearBtn = document.getElementById('clearCustomBtn');
+            clearBtn.style.display = data.peer_selection && data.peer_selection.is_custom ? 'inline' : 'none';
+
+            document.getElementById('peerModalInfo').textContent = data.peer_selection ? data.peer_selection.message : '';
+            renderPeerTable();
+            modal.classList.add('active');
+        }
+
+        function closePeerModal() {
+            document.getElementById('peerModal').classList.remove('active');
+        }
+
+        function renderPeerTable() {
+            const filter = (document.getElementById('peerSearch').value || '').toUpperCase();
+            const tbody = document.getElementById('peerTableBody');
+            const rows = _peerModalData
+                .filter(p => !filter || p.ticker.includes(filter) || (p.name || '').toUpperCase().includes(filter) || (p.industry || '').toUpperCase().includes(filter))
+                .map(p => {
+                    const checked = _peerSelected.has(p.ticker) ? 'checked' : '';
+                    return `<tr>
+                        <td><input type="checkbox" ${checked} onchange="togglePeer('${escapeHtml(p.ticker)}', this.checked)"></td>
+                        <td class="peer-ticker" onclick="selectAcItem('${escapeHtml(p.ticker)}')">${escapeHtml(p.ticker)}</td>
+                        <td>${escapeHtml(p.name || '')}</td>
+                        <td style="color:var(--text-dim)">${escapeHtml(p.industry || '')}</td>
+                        <td class="peer-cap">${formatMarketCap(p.market_cap)}</td>
+                    </tr>`;
+                });
+            tbody.innerHTML = rows.join('');
+            updatePeerCount();
+        }
+
+        function filterPeerTable() { renderPeerTable(); }
+
+        function togglePeer(ticker, checked) {
+            if (checked) _peerSelected.add(ticker);
+            else _peerSelected.delete(ticker);
+            updatePeerCount();
+        }
+
+        function toggleAllPeers(checked) {
+            _peerModalData.forEach(p => {
+                if (checked) _peerSelected.add(p.ticker);
+                else _peerSelected.delete(p.ticker);
+            });
+            renderPeerTable();
+        }
+
+        function selectAllPeers() {
+            _peerModalData.forEach(p => _peerSelected.add(p.ticker));
+            renderPeerTable();
+        }
+
+        function selectNonePeers() {
+            _peerSelected.clear();
+            renderPeerTable();
+        }
+
+        function updatePeerCount() {
+            document.getElementById('peerSelectedCount').textContent = `${_peerSelected.size} selected`;
+        }
+
+        function applyPeers() {
+            const selected = Array.from(_peerSelected);
+            if (selected.length < 2) {
+                alert('Select at least 2 peers');
+                return;
+            }
+            appState.customPeers = selected;
+            closePeerModal();
+            tickerInput.value = appState.ticker;
+            analyze();
+        }
+
+        async function savePeerSet() {
+            const selected = Array.from(_peerSelected);
+            if (selected.length < 2) {
+                alert('Select at least 2 peers');
+                return;
+            }
+            try {
+                const resp = await fetch(`/api/peers/${encodeURIComponent(appState.ticker)}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ peers: selected }),
+                });
+                if (resp.ok) {
+                    appState.customPeers = selected;
+                    closePeerModal();
+                    tickerInput.value = appState.ticker;
+                    analyze();
+                }
+            } catch (e) {
+                logToServer('error', 'Save peers failed', { error: e.message });
+            }
+        }
+
+        async function clearCustomPeers() {
+            try {
+                await fetch(`/api/peers/${encodeURIComponent(appState.ticker)}`, { method: 'DELETE' });
+                appState.customPeers = null;
+                closePeerModal();
+                tickerInput.value = appState.ticker;
+                analyze();
+            } catch (e) {
+                logToServer('error', 'Clear peers failed', { error: e.message });
+            }
+        }
+
+        // Close modal on backdrop click
+        document.getElementById('peerModal').addEventListener('click', function(e) {
+            if (e.target === this) closePeerModal();
+        });
+
         // --- Auto-analyze from URL param ---
         (function() {
             const params = new URLSearchParams(window.location.search);
             const urlTicker = params.get('ticker');
+            const urlPeers = params.get('peers');
+            const urlRegion = params.get('region');
+
+            if (urlPeers) {
+                appState.customPeers = urlPeers.split(',').map(p => p.trim().toUpperCase()).filter(Boolean);
+            }
+            if (urlRegion && ['us', 'europe'].includes(urlRegion.toLowerCase())) {
+                appState.region = urlRegion.toLowerCase();
+            }
+
             if (urlTicker) {
                 tickerInput.value = urlTicker;
                 analyze();
