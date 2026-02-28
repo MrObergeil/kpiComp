@@ -426,6 +426,55 @@
             white-space: nowrap;
         }
 
+        /* Problem keywords */
+        .problem-kw-section {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .problem-kw-section h3 {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--red);
+            margin-bottom: 0.75rem;
+        }
+
+        .problem-kw-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.35rem 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 0.3rem;
+            background: var(--red-dim);
+            font-family: var(--mono);
+            font-size: 0.75rem;
+        }
+
+        .problem-kw-item .kw-name { color: var(--red); }
+        .problem-kw-item .kw-acc { color: var(--text-dim); margin: 0 0.5rem; }
+
+        .problem-kw-item .kw-remove-btn {
+            background: none;
+            border: 1px solid var(--red);
+            color: var(--red);
+            border-radius: 3px;
+            padding: 0.1rem 0.4rem;
+            cursor: pointer;
+            font-family: var(--mono);
+            font-size: 0.65rem;
+        }
+
+        .problem-kw-item .kw-remove-btn:hover { background: var(--red-dim); }
+
+        .problem-kw-empty {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            padding: 0.5rem 0;
+        }
+
         .status-msg {
             font-family: var(--mono);
             font-size: 0.8rem;
@@ -443,6 +492,7 @@
     <header>
         <h1>Sentiment Training</h1>
         <a href="/" class="back-link">Back to main</a>
+        <a href="/sector-scan" class="back-link" style="margin-left:1rem">Sector Scan</a>
     </header>
 
     <div class="tabs">
@@ -500,6 +550,10 @@
             <div class="keyword-actions">
                 <button id="saveKwBtn" class="btn btn-accent">Save Keywords</button>
                 <button id="resetKwBtn" class="btn">Reset to Defaults</button>
+            </div>
+            <div class="problem-kw-section" id="problemKwSection" style="display:none;">
+                <h3>Problem Keywords</h3>
+                <div id="problemKwList"></div>
             </div>
         </div>
     </div>
@@ -640,6 +694,7 @@ async function submitFeedback(idx, value, btn) {
     }
 
     loadFeedback();
+    loadKeywordStats();
 }
 
 
@@ -751,6 +806,7 @@ document.getElementById('saveKwBtn').addEventListener('click', async () => {
 
         // Re-fetch articles to show updated scoring
         if (currentTicker) fetchArticles();
+        loadKeywordStats();
     } catch (e) {
         console.error('Failed to save keywords', e);
     }
@@ -821,8 +877,57 @@ function esc(str) {
     return d.innerHTML;
 }
 
+// --- Problem Keywords ---
+
+async function loadKeywordStats() {
+    try {
+        const resp = await fetch('/train/api/keyword-stats');
+        const data = await resp.json();
+        const stats = data.stats || {};
+
+        // Filter: accuracy < 50% and at least 3 appearances
+        const problems = Object.entries(stats)
+            .filter(([_, s]) => s.total >= 3 && s.accuracy < 0.5)
+            .sort((a, b) => a[1].accuracy - b[1].accuracy);
+
+        const section = document.getElementById('problemKwSection');
+        const list = document.getElementById('problemKwList');
+        list.innerHTML = '';
+
+        if (problems.length === 0) {
+            section.style.display = 'none';
+            return;
+        }
+
+        section.style.display = 'block';
+        for (const [kw, s] of problems) {
+            const item = document.createElement('div');
+            item.className = 'problem-kw-item';
+            item.innerHTML = `
+                <span class="kw-name">${esc(kw)}</span>
+                <span class="kw-acc">${Math.round(s.accuracy * 100)}% (${s.correct}/${s.total})</span>
+                <button class="kw-remove-btn" onclick="removeProblemKeyword('${esc(kw)}')">remove</button>
+            `;
+            list.appendChild(item);
+        }
+    } catch (e) {
+        console.error('Failed to load keyword stats', e);
+    }
+}
+
+function removeProblemKeyword(word) {
+    if (!pendingOverrides || !keywordData) return;
+    const isBullish = keywordData.effective_bullish.includes(word);
+    const isBearish = keywordData.effective_bearish.includes(word);
+    if (isBullish) removeKeyword('bullish', word);
+    if (isBearish) removeKeyword('bearish', word);
+    // Auto-save after removing a problem keyword
+    document.getElementById('saveKwBtn').click();
+}
+
 // Init
 loadKeywords();
+loadKeywordStats();
 </script>
 </body>
 </html>

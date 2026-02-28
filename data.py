@@ -328,7 +328,7 @@ def get_stock_name(info: dict) -> str:
     return info.get("shortName") or info.get("longName") or "Unknown"
 
 
-def _fetch_peer_kpis(ticker: str) -> Optional[dict]:
+def fetch_ticker_kpis(ticker: str) -> Optional[dict]:
     """Fetch KPIs for a single peer ticker. Returns dict or None on failure.
     Uses per-ticker cache for reuse across different peer sets."""
     now = time.time()
@@ -364,7 +364,7 @@ def _fetch_peers_kpis(peer_tickers: list[str], exclude_ticker: str = "") -> list
 
     all_kpis = []
     with ThreadPoolExecutor(max_workers=PEER_FETCH_WORKERS) as pool:
-        futures = {pool.submit(_fetch_peer_kpis, t): t for t in tickers_to_fetch}
+        futures = {pool.submit(fetch_ticker_kpis, t): t for t in tickers_to_fetch}
         for future in as_completed(futures):
             result = future.result()
             if result is not None:

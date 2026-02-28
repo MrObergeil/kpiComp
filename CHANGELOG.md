@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-02-28 — Sector Scan
+
+### Added
+- **Sector scan page** (`/sector-scan`): scan an entire sector or industry, rank all stocks by value score in a sortable table
+- `sector_scan.py` router with SSE streaming endpoint for real-time scan progress
+- `sector_scan.html` UI: sector/industry pickers, region toggle, progress bar, sortable results table with toggleable KPI columns
+- Column preferences saved to localStorage
+- Click any row to open the stock in the main analyzer
+- Stocks scored against the scanned peer set using existing rating algorithm (absolute + relative, no trend)
+- 10 parallel workers, per-ticker KPI cache reused across scans
+
+### Changed
+- `data.py`: renamed `_fetch_peer_kpis` to `fetch_ticker_kpis` (now public for reuse by sector scan)
+- `main.py`: mounted sector_scan_router
+- Added nav links to sector-scan from index.html and train.html
+
 ## 2026-02-28 — Expand European Ticker Coverage
 
 ### Changed

@@ -28,6 +28,7 @@ logger = logging.getLogger(__name__)
 
 from data import analyze_stock, clear_cache
 from train import router as train_router
+from sector_scan import router as sector_scan_router
 import stock_db
 import peer_groups
 
@@ -37,6 +38,7 @@ app = FastAPI(
     version="2.0.0",
 )
 app.include_router(train_router)
+app.include_router(sector_scan_router)
 
 # --- Ticker autocomplete data (loaded once at startup) ---
 _tickers_path = Path(__file__).parent / "data" / "tickers.json"

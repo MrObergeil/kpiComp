@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sector Scan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,wght@0,400;0,500;0,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0e17;
+            --bg-card: #111827;
+            --bg-card-hover: #1a2332;
+            --border: #1e293b;
+            --border-accent: #334155;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.15);
+            --green: #34d399;
+            --green-dim: rgba(52, 211, 153, 0.15);
+            --red: #f87171;
+            --red-dim: rgba(248, 113, 113, 0.15);
+            --yellow: #fbbf24;
+            --yellow-dim: rgba(251, 191, 36, 0.15);
+            --mono: 'DM Mono', 'Courier New', monospace;
+            --sans: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--sans);
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-decoration: none;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+            border-color: var(--text-dim);
+        }
+
+        header h1 {
+            font-family: var(--mono);
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: -0.02em;
+        }
+
+        header p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-top: 0.4rem;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .controls select {
+            font-family: var(--mono);
+            font-size: 0.9rem;
+            padding: 0.6rem 1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            outline: none;
+            cursor: pointer;
+            min-width: 180px;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%2364748b'%3E%3Cpath d='M2 4l4 4 4-4'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2rem;
+        }
+
+        .controls select:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .controls select:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .region-toggle {
+            display: inline-flex;
+            gap: 0;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .region-btn {
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            padding: 0.45rem 0.8rem;
+            background: var(--bg-card);
+            border: none;
+            border-right: 1px solid var(--border);
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .region-btn:last-child { border-right: none; }
+
+        .region-btn.active {
+            background: var(--accent-glow);
+            color: var(--accent);
+        }
+
+        .region-btn:hover:not(.active) {
+            color: var(--text-muted);
+            background: var(--bg-card-hover);
+        }
+
+        .scan-btn {
+            font-family: var(--sans);
+            font-weight: 500;
+            font-size: 0.95rem;
+            padding: 0.6rem 1.75rem;
+            background: var(--accent);
+            color: var(--bg);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        .scan-btn:hover { opacity: 0.9; }
+        .scan-btn:active { transform: scale(0.97); }
+        .scan-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* Progress */
+        .progress-section {
+            display: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .progress-section.active { display: block; }
+
+        .progress-bar-outer {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            height: 28px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-inner {
+            background: linear-gradient(90deg, var(--accent), #818cf8);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .progress-label {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: var(--text);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Stats */
+        .stats-line {
+            display: none;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .stats-line.active { display: block; }
+        .stats-line .failed { color: var(--red); }
+
+        /* Column picker */
+        .column-picker {
+            display: none;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+
+        .column-picker.active { display: flex; }
+
+        .col-toggle {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            padding: 0.25rem 0.6rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+
+        .col-toggle.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .col-toggle:hover:not(.active) {
+            border-color: var(--border-accent);
+            color: var(--text-muted);
+        }
+
+        /* Results table */
+        .results-wrap {
+            display: none;
+            overflow-x: auto;
+        }
+
+        .results-wrap.active { display: block; }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+        }
+
+        .results-table th {
+            font-family: var(--mono);
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-dim);
+            padding: 0.6rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+            text-align: right;
+            cursor: pointer;
+            white-space: nowrap;
+            user-select: none;
+            transition: color 0.15s;
+        }
+
+        .results-table th:hover { color: var(--accent); }
+
+        .results-table th.sort-asc::after { content: ' \2191'; color: var(--accent); }
+        .results-table th.sort-desc::after { content: ' \2193'; color: var(--accent); }
+
+        .results-table th:first-child,
+        .results-table th:nth-child(2),
+        .results-table th:nth-child(3) { text-align: left; }
+
+        .results-table td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid var(--border);
+            text-align: right;
+            white-space: nowrap;
+            font-family: var(--mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .results-table td:first-child,
+        .results-table td:nth-child(2),
+        .results-table td:nth-child(3) { text-align: left; }
+
+        .results-table td:first-child {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .results-table td:nth-child(2) {
+            color: var(--text);
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .results-table tr {
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .results-table tbody tr:hover {
+            background: var(--bg-card-hover);
+        }
+
+        /* Score styling */
+        .score-cell {
+            font-weight: 500;
+        }
+
+        .score-high { color: var(--green); }
+        .score-mid { color: var(--yellow); }
+        .score-low { color: var(--red); }
+
+        /* Market cap formatting */
+        .mcap { color: var(--text-dim); font-size: 0.75rem; }
+
+        /* Rank column */
+        .rank { color: var(--text-dim); font-size: 0.75rem; }
+
+        /* Hidden columns */
+        .col-hidden { display: none; }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 1rem;
+            color: var(--text-dim);
+        }
+
+        .empty-state .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.4;
+        }
+
+        /* Responsive */
+        @media (max-width: 700px) {
+            .controls { flex-direction: column; align-items: stretch; }
+            .controls select { min-width: auto; }
+            .container { padding: 1rem; }
+            header h1 { font-size: 1.3rem; }
+            .nav-links { position: static; justify-content: center; margin-bottom: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="nav-links">
+                <a href="/" class="nav-link">analyzer</a>
+                <a href="/train" class="nav-link">training</a>
+            </div>
+            <h1>$ sector-scan</h1>
+            <p>Scan a sector, rank every stock by value score</p>
+        </header>
+
+        <div class="controls">
+            <select id="sectorSelect" title="Select sector">
+                <option value="">Select sector...</option>
+            </select>
+            <select id="industrySelect" disabled title="Select industry">
+                <option value="">(all industries)</option>
+            </select>
+            <div class="region-toggle">
+                <button class="region-btn active" data-region="global">Global</button>
+                <button class="region-btn" data-region="us">US</button>
+                <button class="region-btn" data-region="europe">Europe</button>
+            </div>
+            <button id="scanBtn" class="scan-btn" disabled>Scan</button>
+        </div>
+
+        <div id="progress" class="progress-section">
+            <div class="progress-bar-outer">
+                <div id="progressBar" class="progress-bar-inner"></div>
+                <div id="progressLabel" class="progress-label">0 / 0</div>
+            </div>
+        </div>
+
+        <div id="statsLine" class="stats-line"></div>
+
+        <div id="columnPicker" class="column-picker"></div>
+
+        <div id="resultsWrap" class="results-wrap">
+            <table class="results-table">
+                <thead id="tableHead"></thead>
+                <tbody id="tableBody"></tbody>
+            </table>
+        </div>
+
+        <div id="emptyState" class="empty-state">
+            <div class="icon">&#x25A6;</div>
+            <p>Select a sector and hit Scan to screen stocks</p>
+        </div>
+    </div>
+
+<script>
+// --- KPI column definitions ---
+const KPI_COLS = [
+    { key: 'trailingPE', label: 'P/E', fmt: v => v?.toFixed(1) ?? '-', default: true },
+    { key: 'forwardPE', label: 'Fwd P/E', fmt: v => v?.toFixed(1) ?? '-', default: true },
+    { key: 'priceToBook', label: 'P/B', fmt: v => v?.toFixed(2) ?? '-', default: true },
+    { key: 'enterpriseToEbitda', label: 'EV/EBITDA', fmt: v => v?.toFixed(1) ?? '-', default: true },
+    { key: 'debtToEquity', label: 'D/E', fmt: v => v?.toFixed(0) ?? '-', default: true },
+    { key: 'returnOnEquity', label: 'ROE', fmt: v => v != null ? (v * 100).toFixed(1) + '%' : '-', default: false },
+    { key: 'profitMargins', label: 'Margin', fmt: v => v != null ? (v * 100).toFixed(1) + '%' : '-', default: false },
+    { key: 'revenueGrowth', label: 'Rev Grw', fmt: v => v != null ? (v * 100).toFixed(1) + '%' : '-', default: false },
+    { key: 'currentRatio', label: 'Curr Ratio', fmt: v => v?.toFixed(2) ?? '-', default: false },
+    { key: 'dividendYield', label: 'Div Yield', fmt: v => v != null ? (v * 100).toFixed(2) + '%' : '-', default: false },
+    { key: 'fcfYield', label: 'FCF Yield', fmt: v => v != null ? (v * 100).toFixed(1) + '%' : '-', default: true },
+    { key: 'pegRatio', label: 'PEG', fmt: v => v?.toFixed(2) ?? '-', default: true },
+];
+
+// --- State ---
+let scanData = null;
+let sortKey = 'score';
+let sortAsc = false;
+let visibleCols = {};
+let selectedRegion = null;
+
+// Load column prefs from localStorage
+const stored = localStorage.getItem('sectorScan_columns');
+if (stored) {
+    try { visibleCols = JSON.parse(stored); } catch(e) {}
+}
+// Fill defaults for any missing keys
+KPI_COLS.forEach(c => {
+    if (!(c.key in visibleCols)) visibleCols[c.key] = c.default;
+});
+
+// --- DOM refs ---
+const sectorSel = document.getElementById('sectorSelect');
+const industrySel = document.getElementById('industrySelect');
+const scanBtn = document.getElementById('scanBtn');
+const progressSection = document.getElementById('progress');
+const progressBar = document.getElementById('progressBar');
+const progressLabel = document.getElementById('progressLabel');
+const statsLine = document.getElementById('statsLine');
+const columnPicker = document.getElementById('columnPicker');
+const resultsWrap = document.getElementById('resultsWrap');
+const tableHead = document.getElementById('tableHead');
+const tableBody = document.getElementById('tableBody');
+const emptyState = document.getElementById('emptyState');
+
+// --- Init: fetch sectors ---
+(async function init() {
+    const res = await fetch('/api/taxonomy/sectors');
+    const sectors = await res.json();
+    sectors.forEach(s => {
+        const opt = document.createElement('option');
+        opt.value = s.sector;
+        opt.textContent = `${s.sector} (${s.count})`;
+        sectorSel.appendChild(opt);
+    });
+})();
+
+// --- Sector change: fetch industries ---
+sectorSel.addEventListener('change', async () => {
+    const sector = sectorSel.value;
+    industrySel.innerHTML = '<option value="">(all industries)</option>';
+
+    if (!sector) {
+        industrySel.disabled = true;
+        scanBtn.disabled = true;
+        return;
+    }
+
+    scanBtn.disabled = false;
+
+    const res = await fetch(`/api/taxonomy/industries?sector=${encodeURIComponent(sector)}`);
+    const industries = await res.json();
+    industries.forEach(i => {
+        const opt = document.createElement('option');
+        opt.value = i.industry;
+        opt.textContent = `${i.industry} (${i.count})`;
+        industrySel.appendChild(opt);
+    });
+    industrySel.disabled = false;
+});
+
+// --- Region toggle ---
+document.querySelectorAll('.region-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.region-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedRegion = btn.dataset.region === 'global' ? null : btn.dataset.region;
+    });
+});
+
+// --- Scan ---
+scanBtn.addEventListener('click', startScan);
+
+function startScan() {
+    const sector = sectorSel.value;
+    if (!sector) return;
+    const industry = industrySel.value || null;
+
+    scanBtn.disabled = true;
+    scanBtn.textContent = 'Scanning...';
+    emptyState.style.display = 'none';
+    resultsWrap.classList.remove('active');
+    columnPicker.classList.remove('active');
+    statsLine.classList.remove('active');
+    progressSection.classList.add('active');
+    progressBar.style.width = '0%';
+    progressLabel.textContent = '0 / 0';
+
+    let url = `/sector-scan/api/stream?sector=${encodeURIComponent(sector)}`;
+    if (industry) url += `&industry=${encodeURIComponent(industry)}`;
+    if (selectedRegion) url += `&region=${encodeURIComponent(selectedRegion)}`;
+
+    const es = new EventSource(url);
+
+    es.addEventListener('start', e => {
+        const d = JSON.parse(e.data);
+        progressLabel.textContent = `0 / ${d.total}`;
+    });
+
+    es.addEventListener('progress', e => {
+        const d = JSON.parse(e.data);
+        const pct = Math.round((d.completed / d.total) * 100);
+        progressBar.style.width = pct + '%';
+        progressLabel.textContent = `${d.completed} / ${d.total} (${d.ticker})`;
+    });
+
+    es.addEventListener('result', e => {
+        const d = JSON.parse(e.data);
+        scanData = d;
+        renderStats(d.stats);
+        buildColumnPicker();
+        renderTable();
+    });
+
+    es.addEventListener('done', () => {
+        es.close();
+        progressSection.classList.remove('active');
+        scanBtn.disabled = false;
+        scanBtn.textContent = 'Scan';
+    });
+
+    es.onerror = () => {
+        es.close();
+        progressSection.classList.remove('active');
+        scanBtn.disabled = false;
+        scanBtn.textContent = 'Scan';
+    };
+}
+
+// --- Stats ---
+function renderStats(stats) {
+    let html = `${stats.scored} stocks scored in ${stats.elapsed}s`;
+    if (stats.failed > 0) {
+        html += ` <span class="failed">(${stats.failed} failed)</span>`;
+    }
+    statsLine.innerHTML = html;
+    statsLine.classList.add('active');
+}
+
+// --- Column picker ---
+function buildColumnPicker() {
+    columnPicker.innerHTML = '';
+    KPI_COLS.forEach(col => {
+        const btn = document.createElement('button');
+        btn.className = 'col-toggle' + (visibleCols[col.key] ? ' active' : '');
+        btn.textContent = col.label;
+        btn.addEventListener('click', () => {
+            visibleCols[col.key] = !visibleCols[col.key];
+            btn.classList.toggle('active');
+            localStorage.setItem('sectorScan_columns', JSON.stringify(visibleCols));
+            renderTable();
+        });
+        columnPicker.appendChild(btn);
+    });
+    columnPicker.classList.add('active');
+}
+
+// --- Table rendering ---
+function renderTable() {
+    if (!scanData || !scanData.stocks.length) return;
+
+    const stocks = [...scanData.stocks];
+
+    // Sort
+    stocks.sort((a, b) => {
+        let va = a[sortKey], vb = b[sortKey];
+        if (va == null && vb == null) return 0;
+        if (va == null) return 1;
+        if (vb == null) return -1;
+        return sortAsc ? va - vb : vb - va;
+    });
+
+    // Build header
+    const activeCols = KPI_COLS.filter(c => visibleCols[c.key]);
+
+    let headHtml = '<tr>';
+    headHtml += thCell('#', 'rank_idx');
+    headHtml += thCell('Ticker', 'ticker');
+    headHtml += thCell('Name', 'name');
+    headHtml += thCell('Score', 'score');
+    headHtml += thCell('Mkt Cap', 'market_cap');
+    activeCols.forEach(c => { headHtml += thCell(c.label, c.key); });
+    headHtml += '</tr>';
+    tableHead.innerHTML = headHtml;
+
+    // Bind sort handlers
+    tableHead.querySelectorAll('th[data-key]').forEach(th => {
+        th.addEventListener('click', () => {
+            const key = th.dataset.key;
+            if (key === 'rank_idx') return;
+            if (sortKey === key) {
+                sortAsc = !sortAsc;
+            } else {
+                sortKey = key;
+                sortAsc = (key === 'ticker' || key === 'name');
+            }
+            renderTable();
+        });
+    });
+
+    // Build body
+    let bodyHtml = '';
+    stocks.forEach((s, i) => {
+        bodyHtml += `<tr data-ticker="${esc(s.ticker)}">`;
+        bodyHtml += `<td class="rank">${i + 1}</td>`;
+        bodyHtml += `<td>${esc(s.ticker)}</td>`;
+        bodyHtml += `<td>${esc(s.name)}</td>`;
+        bodyHtml += `<td class="score-cell ${scoreClass(s.score)}">${s.score?.toFixed(1) ?? '-'}</td>`;
+        bodyHtml += `<td class="mcap">${fmtCap(s.market_cap)}</td>`;
+        activeCols.forEach(c => {
+            bodyHtml += `<td>${c.fmt(s[c.key])}</td>`;
+        });
+        bodyHtml += '</tr>';
+    });
+    tableBody.innerHTML = bodyHtml;
+
+    // Row click -> open analyzer
+    tableBody.querySelectorAll('tr').forEach(tr => {
+        tr.addEventListener('click', () => {
+            const ticker = tr.dataset.ticker;
+            if (ticker) window.open(`/?ticker=${encodeURIComponent(ticker)}`, '_blank');
+        });
+    });
+
+    resultsWrap.classList.add('active');
+}
+
+function thCell(label, key) {
+    let cls = '';
+    if (sortKey === key) cls = sortAsc ? 'sort-asc' : 'sort-desc';
+    return `<th data-key="${key}" class="${cls}">${esc(label)}</th>`;
+}
+
+function scoreClass(score) {
+    if (score == null) return '';
+    if (score >= 6.5) return 'score-high';
+    if (score >= 4.0) return 'score-mid';
+    return 'score-low';
+}
+
+function fmtCap(v) {
+    if (v == null) return '-';
+    if (v >= 1e12) return (v / 1e12).toFixed(1) + 'T';
+    if (v >= 1e9) return (v / 1e9).toFixed(1) + 'B';
+    if (v >= 1e6) return (v / 1e6).toFixed(0) + 'M';
+    return v.toLocaleString();
+}
+
+function esc(s) {
+    if (!s) return '';
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+}
+</script>
+</body>
+</html>
