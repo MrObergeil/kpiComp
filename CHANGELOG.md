@@ -1,5 +1,18 @@
 # Changelog
 
+## 2026-02-28 — Composite Sentiment Score & UI Polish
+
+### Added
+- **Composite sentiment score**: weighted signal from 4 directional indicators (analyst consensus 35%, options flow 30%, news sentiment 20%, insider trading 15%) displayed as -1.0 to +1.0 gauge above sentiment cards
+- Registry-based indicator system (`sentiment_score.py`) — add/remove indicators by editing one list
+- Auto weight redistribution when indicators are unavailable, with confidence levels (high/medium/low)
+- Per-indicator breakdown chips showing individual scores and effective weights
+- `python-dotenv` loading for `FINNHUB_API_KEY` via `.env` file
+
+### Fixed
+- Region toggle buttons overlapping — moved border to parent container
+- Region switching now does smooth in-place reload instead of full page flash
+
 ## 2026-02-27 — Peer Drill-Down, Regional Comparison & Scoring
 
 ### Added
