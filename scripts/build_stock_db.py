@@ -3,12 +3,12 @@
 Build data/stocks.json — enriched stock database for peer comparison.
 
 Covers index constituents: S&P 500, S&P 400, S&P 600, NASDAQ-100, Dow 30,
-FTSE 100, DAX 40, CAC 40, Euro Stoxx 50.
+FTSE 100, DAX 40, Euro Stoxx 50, Russell 2000.
 Seeds names from data/tickers.json, enriches via yfinance (sector, industry, marketCap).
 
 Usage: python scripts/build_stock_db.py
-Output: data/stocks.json (~1500+ stocks, keyed by ticker)
-Runtime: ~40-75 min (yfinance rate limits)
+Output: data/stocks.json (~3000+ stocks, keyed by ticker)
+Runtime: ~90-120 min (yfinance rate limits)
 """
 
 import argparse
@@ -124,15 +124,13 @@ def get_eu_index_tickers() -> dict[str, list[str]]:
     try:
         from pytickersymbols import PyTickerSymbols
     except ImportError:
-        logger.warning("pytickersymbols not installed, skipping EU indices")
+        logger.warning("pytickersymbols not installed, skipping pytickersymbols indices")
         return {}
 
     pts = PyTickerSymbols()
     index_map = {
         "FTSE 100": "ftse100",
         "DAX": "dax40",
-        "CAC 40": "cac40",
-        "Euro Stoxx 50": "eurostoxx50",
     }
 
     result = {}
@@ -151,6 +149,56 @@ def get_eu_index_tickers() -> dict[str, list[str]]:
         logger.info("%s: %d constituents", index_name, len(tickers))
 
     return result
+
+
+def get_eurostoxx50_tickers() -> list[str]:
+    """Get EURO STOXX 50 constituents from Wikipedia."""
+    import pandas as pd
+    import requests
+
+    url = "https://en.wikipedia.org/wiki/EURO_STOXX_50"
+    resp = requests.get(url, headers={"User-Agent": "stock-db-builder/1.0"})
+    resp.raise_for_status()
+    tables = pd.read_html(StringIO(resp.text))
+    for t in tables:
+        if "Ticker" in t.columns:
+            tickers = t["Ticker"].dropna().str.strip().tolist()
+            logger.info("EURO STOXX 50: %d constituents", len(tickers))
+            return tickers
+    logger.warning("EURO STOXX 50: no Ticker column found")
+    return []
+
+
+def get_russell2000_tickers() -> list[str]:
+    """Get Russell 2000 constituents via iShares IWM ETF holdings."""
+    import csv
+    import requests
+
+    url = ("https://www.ishares.com/us/products/239710/"
+           "ishares-russell-2000-etf/1467271812596.ajax"
+           "?fileType=csv&fileName=IWM_holdings&dataType=fund")
+    resp = requests.get(url, headers={"User-Agent": "stock-db-builder/1.0"})
+    resp.raise_for_status()
+    lines = resp.text.strip().split("\n")
+
+    # Find header row
+    header_idx = None
+    for i, line in enumerate(lines):
+        if line.startswith("Ticker,") or line.startswith('"Ticker"'):
+            header_idx = i
+            break
+    if header_idx is None:
+        logger.warning("Russell 2000: could not find header in IWM CSV")
+        return []
+
+    reader = csv.DictReader(lines[header_idx:])
+    tickers = []
+    for row in reader:
+        t = row.get("Ticker", "").strip()
+        if t and t != "-" and not t.startswith("$"):
+            tickers.append(t)
+    logger.info("Russell 2000 (IWM): %d constituents", len(tickers))
+    return tickers
 
 
 def enrich_ticker(ticker: str, name_hint: str = "") -> dict | None:
@@ -218,11 +266,27 @@ def build():
     except Exception as e:
         logger.warning("Failed to fetch S&P 600: %s", e)
 
-    # EU indices
+    # EU indices (pytickersymbols: FTSE 100, DAX)
     logger.info("Fetching EU index constituents...")
     eu_indices = get_eu_index_tickers()
     for slug, tickers in eu_indices.items():
         add_tickers(tickers, slug)
+
+    # EURO STOXX 50 (Wikipedia)
+    logger.info("Fetching EURO STOXX 50 constituents from Wikipedia...")
+    try:
+        eurostoxx50 = get_eurostoxx50_tickers()
+        add_tickers(eurostoxx50, "eurostoxx50")
+    except Exception as e:
+        logger.warning("Failed to fetch EURO STOXX 50: %s", e)
+
+    # Russell 2000 (iShares IWM holdings)
+    logger.info("Fetching Russell 2000 constituents from iShares IWM...")
+    try:
+        russell2000 = get_russell2000_tickers()
+        add_tickers(russell2000, "russell2000")
+    except Exception as e:
+        logger.warning("Failed to fetch Russell 2000: %s", e)
 
     all_tickers = list(ticker_indices.keys())
     logger.info("Total unique tickers to enrich: %d", len(all_tickers))

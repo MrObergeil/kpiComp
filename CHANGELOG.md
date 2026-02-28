@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-02-28 — Expand Stock DB: DAX, EURO STOXX 50, Russell 2000
+
+### Added
+- **EURO STOXX 50** index via Wikipedia scrape (50 tickers with home-exchange suffixes)
+- **Russell 2000** index via iShares IWM ETF holdings CSV (~1939 tickers)
+- `get_eurostoxx50_tickers()` and `get_russell2000_tickers()` in `build_stock_db.py`
+- Total unique tickers: ~2957 (up from ~1600)
+
+### Changed
+- Removed CAC 40 from pytickersymbols fetch (covered by EURO STOXX 50)
+
 ## 2026-02-28 — Multi-Select Sector & Industry Filters
 
 ### Changed
