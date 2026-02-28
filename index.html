@@ -1720,12 +1720,23 @@
             for (const item of allTickers) {
                 if (item.t.startsWith(q)) {
                     tickerMatches.push(item);
-                    if (tickerMatches.length >= 8) break;
                 } else if (item.n.toUpperCase().includes(q)) {
                     nameMatches.push(item);
                 }
             }
-            return tickerMatches.concat(nameMatches).slice(0, 8);
+            // Dedup by company name: keep primary ticker per company
+            function dedupByName(arr) {
+                const byName = new Map();
+                for (const item of arr) {
+                    const key = item.n.toLowerCase();
+                    const existing = byName.get(key);
+                    if (!existing || (item.p && !existing.p)) {
+                        byName.set(key, item);
+                    }
+                }
+                return [...byName.values()];
+            }
+            return dedupByName(tickerMatches).concat(dedupByName(nameMatches)).slice(0, 8);
         }
 
         function showAcDropdown(results) {

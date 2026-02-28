@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-02-28 — Multi-Ticker Dedup & Sentiment Merging
+
+### Added
+- **Ticker dedup**: companies with multiple tickers (e.g., Rheinmetall: RHM.F, RHMB.F, RNMBF, RNMBY) now show one autocomplete result — the primary home-exchange listing
+- **Exchange tier heuristic**: picks primary ticker per company using exchange priority (NASDAQ/NYSE/XETRA > Frankfurt/Paris > OTC/ADR), with shorter ticker as tiebreaker
+- **Sentiment merging**: `fetch_sentiment_multi()` and `fetch_articles_multi()` in `sentiment.py` — fetch articles across all ticker aliases, deduplicate by headline, score merged set
+- **`/api/ticker-aliases/{ticker}` endpoint**: returns all tickers sharing the same company name
+- **`p` (primary) field** on ticker data served by `/api/tickers` — client uses this for dedup
+
+### Changed
+- `filterTickers()` in `index.html` deduplicates autocomplete results by company name, keeping primary ticker
+- `analyze_stock()` in `data.py` accepts `ticker_aliases` param, uses `fetch_sentiment_multi()` when aliases exist
+- `train.py` `/train/api/articles/{ticker}` merges articles across aliases via `fetch_articles_multi()`
+- `_ticker_to_aliases` dict built at startup in `main.py`, exposed via `app.state` for router access
+
 ## 2026-02-28 — Logging Infrastructure Improvements
 
 ### Added

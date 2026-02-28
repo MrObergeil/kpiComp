@@ -15,7 +15,7 @@ import logging
 
 from sp500 import SP500_BY_SECTOR
 from rating import extract_kpis, compute_sector_averages, get_kpi_keys
-from sentiment import fetch_sentiment
+from sentiment import fetch_sentiment, fetch_sentiment_multi
 from sentiment import clear_cache as _clear_sentiment_cache
 from reddit_buzz import fetch_reddit_buzz
 from reddit_buzz import clear_cache as _clear_reddit_buzz_cache
@@ -432,6 +432,7 @@ def analyze_stock(
     ticker: str,
     peers: list[str] | None = None,
     region: str | None = None,
+    ticker_aliases: list[str] | None = None,
 ) -> dict:
     """
     Full analysis pipeline for a single stock ticker.
@@ -494,7 +495,11 @@ def analyze_stock(
         else:
             peers_future = pool.submit(get_sector_peers_kpis, sector, resolved_ticker)
         hist_future = pool.submit(fetch_historical_kpis, resolved_ticker)
-        sentiment_future = pool.submit(fetch_sentiment, resolved_ticker, company_name)
+        _sent_aliases = ticker_aliases if ticker_aliases and len(ticker_aliases) > 1 else None
+        if _sent_aliases:
+            sentiment_future = pool.submit(fetch_sentiment_multi, _sent_aliases, company_name)
+        else:
+            sentiment_future = pool.submit(fetch_sentiment, resolved_ticker, company_name)
         reddit_future = pool.submit(fetch_reddit_buzz, resolved_ticker)
         insider_future = pool.submit(fetch_insider_trading, resolved_ticker)
         analyst_future = pool.submit(fetch_analyst_ratings, resolved_ticker)

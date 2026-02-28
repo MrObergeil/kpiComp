@@ -3,6 +3,7 @@ News sentiment & buzz indicator via Finnhub /company-news (free tier).
 Computes sentiment from headline + summary keywords. Separate from the 1-10 rating.
 """
 
+import hashlib
 import json
 import os
 import re
@@ -53,6 +54,39 @@ _BEARISH = {
 
 _WORD_RE = re.compile(r"[a-z]+")
 
+# Feedback overrides: headline_hash -> corrected score
+_feedback_overrides: dict[str, float] = {}
+_feedback_overrides_ts: float = 0.0
+_FEEDBACK_TTL = 60  # reload every 60s
+
+
+def _headline_hash(headline: str) -> str:
+    return hashlib.md5(headline.lower().strip().encode()).hexdigest()
+
+
+def _load_feedback_overrides() -> dict[str, float]:
+    """Load corrections from feedback.json. Cached with short TTL."""
+    global _feedback_overrides, _feedback_overrides_ts
+    now = time.time()
+    if now - _feedback_overrides_ts < _FEEDBACK_TTL:
+        return _feedback_overrides
+
+    overrides: dict[str, float] = {}
+    try:
+        entries = json.loads((_TRAIN_DATA_DIR / "feedback.json").read_text())
+        for entry in entries:
+            computed = entry.get("computed_score")
+            correct = entry.get("correct_score")
+            headline = entry.get("headline", "")
+            if computed != correct and headline:
+                overrides[_headline_hash(headline)] = correct
+    except (FileNotFoundError, json.JSONDecodeError):
+        pass
+
+    _feedback_overrides = overrides
+    _feedback_overrides_ts = now
+    return overrides
+
 
 def _get_effective_keywords() -> tuple[set[str], set[str]]:
     """Merge base keyword sets with persistent overrides from train_data/news_keywords.json."""
@@ -92,7 +126,16 @@ def _is_relevant(headline: str, summary: str, ticker: str, company_name: str = "
 
 def _score_article(headline: str, summary: str, bullish: set, bearish: set) -> tuple[float, dict]:
     """Score an article from headline + summary. Headline matches weighted 2x.
-    Returns (score, {"bullish": [...], "bearish": [...]})."""
+    Returns (score, {"bullish": [...], "bearish": [...]}).
+    If user feedback overrides exist for this headline, uses the corrected score."""
+    # Check feedback overrides first
+    overrides = _load_feedback_overrides()
+    if headline:
+        h_hash = _headline_hash(headline)
+        if h_hash in overrides:
+            override_score = overrides[h_hash]
+            return override_score, {"bullish": [], "bearish": [], "overridden": True}
+
     h_words = set(_WORD_RE.findall(headline.lower())) if headline else set()
     s_words = set(_WORD_RE.findall(summary.lower())) if summary else set()
 
@@ -162,6 +205,26 @@ def _fetch_raw_articles(ticker: str) -> list | None:
         return None
 
     return articles
+
+
+def _merge_articles_multi(tickers: list[str]) -> list | None:
+    """Fetch raw articles for multiple tickers, merge and deduplicate by headline."""
+    all_articles = []
+    for t in tickers:
+        arts = _fetch_raw_articles(t)
+        if arts:
+            all_articles.extend(arts)
+    if not all_articles:
+        return None
+    # Deduplicate by headline hash
+    seen = set()
+    merged = []
+    for art in all_articles:
+        h = _headline_hash(art.get("headline", ""))
+        if h not in seen:
+            seen.add(h)
+            merged.append(art)
+    return merged
 
 
 def fetch_sentiment(ticker: str, company_name: str = "") -> dict | None:
@@ -236,6 +299,98 @@ def fetch_articles(ticker: str, company_name: str = "") -> list | None:
     if company_name:
         articles = [a for a in articles
                     if _is_relevant(a.get("headline", ""), a.get("summary", ""), key, company_name)]
+
+    bullish_kw, bearish_kw = _get_effective_keywords()
+    scored = []
+    for art in articles:
+        headline = art.get("headline", "")
+        summary = art.get("summary", "")
+        score, matched = _score_article(headline, summary, bullish_kw, bearish_kw)
+        scored.append({
+            "headline": headline,
+            "summary": summary,
+            "source": art.get("source", ""),
+            "url": art.get("url", ""),
+            "datetime": art.get("datetime", 0),
+            "score": score,
+            "matched_keywords": matched,
+        })
+
+    return scored
+
+
+def fetch_sentiment_multi(tickers: list[str], company_name: str = "") -> dict | None:
+    """Like fetch_sentiment but merges articles across multiple tickers for the same company."""
+    if not tickers or len(tickers) <= 1:
+        return fetch_sentiment(tickers[0] if tickers else "", company_name)
+
+    primary = tickers[0].upper().strip()
+    now = time.time()
+
+    # Check cache on primary ticker
+    with _cache_lock:
+        if primary in _cache:
+            entry = _cache[primary]
+            if now - entry["ts"] < entry["ttl"] and entry.get("data") is not None:
+                return entry["data"]
+
+    articles = _merge_articles_multi(tickers)
+    if articles is None:
+        return None
+
+    relevant = [a for a in articles
+                if any(_is_relevant(a.get("headline", ""), a.get("summary", ""),
+                                    t.upper().strip(), company_name) for t in tickers)]
+
+    count = len(relevant)
+    sufficient = count >= MIN_ARTICLES
+    bullish_kw, bearish_kw = _get_effective_keywords()
+
+    bullish = bearish = neutral = 0
+    for art in relevant:
+        score, _ = _score_article(art.get("headline", ""), art.get("summary", ""), bullish_kw, bearish_kw)
+        if score > 0:
+            bullish += 1
+        elif score < 0:
+            bearish += 1
+        else:
+            neutral += 1
+
+    total_scored = bullish + bearish + neutral
+    bull_pct = bullish / total_scored if total_scored else 0.0
+    bear_pct = bearish / total_scored if total_scored else 0.0
+    opinionated = bullish + bearish
+    bull_bear_ratio = bullish / opinionated if opinionated else 0.5
+
+    result = {
+        "available": True,
+        "sufficient_data": sufficient,
+        "bullish_pct": round(bull_pct, 3),
+        "bearish_pct": round(bear_pct, 3),
+        "neutral_pct": round(1.0 - bull_pct - bear_pct, 3),
+        "bull_bear_ratio": round(bull_bear_ratio, 3),
+        "articles_this_week": count,
+    }
+
+    with _cache_lock:
+        _cache[primary] = {"data": result, "raw_articles": articles, "ts": now, "ttl": CACHE_TTL}
+
+    return result
+
+
+def fetch_articles_multi(tickers: list[str], company_name: str = "") -> list | None:
+    """Like fetch_articles but merges across multiple tickers for the same company."""
+    if not tickers or len(tickers) <= 1:
+        return fetch_articles(tickers[0] if tickers else "", company_name)
+
+    articles = _merge_articles_multi(tickers)
+    if articles is None:
+        return None
+
+    if company_name:
+        articles = [a for a in articles
+                    if any(_is_relevant(a.get("headline", ""), a.get("summary", ""),
+                                        t.upper().strip(), company_name) for t in tickers)]
 
     bullish_kw, bearish_kw = _get_effective_keywords()
     scored = []
