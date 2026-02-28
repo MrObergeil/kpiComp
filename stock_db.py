@@ -6,8 +6,11 @@ Provides O(1) lookups and filtered queries for peer comparison.
 """
 
 import json
+import logging
 import threading
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 _DB_PATH = Path(__file__).parent / "data" / "stocks.json"
 _db: dict[str, dict] | None = None
@@ -23,9 +26,11 @@ def _load_db() -> dict[str, dict]:
             return _db
         if not _DB_PATH.exists():
             _db = {}
+            logger.info("Stock DB not found at %s", _DB_PATH)
             return _db
         with open(_DB_PATH) as f:
             _db = json.load(f)
+        logger.info("Stock DB loaded: %d stocks from %s", len(_db), _DB_PATH)
         return _db
 
 

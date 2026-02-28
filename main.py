@@ -13,6 +13,7 @@ import asyncio
 import json
 import time
 import logging
+import uuid
 from pathlib import Path
 from typing import Optional
 
@@ -45,18 +46,69 @@ if _tickers_path.exists():
         _tickers_data = json.load(f)
     logger.info(f"Loaded {len(_tickers_data)} tickers for autocomplete")
 
+# --- Multi-ticker dedup: group by company name, pick primary per group ---
+# Keywords that indicate major exchanges (matched case-insensitively against exchange field)
+_TIER3_KEYWORDS = ["nasdaq", "nyse", "xetra", "lse", "nikkei"]
+_TIER2_KEYWORDS = ["frankfurt", "paris", "milan", "madrid", "swiss", "stockholm",
+                   "helsinki", "copenhagen", "oslo", "shanghai", "shenzhen",
+                   "kospi", "kosdaq", "london", "euronext", "toronto",
+                   "asx", "borsa", "bme", "six"]
+
+def _exchange_tier(exchange: str) -> int:
+    e = exchange.lower()
+    if any(kw in e for kw in _TIER3_KEYWORDS):
+        return 3
+    if any(kw in e for kw in _TIER2_KEYWORDS):
+        return 2
+    return 1
+
+def _ticker_priority(item: dict) -> tuple:
+    """Sort key: lower = better. (neg_tier, ticker_len, ticker)."""
+    t = item["t"]
+    tier = _exchange_tier(item.get("e", ""))
+    # Detect likely OTC/ADR: no dot, 5+ chars, ends in F or Y
+    if "." not in t and len(t) >= 5 and t[-1] in ("F", "Y"):
+        tier = 0
+    return (-tier, len(t), t)
+
+# Maps ticker → list of all tickers for the same company
+_ticker_to_aliases: dict[str, list[str]] = {}
+
+if _tickers_data:
+    from collections import defaultdict
+    _company_groups: dict[str, list[dict]] = defaultdict(list)
+    for item in _tickers_data:
+        _company_groups[item["n"].strip().lower()].append(item)
+
+    for name, group in _company_groups.items():
+        group.sort(key=_ticker_priority)
+        primary_ticker = group[0]["t"]
+        all_tickers = [item["t"] for item in group]
+        for item in group:
+            item["p"] = item["t"] == primary_ticker  # p = primary
+            _ticker_to_aliases[item["t"].upper()] = all_tickers
+    del _company_groups
+
+    primary_count = sum(1 for item in _tickers_data if item.get("p"))
+    logger.info(f"Ticker dedup: {primary_count} primary tickers from {len(_tickers_data)} total")
+
+app.state.ticker_to_aliases = _ticker_to_aliases  # expose for train.py router
+
 
 # --- Middleware ---
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
+    request_id = str(uuid.uuid4())
+    request.state.request_id = request_id
     start = time.monotonic()
     response = await call_next(request)
     duration_ms = round((time.monotonic() - start) * 1000)
     logger.info(
         f"{request.method} {request.url.path} -> {response.status_code}",
-        extra={"duration_ms": duration_ms, "status_code": response.status_code},
+        extra={"duration_ms": duration_ms, "status_code": response.status_code, "request_id": request_id},
     )
+    response.headers["X-Request-ID"] = request_id
     return response
 
 
@@ -84,7 +136,8 @@ async def api_analyze(
         if region and region.lower().strip() in ("us", "europe"):
             rgn = region.lower().strip()
 
-        result = await asyncio.to_thread(analyze_stock, ticker, peers=peer_list, region=rgn)
+        aliases = _ticker_to_aliases.get(ticker.upper().strip())
+        result = await asyncio.to_thread(analyze_stock, ticker, peers=peer_list, region=rgn, ticker_aliases=aliases)
         return JSONResponse(content=result)
     except ValueError as e:
         raise HTTPException(status_code=400, detail=str(e))
@@ -107,6 +160,14 @@ async def api_tickers():
         content=_tickers_data,
         headers={"Cache-Control": "public, max-age=86400"},
     )
+
+
+@app.get("/api/ticker-aliases/{ticker}")
+async def api_ticker_aliases(ticker: str):
+    """Return all tickers that share the same company name."""
+    key = ticker.upper().strip()
+    aliases = _ticker_to_aliases.get(key, [key])
+    return {"ticker": key, "aliases": aliases}
 
 
 # --- Peer CRUD ---

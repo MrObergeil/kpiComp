@@ -8,11 +8,11 @@ import logging
 from datetime import datetime, timezone
 from pathlib import Path
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 
-from sentiment import fetch_articles, _BULLISH, _BEARISH, _TRAIN_DATA_DIR
+from sentiment import fetch_articles, fetch_articles_multi, _BULLISH, _BEARISH, _TRAIN_DATA_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -68,9 +68,14 @@ async def train_page():
 # --- Articles ---
 
 @router.get("/train/api/articles/{ticker}")
-async def get_articles(ticker: str):
+async def get_articles(ticker: str, request: Request):
     import asyncio
-    articles = await asyncio.to_thread(fetch_articles, ticker)
+    aliases_map = getattr(request.app.state, "ticker_to_aliases", {})
+    aliases = aliases_map.get(ticker.upper().strip())
+    if aliases and len(aliases) > 1:
+        articles = await asyncio.to_thread(fetch_articles_multi, aliases)
+    else:
+        articles = await asyncio.to_thread(fetch_articles, ticker)
     if articles is None:
         raise HTTPException(status_code=404, detail=f"Could not fetch articles for '{ticker}'")
     return {"ticker": ticker.upper().strip(), "articles": articles}
@@ -121,6 +126,7 @@ async def save_keywords(indicator: str, overrides: KeywordOverrides):
         "bearish_remove": sorted(set(w.lower().strip() for w in overrides.bearish_remove if w.strip())),
     }
     _write_overrides(indicator, data)
+    logger.info("Saved keyword overrides for %s", indicator)
     return {"status": "ok", "overrides": data}
 
 
@@ -142,9 +148,44 @@ async def submit_feedback(entry: FeedbackEntry):
     record = entry.model_dump()
     record["timestamp"] = datetime.now(timezone.utc).isoformat()
     _append_feedback(record)
+    logger.debug("Feedback submitted for %s: computed=%.2f correct=%.2f", entry.ticker, entry.computed_score, entry.correct_score)
     return {"status": "ok"}
 
 
 @router.get("/train/api/feedback")
 async def get_feedback():
     return {"feedback": _read_feedback()}
+
+
+@router.get("/train/api/keyword-stats")
+async def keyword_stats():
+    """Analyze feedback to show per-keyword accuracy."""
+    entries = _read_feedback()
+    stats: dict[str, dict] = {}  # keyword -> {correct: N, incorrect: N}
+
+    for entry in entries:
+        computed = entry.get("computed_score")
+        correct = entry.get("correct_score")
+        matched = entry.get("matched_keywords", {})
+        is_correct = computed == correct
+
+        all_keywords = list(matched.get("bullish", [])) + list(matched.get("bearish", []))
+        for kw in all_keywords:
+            if kw not in stats:
+                stats[kw] = {"correct": 0, "incorrect": 0}
+            if is_correct:
+                stats[kw]["correct"] += 1
+            else:
+                stats[kw]["incorrect"] += 1
+
+    result = {}
+    for kw, counts in stats.items():
+        total = counts["correct"] + counts["incorrect"]
+        result[kw] = {
+            "correct": counts["correct"],
+            "incorrect": counts["incorrect"],
+            "total": total,
+            "accuracy": round(counts["correct"] / total, 3) if total else 0.0,
+        }
+
+    return {"stats": result}

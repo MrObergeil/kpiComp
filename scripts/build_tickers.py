@@ -8,11 +8,19 @@ Output: data/tickers.json
 Dependencies (build-time only): pytickersymbols, financedatabase, requests
 """
 
+import argparse
 import json
+import logging
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from logging_config import setup_logging
+
 import requests
+
+logger = logging.getLogger(__name__)
 
 EDGAR_URL = "https://www.sec.gov/files/company_tickers_exchange.json"
 EDGAR_HEADERS = {"User-Agent": "StockRater/1.0 admin@example.com"}
@@ -23,7 +31,7 @@ OUTPUT_PATH = Path(__file__).resolve().parent.parent / "data" / "tickers.json"
 
 def fetch_us_tickers() -> dict[str, dict]:
     """Fetch US tickers from SEC EDGAR. Returns {ticker: {t, n, e}}."""
-    print("Fetching US tickers from SEC EDGAR...")
+    logger.info("Fetching US tickers from SEC EDGAR...")
     resp = requests.get(EDGAR_URL, headers=EDGAR_HEADERS, timeout=30)
     resp.raise_for_status()
     data = resp.json()
@@ -45,7 +53,7 @@ def fetch_us_tickers() -> dict[str, dict]:
             continue
         tickers[ticker] = {"t": ticker, "n": _title_case(name), "e": exchange}
 
-    print(f"  -> {len(tickers)} US tickers")
+    logger.info("-> %d US tickers", len(tickers))
     return tickers
 
 
@@ -54,11 +62,10 @@ def fetch_eu_tickers() -> dict[str, dict]:
     try:
         from pytickersymbols import PyTickerSymbols
     except ImportError:
-        print("WARNING: pytickersymbols not installed, skipping EU tickers.")
-        print("  Install with: pip install pytickersymbols")
+        logger.warning("pytickersymbols not installed, skipping EU tickers (pip install pytickersymbols)")
         return {}
 
-    print("Fetching European tickers via pytickersymbols...")
+    logger.info("Fetching European tickers via pytickersymbols...")
     pts = PyTickerSymbols()
 
     indices = pts.get_all_indices()
@@ -80,7 +87,7 @@ def fetch_eu_tickers() -> dict[str, dict]:
                 if yahoo not in tickers:
                     tickers[yahoo] = {"t": yahoo, "n": name, "e": exchange}
 
-    print(f"  -> {len(tickers)} EU tickers")
+    logger.info("-> %d EU tickers", len(tickers))
     return tickers
 
 
@@ -89,11 +96,10 @@ def fetch_asian_tickers() -> dict[str, dict]:
     try:
         import financedatabase as fd
     except ImportError:
-        print("WARNING: financedatabase not installed, skipping Asian tickers.")
-        print("  Install with: pip install financedatabase")
+        logger.warning("financedatabase not installed, skipping Asian tickers (pip install financedatabase)")
         return {}
 
-    print("Fetching Asian tickers via financedatabase...")
+    logger.info("Fetching Asian tickers via financedatabase...")
     equities = fd.Equities()
 
     exchange_labels = {
@@ -121,7 +127,7 @@ def fetch_asian_tickers() -> dict[str, dict]:
             exchange = exchange_labels.get(raw_exchange, raw_exchange)
             tickers[yahoo_ticker] = {"t": yahoo_ticker, "n": name, "e": exchange}
 
-    print(f"  -> {len(tickers)} Asian tickers")
+    logger.info("-> %d Asian tickers", len(tickers))
     return tickers
 
 
@@ -167,15 +173,19 @@ def main():
     merged = {**asia, **eu, **us}
 
     result = sorted(merged.values(), key=lambda x: x["t"])
-    print(f"Total: {len(result)} tickers")
+    logger.info("Total: %d tickers", len(result))
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(OUTPUT_PATH, "w") as f:
         json.dump(result, f, separators=(",", ":"))
 
     size_kb = OUTPUT_PATH.stat().st_size / 1024
-    print(f"Written to {OUTPUT_PATH} ({size_kb:.0f} KB)")
+    logger.info("Written to %s (%.0f KB)", OUTPUT_PATH, size_kb)
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Build data/tickers.json")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Enable DEBUG logging")
+    args = parser.parse_args()
+    setup_logging(level=logging.DEBUG if args.verbose else logging.INFO)
     main()

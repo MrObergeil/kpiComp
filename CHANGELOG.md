@@ -1,5 +1,34 @@
 # Changelog
 
+## 2026-02-28 — Logging Infrastructure Improvements
+
+### Added
+- **Env-based log level**: `LOG_LEVEL` env var (default `INFO`) controls root log level in `logging_config.py`
+- **Request ID middleware**: every HTTP request gets a `uuid4` request ID, threaded through logs as `request_id` field, returned as `X-Request-ID` response header, stored on `request.state.request_id`
+- **Logging in silent modules**: `peers.py` (cascade level + peer count at INFO, fallback steps at DEBUG), `stock_db.py` (DB load at INFO), `rating.py` (final score at DEBUG), `sentiment_score.py` (composite score + weight redistribution at DEBUG)
+- **`--verbose` flag** on `scripts/build_stock_db.py` and `scripts/build_tickers.py` for DEBUG output
+
+### Changed
+- Build scripts (`build_stock_db.py`, `build_tickers.py`) migrated from `print()` to structured JSON logging via `setup_logging()`
+- `train.py` logger now used for keyword override saves and feedback submissions
+- `setup_logging()` signature changed: `level` param defaults to `None` (reads from `LOG_LEVEL` env) instead of hardcoded `logging.INFO`
+
+## 2026-02-28 — Expand Stock Database with S&P 400 & S&P 600
+
+### Added
+- **S&P MidCap 400** and **S&P SmallCap 600** index scraping in `scripts/build_stock_db.py` via Wikipedia + `pandas.read_html()`
+- `get_sp400_tickers()` and `get_sp600_tickers()` functions with shared `_scrape_wikipedia_tickers()` helper
+- User-Agent header to avoid Wikipedia 403s
+- ~1000 net new mid/small-cap US stocks (total ~1576, up from ~603)
+- Index slugs `sp400` and `sp600` in stock entries
+
+## 2026-02-28 — Feedback Loop in Sentiment Scoring
+
+### Added
+- **Feedback overrides**: user corrections from training UI now feed back into `_score_article()` — corrected headlines use the user's score instead of re-computing keywords
+- **Keyword accuracy stats**: `GET /train/api/keyword-stats` endpoint analyzes feedback to show per-keyword correct/incorrect counts
+- **Problem Keywords sidebar**: training UI shows keywords with <50% accuracy (min 3 appearances) with one-click remove
+
 ## 2026-02-28 — Composite Sentiment Score & UI Polish
 
 ### Added

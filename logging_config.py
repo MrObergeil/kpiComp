@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 LOG_DIR = "logs"
 LOG_FILE = os.path.join(LOG_DIR, "app.log")
 
-EXTRA_FIELDS = ("ticker", "duration_ms", "status_code", "source")
+EXTRA_FIELDS = ("ticker", "duration_ms", "status_code", "source", "request_id")
 
 
 class JSONFormatter(logging.Formatter):
@@ -31,7 +31,10 @@ class JSONFormatter(logging.Formatter):
         return json.dumps(entry)
 
 
-def setup_logging(level=logging.INFO):
+def setup_logging(level=None):
+    if level is None:
+        env_level = os.environ.get("LOG_LEVEL", "INFO").upper()
+        level = getattr(logging, env_level, logging.INFO)
     os.makedirs(LOG_DIR, exist_ok=True)
 
     formatter = JSONFormatter()

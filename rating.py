@@ -28,9 +28,12 @@ KPIs used (12):
   - PEG Ratio (pegRatio): Lower is better. P/E adjusted for growth.
 """
 
+import logging
+import math
 from dataclasses import dataclass
 from typing import Optional
-import math
+
+logger = logging.getLogger(__name__)
 
 
 # --- KPI Configuration ---
@@ -410,6 +413,11 @@ def calculate_rating(
     absolute_score = round(1.0 + total_abs_weighted * 9.0, 1)
     relative_score = round(1.0 + total_rel_weighted * 9.0, 1)
     trend_score_mapped = round(1.0 + trend_aggregate * 9.0, 1) if trend_aggregate is not None else None
+
+    logger.debug(
+        "Rating: overall=%.1f abs=%.1f rel=%.1f trend=%s",
+        overall_rating, absolute_score, relative_score, trend_score_mapped,
+    )
 
     return {
         "overall_rating": overall_rating,

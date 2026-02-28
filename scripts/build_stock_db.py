@@ -2,24 +2,32 @@
 """
 Build data/stocks.json — enriched stock database for peer comparison.
 
-Covers index constituents: S&P 500, NASDAQ-100, Dow 30, FTSE 100, DAX 40, CAC 40, Euro Stoxx 50.
+Covers index constituents: S&P 500, S&P 400, S&P 600, NASDAQ-100, Dow 30,
+FTSE 100, DAX 40, CAC 40, Euro Stoxx 50.
 Seeds names from data/tickers.json, enriches via yfinance (sector, industry, marketCap).
 
 Usage: python scripts/build_stock_db.py
-Output: data/stocks.json (~700-1500 stocks, keyed by ticker)
-Runtime: ~15-30 min (yfinance rate limits)
+Output: data/stocks.json (~1500+ stocks, keyed by ticker)
+Runtime: ~40-75 min (yfinance rate limits)
 """
 
+import argparse
 import json
+import logging
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from io import StringIO
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from logging_config import setup_logging
+
 import yfinance as yf
+
+logger = logging.getLogger(__name__)
 
 OUTPUT_PATH = ROOT / "data" / "stocks.json"
 TICKERS_PATH = ROOT / "data" / "tickers.json"
@@ -83,12 +91,40 @@ def get_sp500_tickers() -> list[str]:
     return SP500_TICKERS
 
 
+def _scrape_wikipedia_tickers(url: str, label: str) -> list[str]:
+    """Scrape ticker symbols from a Wikipedia S&P index table."""
+    import pandas as pd
+    import requests
+
+    resp = requests.get(url, headers={"User-Agent": "stock-db-builder/1.0"})
+    resp.raise_for_status()
+    tables = pd.read_html(StringIO(resp.text))
+    df = tables[0]
+    tickers = df["Symbol"].dropna().str.strip().tolist()
+    logger.info("%s: %d constituents", label, len(tickers))
+    return tickers
+
+
+def get_sp400_tickers() -> list[str]:
+    return _scrape_wikipedia_tickers(
+        "https://en.wikipedia.org/wiki/List_of_S%26P_400_companies",
+        "S&P 400",
+    )
+
+
+def get_sp600_tickers() -> list[str]:
+    return _scrape_wikipedia_tickers(
+        "https://en.wikipedia.org/wiki/List_of_S%26P_600_companies",
+        "S&P 600",
+    )
+
+
 def get_eu_index_tickers() -> dict[str, list[str]]:
     """Get EU index constituents via pytickersymbols."""
     try:
         from pytickersymbols import PyTickerSymbols
     except ImportError:
-        print("WARNING: pytickersymbols not installed, skipping EU indices.")
+        logger.warning("pytickersymbols not installed, skipping EU indices")
         return {}
 
     pts = PyTickerSymbols()
@@ -110,9 +146,9 @@ def get_eu_index_tickers() -> dict[str, list[str]]:
                         tickers.append(yahoo)
                         break  # one yahoo symbol per stock
         except Exception as e:
-            print(f"  WARNING: Failed to fetch {index_name}: {e}")
+            logger.warning("Failed to fetch %s: %s", index_name, e)
         result[slug] = tickers
-        print(f"  {index_name}: {len(tickers)} constituents")
+        logger.info("%s: %d constituents", index_name, len(tickers))
 
     return result
 
@@ -133,16 +169,16 @@ def enrich_ticker(ticker: str, name_hint: str = "") -> dict | None:
             "indices": [],
         }
     except Exception as e:
-        print(f"    SKIP {ticker}: {e}")
+        logger.debug("SKIP %s: %s", ticker, e)
         return None
 
 
 def build():
-    print("=== Building Stock Database ===\n")
+    logger.info("=== Building Stock Database ===")
 
     # Load name hints from tickers.json
     ticker_hints = load_tickers_json()
-    print(f"Loaded {len(ticker_hints)} name hints from tickers.json")
+    logger.info("Loaded %d name hints from tickers.json", len(ticker_hints))
 
     # Collect all tickers with their index memberships
     ticker_indices: dict[str, set] = {}
@@ -156,24 +192,40 @@ def build():
     # S&P 500
     sp500 = get_sp500_tickers()
     add_tickers(sp500, "sp500")
-    print(f"S&P 500: {len(sp500)} tickers")
+    logger.info("S&P 500: %d tickers", len(sp500))
 
     # NASDAQ-100
     add_tickers(NASDAQ_100, "nasdaq100")
-    print(f"NASDAQ-100: {len(NASDAQ_100)} tickers")
+    logger.info("NASDAQ-100: %d tickers", len(NASDAQ_100))
 
     # Dow 30
     add_tickers(DOW_30, "dow30")
-    print(f"Dow 30: {len(DOW_30)} tickers")
+    logger.info("Dow 30: %d tickers", len(DOW_30))
+
+    # S&P MidCap 400
+    logger.info("Fetching S&P 400 constituents from Wikipedia...")
+    try:
+        sp400 = get_sp400_tickers()
+        add_tickers(sp400, "sp400")
+    except Exception as e:
+        logger.warning("Failed to fetch S&P 400: %s", e)
+
+    # S&P SmallCap 600
+    logger.info("Fetching S&P 600 constituents from Wikipedia...")
+    try:
+        sp600 = get_sp600_tickers()
+        add_tickers(sp600, "sp600")
+    except Exception as e:
+        logger.warning("Failed to fetch S&P 600: %s", e)
 
     # EU indices
-    print("\nFetching EU index constituents...")
+    logger.info("Fetching EU index constituents...")
     eu_indices = get_eu_index_tickers()
     for slug, tickers in eu_indices.items():
         add_tickers(tickers, slug)
 
     all_tickers = list(ticker_indices.keys())
-    print(f"\nTotal unique tickers to enrich: {len(all_tickers)}")
+    logger.info("Total unique tickers to enrich: %d", len(all_tickers))
 
     # Enrich via yfinance in parallel batches
     stocks = {}
@@ -186,7 +238,7 @@ def build():
         batch = all_tickers[batch_start:batch_start + batch_size]
         batch_num = batch_start // batch_size + 1
         total_batches = (total + batch_size - 1) // batch_size
-        print(f"\nBatch {batch_num}/{total_batches} ({batch_start + 1}-{min(batch_start + batch_size, total)}/{total})")
+        logger.info("Batch %d/%d (%d-%d/%d)", batch_num, total_batches, batch_start + 1, min(batch_start + batch_size, total), total)
 
         with ThreadPoolExecutor(max_workers=workers) as pool:
             futures = {}
@@ -200,17 +252,17 @@ def build():
                 if result:
                     result["indices"] = sorted(ticker_indices[ticker])
                     stocks[ticker] = result
-                    print(f"  OK  {ticker}: {result['sector']} / {result['industry']}")
+                    logger.debug("OK  %s: %s / %s", ticker, result['sector'], result['industry'])
                 else:
                     failed += 1
-                    print(f"  FAIL {ticker}")
+                    logger.warning("FAIL %s", ticker)
 
         # Rate limit between batches
         if batch_start + batch_size < total:
             time.sleep(1)
 
-    print(f"\n=== Results ===")
-    print(f"Enriched: {len(stocks)} / {total} ({failed} failed)")
+    logger.info("=== Results ===")
+    logger.info("Enriched: %d / %d (%d failed)", len(stocks), total, failed)
 
     # Write output
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -218,12 +270,12 @@ def build():
         json.dump(stocks, f, indent=2, sort_keys=True)
 
     size_kb = OUTPUT_PATH.stat().st_size / 1024
-    print(f"Written to {OUTPUT_PATH} ({size_kb:.0f} KB)")
+    logger.info("Written to %s (%.0f KB)", OUTPUT_PATH, size_kb)
 
     # Summary by region
     us_count = sum(1 for s in stocks.values() if s["region"] == "US")
     eu_count = sum(1 for s in stocks.values() if s["region"] == "Europe")
-    print(f"US: {us_count}, Europe: {eu_count}")
+    logger.info("US: %d, Europe: %d", us_count, eu_count)
 
     # Summary by index
     index_counts = {}
@@ -231,8 +283,12 @@ def build():
         for idx in s["indices"]:
             index_counts[idx] = index_counts.get(idx, 0) + 1
     for idx, count in sorted(index_counts.items()):
-        print(f"  {idx}: {count}")
+        logger.info("  %s: %d", idx, count)
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Build data/stocks.json")
+    parser.add_argument("--verbose", "-v", action="store_true", help="Enable DEBUG logging")
+    args = parser.parse_args()
+    setup_logging(level=logging.DEBUG if args.verbose else logging.INFO)
     build()

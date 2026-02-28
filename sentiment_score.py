@@ -5,8 +5,11 @@ Each indicator normalizes to 0.0-1.0 (0.5 = neutral, >0.5 = bullish).
 Missing indicators redistribute weight proportionally.
 """
 
+import logging
 from dataclasses import dataclass
 from typing import Callable, Optional
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -110,6 +113,7 @@ def compute_composite_sentiment(analysis_data: dict) -> Optional[dict]:
 
     available_count = sum(1 for b in breakdown if b["available"])
     if available_count < 2:
+        logger.debug("Composite sentiment: only %d indicators available, need 2", available_count)
         return None
 
     # Redistribute weights and compute weighted average
@@ -129,6 +133,11 @@ def compute_composite_sentiment(analysis_data: dict) -> Optional[dict]:
     composite = round((weighted_sum - 0.5) * 2.0, 3)
 
     confidence = "high" if available_count >= 4 else "medium" if available_count >= 3 else "low"
+
+    redistributed = [b["name"] for b in breakdown if b["available"] and b["effective_weight"] != b["weight"]]
+    if redistributed:
+        logger.debug("Sentiment weight redistributed across: %s", ", ".join(redistributed))
+    logger.debug("Composite sentiment: score=%.3f confidence=%s indicators=%d/%d", composite, confidence, available_count, len(INDICATORS))
 
     return {
         "score": composite,
