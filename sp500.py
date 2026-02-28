@@ -1,7 +1,10 @@
 """
 S&P 500 tickers organized by sector.
 Source: Yahoo Finance sector data (as of Feb 2026).
-Used to find sector peers for comparison without fetching all 500 tickers.
+
+DEPRECATED: Runtime code now uses stock_db.py + peers.py for peer resolution.
+This file is kept as seed data for scripts/build_stock_db.py and as fallback
+when a stock is not in the enriched database (data/stocks.json).
 """
 
 SP500_BY_SECTOR = {

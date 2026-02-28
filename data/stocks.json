@@ -1,0 +1,6744 @@
+{
+  "10J.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Furnishings, Fixtures & Appliances",
+    "market_cap": 5282567680,
+    "name": "Howden Joinery Group PLC      R",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "10J.F"
+  },
+  "1BF.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Insurance - Life",
+    "market_cap": 8842604544,
+    "name": "Phoenix Group Holdings PLC    R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "1BF.F"
+  },
+  "1IV.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 8007794688,
+    "name": "St. James's Place PLC         R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "1IV.F"
+  },
+  "1IZ1.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "",
+    "market_cap": null,
+    "name": "Scottish Mortgage Inv.Tr. PLC R",
+    "region": "Europe",
+    "sector": "",
+    "ticker": "1IZ1.F"
+  },
+  "1LNB.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 6728952832,
+    "name": "Spirax Group PLC              R",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "1LNB.F"
+  },
+  "3JDA.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Internet Content & Information",
+    "market_cap": 3538885376,
+    "name": "Rightmove PLC                 R",
+    "region": "Europe",
+    "sector": "Communication Services",
+    "ticker": "3JDA.F"
+  },
+  "6CMB.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 5009074176,
+    "name": "Croda International PLC       R",
+    "region": "Europe",
+    "sector": "Basic Materials",
+    "ticker": "6CMB.F"
+  },
+  "8GCA.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Other Industrial Metals & Mining",
+    "market_cap": 70919389184,
+    "name": "Glencore PLC                  R",
+    "region": "Europe",
+    "sector": "Basic Materials",
+    "ticker": "8GCA.F"
+  },
+  "AAFRF": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Telecom Services",
+    "market_cap": 17673211904,
+    "name": "Airtel Africa Plc",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "AAFRF"
+  },
+  "AAPL": {
+    "indices": [
+      "dow30",
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Consumer Electronics",
+    "market_cap": 4011799085056,
+    "name": "Apple Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "AAPL"
+  },
+  "ABBV": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 397289881600,
+    "name": "AbbVie Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "ABBV"
+  },
+  "ABNB": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Travel Services",
+    "market_cap": 82115428352,
+    "name": "Airbnb, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "ABNB"
+  },
+  "ABT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 202345775104,
+    "name": "Abbott Laboratories",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "ABT"
+  },
+  "ACN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 128604405760,
+    "name": "Accenture plc",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ACN"
+  },
+  "ADBE": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 108434145280,
+    "name": "Adobe Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ADBE"
+  },
+  "ADI": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 173508935680,
+    "name": "Analog Devices, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ADI"
+  },
+  "ADM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Farm Products",
+    "market_cap": 32442628096,
+    "name": "Archer-Daniels-Midland Company",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "ADM"
+  },
+  "ADP": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 88315428864,
+    "name": "Automatic Data Processing, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ADP"
+  },
+  "ADS.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Footwear & Accessories",
+    "market_cap": 28916023296,
+    "name": "adidas AG                     N",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "ADS.F"
+  },
+  "ADSK": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 49724850176,
+    "name": "Autodesk, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ADSK"
+  },
+  "AEE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 30965092352,
+    "name": "Ameren Corporation",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "AEE"
+  },
+  "AEP": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 71447805952,
+    "name": "American Electric Power Company",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "AEP"
+  },
+  "AES": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Diversified",
+    "market_cap": 11571965952,
+    "name": "The AES Corporation",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "AES"
+  },
+  "AFL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Life",
+    "market_cap": 59733262336,
+    "name": "AFLAC Incorporated",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "AFL"
+  },
+  "AHT.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 2402525696,
+    "name": "Ashland Inc.                  R",
+    "region": "Europe",
+    "sector": "Basic Materials",
+    "ticker": "AHT.F"
+  },
+  "AIG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Diversified",
+    "market_cap": 43354935296,
+    "name": "American International Group, I",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "AIG"
+  },
+  "AIR.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 150029942784,
+    "name": "Airbus SE                     A",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "AIR.F"
+  },
+  "AIZ": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Property & Casualty",
+    "market_cap": 11577361408,
+    "name": "Assurant, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "AIZ"
+  },
+  "AJG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance Brokers",
+    "market_cap": 57904062464,
+    "name": "Arthur J. Gallagher & Co.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "AJG"
+  },
+  "AKAM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 14474322944,
+    "name": "Akamai Technologies, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "AKAM"
+  },
+  "ALB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 21793484800,
+    "name": "Albemarle Corporation",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "ALB"
+  },
+  "ALGN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 13714420736,
+    "name": "Align Technology, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "ALGN"
+  },
+  "ALK": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Airlines",
+    "market_cap": 6339672064,
+    "name": "Alaska Air Group, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "ALK"
+  },
+  "ALL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Property & Casualty",
+    "market_cap": 55675400192,
+    "name": "Allstate Corporation (The)",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "ALL"
+  },
+  "ALLE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Security & Protection Services",
+    "market_cap": 13818598400,
+    "name": "Allegion plc",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "ALLE"
+  },
+  "ALV.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Insurance - Diversified",
+    "market_cap": 147889012736,
+    "name": "Allianz SE                    v",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "ALV.F"
+  },
+  "ALW.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": null,
+    "market_cap": 4867093504,
+    "name": "ALLIANCE WITAN PLC ORD 2.5P",
+    "region": "Europe",
+    "sector": null,
+    "ticker": "ALW.L"
+  },
+  "AMAT": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductor Equipment & Materials",
+    "market_cap": 298175102976,
+    "name": "Applied Materials, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "AMAT"
+  },
+  "AMCR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaging & Containers",
+    "market_cap": 22289084416,
+    "name": "Amcor plc",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "AMCR"
+  },
+  "AMD": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 332082085888,
+    "name": "Advanced Micro Devices, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "AMD"
+  },
+  "AME": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 54549110784,
+    "name": "AMETEK, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "AME"
+  },
+  "AMGN": {
+    "indices": [
+      "dow30",
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 204484526080,
+    "name": "Amgen Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "AMGN"
+  },
+  "AMP": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 45243224064,
+    "name": "Ameriprise Financial, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "AMP"
+  },
+  "AMT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Specialty",
+    "market_cap": 86631161856,
+    "name": "American Tower Corporation (REI",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "AMT"
+  },
+  "AMZN": {
+    "indices": [
+      "dow30",
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Internet Retail",
+    "market_cap": 2232004640768,
+    "name": "Amazon.com, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "AMZN"
+  },
+  "ANET": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Computer Hardware",
+    "market_cap": 164021878784,
+    "name": "Arista Networks, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ANET"
+  },
+  "AON": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance Brokers",
+    "market_cap": 70986670080,
+    "name": "Aon plc",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "AON"
+  },
+  "AOS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 10669067264,
+    "name": "A.O. Smith Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "AOS"
+  },
+  "APA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas E&P",
+    "market_cap": 10411586560,
+    "name": "APA Corporation",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "APA"
+  },
+  "APD": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 61504270336,
+    "name": "Air Products and Chemicals, Inc",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "APD"
+  },
+  "APH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Electronic Components",
+    "market_cap": 182501556224,
+    "name": "Amphenol Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "APH"
+  },
+  "APP": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Advertising Agencies",
+    "market_cap": 150525591552,
+    "name": "Applovin Corporation",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "APP"
+  },
+  "APTV": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Auto Parts",
+    "market_cap": 16646757376,
+    "name": "Aptiv PLC",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "APTV"
+  },
+  "ARE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Office",
+    "market_cap": 9552316416,
+    "name": "Alexandria Real Estate Equities",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "ARE"
+  },
+  "ARM": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 137273933824,
+    "name": "Arm Holdings plc",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ARM"
+  },
+  "ASML": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Semiconductor Equipment & Materials",
+    "market_cap": 568170577920,
+    "name": "ASML Holding N.V. - New York Re",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ASML"
+  },
+  "ATO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Gas",
+    "market_cap": 30379554816,
+    "name": "Atmos Energy Corporation",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "ATO"
+  },
+  "AVB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Residential",
+    "market_cap": 25440362496,
+    "name": "AvalonBay Communities, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "AVB"
+  },
+  "AVGO": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 1525267824640,
+    "name": "Broadcom Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "AVGO"
+  },
+  "AVY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaging & Containers",
+    "market_cap": 14913373184,
+    "name": "Avery Dennison Corporation",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "AVY"
+  },
+  "AWK": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Water",
+    "market_cap": 26220429312,
+    "name": "American Water Works Company, I",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "AWK"
+  },
+  "AXP": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Credit Services",
+    "market_cap": 230985744384,
+    "name": "American Express Company",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "AXP"
+  },
+  "AZN": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 316226830336,
+    "name": "AstraZeneca PLC",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "AZN"
+  },
+  "AZO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Auto Parts",
+    "market_cap": 60875550720,
+    "name": "AutoZone, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "AZO"
+  },
+  "BA": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 180166475776,
+    "name": "Boeing Company (The)",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "BA"
+  },
+  "BAB.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Engineering & Construction",
+    "market_cap": 6755870208,
+    "name": "BABCOCK INTERNATIONAL GROUP PLC",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "BAB.L"
+  },
+  "BAC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Diversified",
+    "market_cap": 381920509952,
+    "name": "Bank of America Corporation",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "BAC"
+  },
+  "BAS.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Chemicals",
+    "market_cap": 44527931392,
+    "name": "BASF SE                       N",
+    "region": "Europe",
+    "sector": "Basic Materials",
+    "ticker": "BAS.F"
+  },
+  "BAX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 10475017216,
+    "name": "Baxter International Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "BAX"
+  },
+  "BAYN.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 41104621568,
+    "name": "Bayer AG                      N",
+    "region": "Europe",
+    "sector": "Healthcare",
+    "ticker": "BAYN.F"
+  },
+  "BB2.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Luxury Goods",
+    "market_cap": 4866064896,
+    "name": "Burberry Group PLC            R",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "BB2.F"
+  },
+  "BBWI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Retail",
+    "market_cap": 4806232576,
+    "name": "Bath & Body Works, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "BBWI"
+  },
+  "BBY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Retail",
+    "market_cap": 13206965248,
+    "name": "Best Buy Co., Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "BBY"
+  },
+  "BCY2.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Banks - Diversified",
+    "market_cap": 73748299776,
+    "name": "BARCLAYS PLC                  R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "BCY2.F"
+  },
+  "BDX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 64003055616,
+    "name": "Becton, Dickinson and Company",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "BDX"
+  },
+  "BEI.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Household & Personal Products",
+    "market_cap": 23561916416,
+    "name": "BEIERSDORF AG                 I",
+    "region": "Europe",
+    "sector": "Consumer Defensive",
+    "ticker": "BEI.F"
+  },
+  "BEN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 14301747200,
+    "name": "Franklin Resources, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "BEN"
+  },
+  "BEZ.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Insurance - Specialty",
+    "market_cap": 7339240448,
+    "name": "BEAZLEY PLC ORD 5P",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "BEZ.L"
+  },
+  "BIIB": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 27593539584,
+    "name": "Biogen Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "BIIB"
+  },
+  "BIO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 7428025856,
+    "name": "Bio-Rad Laboratories, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "BIO"
+  },
+  "BK": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Diversified",
+    "market_cap": 84804624384,
+    "name": "The Bank of New York Mellon Cor",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "BK"
+  },
+  "BKG.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Engineering & Construction",
+    "market_cap": 238611984,
+    "name": "Baoye Group Co. Ltd.          R",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "BKG.F"
+  },
+  "BKNG": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Travel Services",
+    "market_cap": 137002090496,
+    "name": "Booking Holdings Inc. Common St",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "BKNG"
+  },
+  "BKR": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Oil & Gas Equipment & Services",
+    "market_cap": 64136548352,
+    "name": "Baker Hughes Company",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "BKR"
+  },
+  "BLDA.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "REIT - Diversified",
+    "market_cap": 4659462656,
+    "name": "British Land Co. PLC, The     R",
+    "region": "Europe",
+    "sector": "Real Estate",
+    "ticker": "BLDA.F"
+  },
+  "BLK": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 169156395008,
+    "name": "BlackRock, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "BLK"
+  },
+  "BMW.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Auto Manufacturers",
+    "market_cap": 54186020864,
+    "name": "BAYERISCHE MOTOREN WERKE AG   S",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "BMW.F"
+  },
+  "BMY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 124428541952,
+    "name": "Bristol-Myers Squibb Company",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "BMY"
+  },
+  "BNR.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 7551912448,
+    "name": "Brenntag SE                   N",
+    "region": "Europe",
+    "sector": "Basic Materials",
+    "ticker": "BNR.F"
+  },
+  "BR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 21395367936,
+    "name": "Broadridge Financial Solutions,",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "BR"
+  },
+  "BRO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance Brokers",
+    "market_cap": 24315990016,
+    "name": "Brown & Brown, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "BRO"
+  },
+  "BSP.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 71741538304,
+    "name": "BAE SYSTEMS PLC               R",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "BSP.F"
+  },
+  "BSX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 112404324352,
+    "name": "Boston Scientific Corporation",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "BSX"
+  },
+  "BT-A.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Telecom Services",
+    "market_cap": 20251084800,
+    "name": "BT GROUP PLC ORD 5P",
+    "region": "Europe",
+    "sector": "Communication Services",
+    "ticker": "BT-A.L"
+  },
+  "BUZ1.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Food Distribution",
+    "market_cap": 8057243136,
+    "name": "Bunzl PLC                     R",
+    "region": "Europe",
+    "sector": "Consumer Defensive",
+    "ticker": "BUZ1.F"
+  },
+  "BWA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Auto Parts",
+    "market_cap": 12388577280,
+    "name": "BorgWarner Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "BWA"
+  },
+  "BXP": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Office",
+    "market_cap": 10825631744,
+    "name": "BXP, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "BXP"
+  },
+  "C": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Diversified",
+    "market_cap": 207894839296,
+    "name": "Citigroup, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "C"
+  },
+  "CAG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaged Foods",
+    "market_cap": 8959859712,
+    "name": "ConAgra Brands, Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "CAG"
+  },
+  "CAH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Distribution",
+    "market_cap": 53447327744,
+    "name": "Cardinal Health, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "CAH"
+  },
+  "CARR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Building Products & Equipment",
+    "market_cap": 52457562112,
+    "name": "Carrier Global Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "CARR"
+  },
+  "CAT": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Farm & Heavy Construction Machinery",
+    "market_cap": 352355876864,
+    "name": "Caterpillar, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "CAT"
+  },
+  "CB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Property & Casualty",
+    "market_cap": 132988706816,
+    "name": "Chubb Limited",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "CB"
+  },
+  "CBK.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 40670171136,
+    "name": "Commerzbank AG                I",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "CBK.F"
+  },
+  "CBOE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Financial Data & Stock Exchanges",
+    "market_cap": 30587588608,
+    "name": "Cboe Global Markets, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "CBOE"
+  },
+  "CBRE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Real Estate Services",
+    "market_cap": 44638949376,
+    "name": "CBRE Group Inc",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "CBRE"
+  },
+  "CCEP": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Beverages - Non-Alcoholic",
+    "market_cap": 48740507648,
+    "name": "Coca-Cola Europacific Partners ",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "CCEP"
+  },
+  "CCI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Specialty",
+    "market_cap": 37625384960,
+    "name": "Crown Castle Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "CCI"
+  },
+  "CCKC.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Beverages - Non-Alcoholic",
+    "market_cap": 20175740928,
+    "name": "Coca-Cola HBC AG              N",
+    "region": "Europe",
+    "sector": "Consumer Defensive",
+    "ticker": "CCKC.F"
+  },
+  "CCL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Travel Services",
+    "market_cap": 45201768448,
+    "name": "Carnival Corporation",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "CCL"
+  },
+  "CDNS": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 81093017600,
+    "name": "Cadence Design Systems, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "CDNS"
+  },
+  "CDW": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 16171585536,
+    "name": "CDW Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "CDW"
+  },
+  "CE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Chemicals",
+    "market_cap": 5379975680,
+    "name": "Celanese Corporation",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "CE"
+  },
+  "CEG": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Utilities - Independent Power Producers",
+    "market_cap": 117222580224,
+    "name": "Constellation Energy Corporatio",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "CEG"
+  },
+  "CENB.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Utilities - Independent Power Producers",
+    "market_cap": 10074041344,
+    "name": "Centrica PLC                  R",
+    "region": "Europe",
+    "sector": "Utilities",
+    "ticker": "CENB.F"
+  },
+  "CF": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Agricultural Inputs",
+    "market_cap": 15737293824,
+    "name": "CF Industries Holdings, Inc.",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "CF"
+  },
+  "CFG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 27426990080,
+    "name": "Citizens Financial Group, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "CFG"
+  },
+  "CHD": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Household & Personal Products",
+    "market_cap": 24894285824,
+    "name": "Church & Dwight Company, Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "CHD"
+  },
+  "CHRW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Integrated Freight & Logistics",
+    "market_cap": 21835722752,
+    "name": "C.H. Robinson Worldwide, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "CHRW"
+  },
+  "CHTR": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Telecom Services",
+    "market_cap": 29554511872,
+    "name": "Charter Communications, Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "CHTR"
+  },
+  "CI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Healthcare Plans",
+    "market_cap": 77151281152,
+    "name": "The Cigna Group",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "CI"
+  },
+  "CINF": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Property & Casualty",
+    "market_cap": 25774258176,
+    "name": "Cincinnati Financial Corporatio",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "CINF"
+  },
+  "CL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Household & Personal Products",
+    "market_cap": 78841937920,
+    "name": "Colgate-Palmolive Company",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "CL"
+  },
+  "CLX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Household & Personal Products",
+    "market_cap": 15478089728,
+    "name": "Clorox Company (The)",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "CLX"
+  },
+  "CMCSA": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Telecom Services",
+    "market_cap": 112414146560,
+    "name": "Comcast Corporation",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "CMCSA"
+  },
+  "CME": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Financial Data & Stock Exchanges",
+    "market_cap": 113767710720,
+    "name": "CME Group Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "CME"
+  },
+  "CMG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Restaurants",
+    "market_cap": 50312679424,
+    "name": "Chipotle Mexican Grill, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "CMG"
+  },
+  "CMI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 81256480768,
+    "name": "Cummins Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "CMI"
+  },
+  "CMS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 23609731072,
+    "name": "CMS Energy Corporation",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "CMS"
+  },
+  "CNC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Healthcare Plans",
+    "market_cap": 21111730176,
+    "name": "Centene Corporation",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "CNC"
+  },
+  "CNP": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 28079863808,
+    "name": "CenterPoint Energy, Inc (Holdin",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "CNP"
+  },
+  "COF": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Credit Services",
+    "market_cap": 132531388416,
+    "name": "Capital One Financial Corporati",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "COF"
+  },
+  "CON.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Auto Parts",
+    "market_cap": 14820443136,
+    "name": "CONTINENTAL AG                I",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "CON.F"
+  },
+  "COO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 16701938688,
+    "name": "The Cooper Companies, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "COO"
+  },
+  "COP": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas E&P",
+    "market_cap": 135312949248,
+    "name": "ConocoPhillips",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "COP"
+  },
+  "COST": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Discount Stores",
+    "market_cap": 438070804480,
+    "name": "Costco Wholesale Corporation",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "COST"
+  },
+  "CPB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaged Foods",
+    "market_cap": 8007885824,
+    "name": "The Campbell's Company",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "CPB"
+  },
+  "CPRT": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Specialty Business Services",
+    "market_cap": 35961856000,
+    "name": "Copart, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "CPRT"
+  },
+  "CPT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Residential",
+    "market_cap": 11729020928,
+    "name": "Camden Property Trust",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "CPT"
+  },
+  "CRL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 8635346944,
+    "name": "Charles River Laboratories Inte",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "CRL"
+  },
+  "CRM": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 189895442432,
+    "name": "Salesforce, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "CRM"
+  },
+  "CRWD": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 96074711040,
+    "name": "CrowdStrike Holdings, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "CRWD"
+  },
+  "CSCO": {
+    "indices": [
+      "dow30",
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Communication Equipment",
+    "market_cap": 308580483072,
+    "name": "Cisco Systems, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "CSCO"
+  },
+  "CSGP": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Real Estate Services",
+    "market_cap": 19072024576,
+    "name": "CoStar Group, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "CSGP"
+  },
+  "CSX": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Railroads",
+    "market_cap": 79310094336,
+    "name": "CSX Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "CSX"
+  },
+  "CTAS": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Specialty Business Services",
+    "market_cap": 79682125824,
+    "name": "Cintas Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "CTAS"
+  },
+  "CTEC.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 4990482944,
+    "name": "CONVATEC GROUP PLC ORD 10P",
+    "region": "Europe",
+    "sector": "Healthcare",
+    "ticker": "CTEC.L"
+  },
+  "CTRA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas E&P",
+    "market_cap": 22848940032,
+    "name": "Coterra Energy Inc.",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "CTRA"
+  },
+  "CTSH": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 31357540352,
+    "name": "Cognizant Technology Solutions ",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "CTSH"
+  },
+  "CTVA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Agricultural Inputs",
+    "market_cap": 53261193216,
+    "name": "Corteva, Inc.",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "CTVA"
+  },
+  "CVS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Healthcare Plans",
+    "market_cap": 99245187072,
+    "name": "CVS Health Corporation",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "CVS"
+  },
+  "CVX": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Oil & Gas Integrated",
+    "market_cap": 368200974336,
+    "name": "Chevron Corporation",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "CVX"
+  },
+  "CZR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Resorts & Casinos",
+    "market_cap": 5049630208,
+    "name": "Caesars Entertainment, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "CZR"
+  },
+  "D": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 54095405056,
+    "name": "Dominion Energy, Inc.",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "D"
+  },
+  "DAL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Airlines",
+    "market_cap": 46052245504,
+    "name": "Delta Air Lines, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "DAL"
+  },
+  "DASH": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Internet Retail",
+    "market_cap": 77756448768,
+    "name": "DoorDash, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "DASH"
+  },
+  "DB1.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Financial Data & Stock Exchanges",
+    "market_cap": 41385611264,
+    "name": "DEUTSCHE BOERSE AG            N",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "DB1.F"
+  },
+  "DBK.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 59266158592,
+    "name": "DEUTSCHE BANK AG              N",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "DBK.F"
+  },
+  "DCC.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Oil & Gas Refining & Marketing",
+    "market_cap": 4954539520,
+    "name": "DCC PLC                       R",
+    "region": "Europe",
+    "sector": "Energy",
+    "ticker": "DCC.F"
+  },
+  "DD": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 21095407616,
+    "name": "DuPont de Nemours, Inc.",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "DD"
+  },
+  "DDOG": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 40839114752,
+    "name": "Datadog, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "DDOG"
+  },
+  "DE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Farm & Heavy Construction Machinery",
+    "market_cap": 167919796224,
+    "name": "Deere & Company",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "DE"
+  },
+  "DG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Discount Stores",
+    "market_cap": 33898305536,
+    "name": "Dollar General Corporation",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "DG"
+  },
+  "DGX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 23483262976,
+    "name": "Quest Diagnostics Incorporated",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "DGX"
+  },
+  "DHI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Residential Construction",
+    "market_cap": 46276096000,
+    "name": "D.R. Horton, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "DHI"
+  },
+  "DHL.DE": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Integrated Freight & Logistics",
+    "market_cap": 57453240320,
+    "name": "DEUTSCHE POST AG              N",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "DHL.DE"
+  },
+  "DHR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 147996573696,
+    "name": "Danaher Corporation",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "DHR"
+  },
+  "DIS": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Entertainment",
+    "market_cap": 187181006848,
+    "name": "Walt Disney Company (The)",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "DIS"
+  },
+  "DLR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Specialty",
+    "market_cap": 61695008768,
+    "name": "Digital Realty Trust, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "DLR"
+  },
+  "DLTR": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Discount Stores",
+    "market_cap": 25893715968,
+    "name": "Dollar Tree, Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "DLTR"
+  },
+  "DOV": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 31152982016,
+    "name": "Dover Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "DOV"
+  },
+  "DOW": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Chemicals",
+    "market_cap": 21454268416,
+    "name": "Dow Inc.",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "DOW"
+  },
+  "DPLM.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Industrial Distribution",
+    "market_cap": 7576358912,
+    "name": "DIPLOMA PLC ORD 5P",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "DPLM.L"
+  },
+  "DPZ": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Restaurants",
+    "market_cap": 13555464192,
+    "name": "Domino's Pizza Inc",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "DPZ"
+  },
+  "DRI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Restaurants",
+    "market_cap": 24987684864,
+    "name": "Darden Restaurants, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "DRI"
+  },
+  "DTE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 30461952000,
+    "name": "DTE Energy Company",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "DTE"
+  },
+  "DTG.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Farm & Heavy Construction Machinery",
+    "market_cap": 32663169024,
+    "name": "Daimler Truck Holding AG      N",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "DTG.F"
+  },
+  "DUK": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 100497162240,
+    "name": "Duke Energy Corporation (Holdin",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "DUK"
+  },
+  "DVA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Care Facilities",
+    "market_cap": 10197145600,
+    "name": "DaVita Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "DVA"
+  },
+  "DVN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas E&P",
+    "market_cap": 26460475392,
+    "name": "Devon Energy Corporation",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "DVN"
+  },
+  "DXC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 2201053184,
+    "name": "DXC Technology Company",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "DXC"
+  },
+  "DXCM": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 29009408000,
+    "name": "DexCom, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "DXCM"
+  },
+  "EA": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Electronic Gaming & Multimedia",
+    "market_cap": 50318516224,
+    "name": "Electronic Arts Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "EA"
+  },
+  "EBAY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Internet Retail",
+    "market_cap": 40170299392,
+    "name": "eBay Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "EBAY"
+  },
+  "ECL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 86885367808,
+    "name": "Ecolab Inc.",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "ECL"
+  },
+  "ED": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 39977230336,
+    "name": "Consolidated Edison, Inc.",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "ED"
+  },
+  "EDV.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Gold",
+    "market_cap": 12445725696,
+    "name": "ENDEAVOUR MINING PLC ORD USD0.0",
+    "region": "Europe",
+    "sector": "Basic Materials",
+    "ticker": "EDV.L"
+  },
+  "EFX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Consulting Services",
+    "market_cap": 25439602688,
+    "name": "Equifax, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "EFX"
+  },
+  "EIX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 28620107776,
+    "name": "Edison International",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "EIX"
+  },
+  "EL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Household & Personal Products",
+    "market_cap": 40477257728,
+    "name": "Estee Lauder Companies, Inc. (T",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "EL"
+  },
+  "EMN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 8580330496,
+    "name": "Eastman Chemical Company",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "EMN"
+  },
+  "EMR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 85874778112,
+    "name": "Emerson Electric Company",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "EMR"
+  },
+  "ENPH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Solar",
+    "market_cap": 6000392704,
+    "name": "Enphase Energy, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ENPH"
+  },
+  "ENR.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 141003489280,
+    "name": "Siemens Energy AG             N",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "ENR.F"
+  },
+  "ENT.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Gambling",
+    "market_cap": 3781337856,
+    "name": "ENTAIN PLC ORD EUR0.01",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "ENT.L"
+  },
+  "EOAN.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Utilities - Diversified",
+    "market_cap": 51484459008,
+    "name": "E.ON SE                       N",
+    "region": "Europe",
+    "sector": "Utilities",
+    "ticker": "EOAN.F"
+  },
+  "EOG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas E&P",
+    "market_cap": 66136178688,
+    "name": "EOG Resources, Inc.",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "EOG"
+  },
+  "EPAM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 7720705536,
+    "name": "EPAM Systems, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "EPAM"
+  },
+  "EQIX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Specialty",
+    "market_cap": 93147635712,
+    "name": "Equinix, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "EQIX"
+  },
+  "EQR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Residential",
+    "market_cap": 25143924736,
+    "name": "Equity Residential",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "EQR"
+  },
+  "EQT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas E&P",
+    "market_cap": 37294129152,
+    "name": "EQT Corporation",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "EQT"
+  },
+  "ES": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 28181020672,
+    "name": "Eversource Energy (D/B/A)",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "ES"
+  },
+  "ESS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Residential",
+    "market_cap": 18165829632,
+    "name": "Essex Property Trust, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "ESS"
+  },
+  "ETN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 145827889152,
+    "name": "Eaton Corporation, PLC",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "ETN"
+  },
+  "ETR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 47825842176,
+    "name": "Entergy Corporation",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "ETR"
+  },
+  "ETSY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Internet Retail",
+    "market_cap": 5468810752,
+    "name": "Etsy, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "ETSY"
+  },
+  "EVRG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 19111067648,
+    "name": "Evergy, Inc.",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "EVRG"
+  },
+  "EW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 50431893504,
+    "name": "Edwards Lifesciences Corporatio",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "EW"
+  },
+  "EXC": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 49917157376,
+    "name": "Exelon Corporation",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "EXC"
+  },
+  "EXPD": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Integrated Freight & Logistics",
+    "market_cap": 19641186304,
+    "name": "Expeditors International of Was",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "EXPD"
+  },
+  "EXPE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Travel Services",
+    "market_cap": 26704023552,
+    "name": "Expedia Group, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "EXPE"
+  },
+  "EXR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Industrial",
+    "market_cap": 32717238272,
+    "name": "Extra Space Storage Inc",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "EXR"
+  },
+  "F": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Auto Manufacturers",
+    "market_cap": 57488338944,
+    "name": "Ford Motor Company",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "F"
+  },
+  "FANG": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Oil & Gas E&P",
+    "market_cap": 47844044800,
+    "name": "Diamondback Energy, Inc.",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "FANG"
+  },
+  "FAST": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Industrial Distribution",
+    "market_cap": 52448825344,
+    "name": "Fastenal Company",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "FAST"
+  },
+  "FCIT.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": null,
+    "market_cap": 6102016512,
+    "name": "F&C INVESTMENT TRUST PLC ORD 25",
+    "region": "Europe",
+    "sector": null,
+    "ticker": "FCIT.L"
+  },
+  "FCX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Copper",
+    "market_cap": 98275844096,
+    "name": "Freeport-McMoRan, Inc.",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "FCX"
+  },
+  "FDS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Financial Data & Stock Exchanges",
+    "market_cap": 8017969664,
+    "name": "FactSet Research Systems Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "FDS"
+  },
+  "FDX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Integrated Freight & Logistics",
+    "market_cap": 91475206144,
+    "name": "FedEx Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "FDX"
+  },
+  "FE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 29252982784,
+    "name": "FirstEnergy Corp.",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "FE"
+  },
+  "FFIV": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 15766213632,
+    "name": "F5, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "FFIV"
+  },
+  "FG1.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Copper",
+    "market_cap": 50258972672,
+    "name": "ANTOFAGASTA PLC               R",
+    "region": "Europe",
+    "sector": "Basic Materials",
+    "ticker": "FG1.F"
+  },
+  "FIS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 26667425792,
+    "name": "Fidelity National Information S",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "FIS"
+  },
+  "FITB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 46775517184,
+    "name": "Fifth Third Bancorp",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "FITB"
+  },
+  "FLN.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Insurance - Property & Casualty",
+    "market_cap": 10096909312,
+    "name": "Admiral Group PLC             R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "FLN.F"
+  },
+  "FMC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Agricultural Inputs",
+    "market_cap": 1823832960,
+    "name": "FMC Corporation",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "FMC"
+  },
+  "FME.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Medical Care Facilities",
+    "market_cap": 11430244352,
+    "name": "Fresenius Medical Care AG     I",
+    "region": "Europe",
+    "sector": "Healthcare",
+    "ticker": "FME.F"
+  },
+  "FNL.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Other Precious Metals & Mining",
+    "market_cap": 34943492096,
+    "name": "Fresnillo PLC                 R",
+    "region": "Europe",
+    "sector": "Basic Materials",
+    "ticker": "FNL.F"
+  },
+  "FOX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Entertainment",
+    "market_cap": 24290408448,
+    "name": "Fox Corporation",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "FOX"
+  },
+  "FOXA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Entertainment",
+    "market_cap": 24171003904,
+    "name": "Fox Corporation",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "FOXA"
+  },
+  "FRE.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Medical Care Facilities",
+    "market_cap": 28747630592,
+    "name": "Fresenius SE & Co. KGaA       I",
+    "region": "Europe",
+    "sector": "Healthcare",
+    "ticker": "FRE.F"
+  },
+  "FRT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Retail",
+    "market_cap": 9413159936,
+    "name": "Federal Realty Investment Trust",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "FRT"
+  },
+  "FTNT": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 60688269312,
+    "name": "Fortinet, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "FTNT"
+  },
+  "FTV": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Scientific & Technical Instruments",
+    "market_cap": 18993176576,
+    "name": "Fortive Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "FTV"
+  },
+  "G1A.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 10579961856,
+    "name": "GEA Group AG                  I",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "G1A.F"
+  },
+  "G24.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Internet Content & Information",
+    "market_cap": 4868760576,
+    "name": "Scout24 SE                    N",
+    "region": "Europe",
+    "sector": "Communication Services",
+    "ticker": "G24.F"
+  },
+  "GD": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 94831099904,
+    "name": "General Dynamics Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "GD"
+  },
+  "GE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 359522762752,
+    "name": "GE Aerospace",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "GE"
+  },
+  "GEHC": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 38246518784,
+    "name": "GE HealthCare Technologies Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "GEHC"
+  },
+  "GFS": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 26072586240,
+    "name": "GlobalFoundries Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "GFS"
+  },
+  "GILD": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 178372526080,
+    "name": "Gilead Sciences, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "GILD"
+  },
+  "GIS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaged Foods",
+    "market_cap": 23973842944,
+    "name": "General Mills, Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "GIS"
+  },
+  "GL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Life",
+    "market_cap": 11832996864,
+    "name": "Globe Life Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "GL"
+  },
+  "GLW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Electronic Components",
+    "market_cap": 128949600256,
+    "name": "Corning Incorporated",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "GLW"
+  },
+  "GM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Auto Manufacturers",
+    "market_cap": 75365867520,
+    "name": "General Motors Company",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "GM"
+  },
+  "GNRC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 13752611840,
+    "name": "Generac Holdlings Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "GNRC"
+  },
+  "GOOG": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Internet Content & Information",
+    "market_cap": 3715593666560,
+    "name": "Alphabet Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "GOOG"
+  },
+  "GOOGL": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Internet Content & Information",
+    "market_cap": 3718376062976,
+    "name": "Alphabet Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "GOOGL"
+  },
+  "GPC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Auto Parts",
+    "market_cap": 16256452608,
+    "name": "Genuine Parts Company",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "GPC"
+  },
+  "GPN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Business Services",
+    "market_cap": 21798914048,
+    "name": "Global Payments Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "GPN"
+  },
+  "GRMN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Scientific & Technical Instruments",
+    "market_cap": 48920928256,
+    "name": "Garmin Ltd.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "GRMN"
+  },
+  "GS": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Capital Markets",
+    "market_cap": 281227886592,
+    "name": "Goldman Sachs Group, Inc. (The)",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "GS"
+  },
+  "GUIA.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Beverages - Wineries & Distilleries",
+    "market_cap": 40299823104,
+    "name": "DIAGEO PLC                    R",
+    "region": "Europe",
+    "sector": "Consumer Defensive",
+    "ticker": "GUIA.F"
+  },
+  "GWW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Industrial Distribution",
+    "market_cap": 52879503360,
+    "name": "W.W. Grainger, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "GWW"
+  },
+  "H11.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Conglomerates",
+    "market_cap": 18400899072,
+    "name": "HALMA PLC                     R",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "H11.F"
+  },
+  "HAL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas Equipment & Services",
+    "market_cap": 30054486016,
+    "name": "Halliburton Company",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "HAL"
+  },
+  "HAS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Leisure",
+    "market_cap": 14084224000,
+    "name": "Hasbro, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "HAS"
+  },
+  "HBAN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 35602558976,
+    "name": "Huntington Bancshares Incorpora",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "HBAN"
+  },
+  "HBC1.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Banks - Diversified",
+    "market_cap": 274311610368,
+    "name": "HSBC HOLDINGS PLC             R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "HBC1.F"
+  },
+  "HCA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Care Facilities",
+    "market_cap": 117598445568,
+    "name": "HCA Healthcare, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "HCA"
+  },
+  "HD": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Home Improvement Retail",
+    "market_cap": 373406400512,
+    "name": "Home Depot, Inc. (The)",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "HD"
+  },
+  "HEI.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Building Materials",
+    "market_cap": 34366279680,
+    "name": "Heidelberg Materials AG       I",
+    "region": "Europe",
+    "sector": "Basic Materials",
+    "ticker": "HEI.F"
+  },
+  "HEN3.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Household & Personal Products",
+    "market_cap": 34689609728,
+    "name": "Henkel AG & Co. KGaA          I",
+    "region": "Europe",
+    "sector": "Consumer Defensive",
+    "ticker": "HEN3.F"
+  },
+  "HIK.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Drug Manufacturers - Specialty & Generic",
+    "market_cap": 3040534784,
+    "name": "HIKMA PHARMACEUTICALS PLC ORD S",
+    "region": "Europe",
+    "sector": "Healthcare",
+    "ticker": "HIK.L"
+  },
+  "HLNCF": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Drug Manufacturers - Specialty & Generic",
+    "market_cap": 44798427136,
+    "name": "HALEON PLC",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "HLNCF"
+  },
+  "HNR1.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Insurance - Reinsurance",
+    "market_cap": 30672947200,
+    "name": "HANNOVER RUECK SE NA O.N.",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "HNR1.F"
+  },
+  "HOLX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 16794715136,
+    "name": "Hologic, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "HOLX"
+  },
+  "HON": {
+    "indices": [
+      "dow30",
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Conglomerates",
+    "market_cap": 162321727488,
+    "name": "Honeywell International Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "HON"
+  },
+  "HPE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Communication Equipment",
+    "market_cap": 27811670016,
+    "name": "Hewlett Packard Enterprise Comp",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "HPE"
+  },
+  "HPQ": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Computer Hardware",
+    "market_cap": 17581740032,
+    "name": "HP Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "HPQ"
+  },
+  "HRL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaged Foods",
+    "market_cap": 13653661696,
+    "name": "Hormel Foods Corporation",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "HRL"
+  },
+  "HSIC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Distribution",
+    "market_cap": 9879736320,
+    "name": "Henry Schein, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "HSIC"
+  },
+  "HST": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Hotel & Motel",
+    "market_cap": 14140500992,
+    "name": "Host Hotels & Resorts, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "HST"
+  },
+  "HSY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Confectioners",
+    "market_cap": 46944755712,
+    "name": "The Hershey Company",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "HSY"
+  },
+  "HUM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Healthcare Plans",
+    "market_cap": 22470619136,
+    "name": "Humana Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "HUM"
+  },
+  "HWM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 104774770688,
+    "name": "Howmet Aerospace Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "HWM"
+  },
+  "I2X2.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 5609357312,
+    "name": "ICG PLC                       R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "I2X2.F"
+  },
+  "IBM": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 226215264256,
+    "name": "International Business Machines",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "IBM"
+  },
+  "IC1B.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Lodging",
+    "market_cap": 17714651136,
+    "name": "InterContinental Hotels Group R",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "IC1B.F"
+  },
+  "ICE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Financial Data & Stock Exchanges",
+    "market_cap": 92876382208,
+    "name": "Intercontinental Exchange Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "ICE"
+  },
+  "IDXX": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 52859904000,
+    "name": "IDEXX Laboratories, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "IDXX"
+  },
+  "IEA.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Publishing",
+    "market_cap": 12051893248,
+    "name": "Informa PLC                   R",
+    "region": "Europe",
+    "sector": "Communication Services",
+    "ticker": "IEA.F"
+  },
+  "IEX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 15779462144,
+    "name": "IDEX Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "IEX"
+  },
+  "IFF": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 20743876608,
+    "name": "International Flavors & Fragran",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "IFF"
+  },
+  "IFX.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 60783886336,
+    "name": "INFINEON TECHNOLOGIES AG      N",
+    "region": "Europe",
+    "sector": "Technology",
+    "ticker": "IFX.F"
+  },
+  "IGQ5.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 38068948992,
+    "name": "3i Group PLC                  R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "IGQ5.F"
+  },
+  "ILMN": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 19479459840,
+    "name": "Illumina, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "ILMN"
+  },
+  "IMI.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 7046822400,
+    "name": "IMI PLC ORD 28 4/7P",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "IMI.L"
+  },
+  "INCY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Biotechnology",
+    "market_cap": 19919357952,
+    "name": "Incyte Corporation",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "INCY"
+  },
+  "INR.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Airlines",
+    "market_cap": 23349725184,
+    "name": "Internat. Cons. Airl. Group SAA",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "INR.F"
+  },
+  "INTC": {
+    "indices": [
+      "dow30",
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 227080814592,
+    "name": "Intel Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "INTC"
+  },
+  "INTU": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 109806534656,
+    "name": "Intuit Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "INTU"
+  },
+  "INVH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Residential",
+    "market_cap": 16122441728,
+    "name": "Invitation Homes Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "INVH"
+  },
+  "IP": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaging & Containers",
+    "market_cap": 22774292480,
+    "name": "International Paper Company",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "IP"
+  },
+  "IQV": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 29059991552,
+    "name": "IQVIA Holdings, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "IQV"
+  },
+  "IR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 37349785600,
+    "name": "Ingersoll Rand Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "IR"
+  },
+  "IRM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Specialty",
+    "market_cap": 32349579264,
+    "name": "Iron Mountain Incorporated (Del",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "IRM"
+  },
+  "ISRG": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 180008419328,
+    "name": "Intuitive Surgical, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "ISRG"
+  },
+  "IT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 11229619200,
+    "name": "Gartner, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "IT"
+  },
+  "IT1.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Specialty Business Services",
+    "market_cap": 8221120000,
+    "name": "Intertek Group PLC            R",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "IT1.F"
+  },
+  "ITBA.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Tobacco",
+    "market_cap": 30146473984,
+    "name": "Imperial Brands PLC           R",
+    "region": "Europe",
+    "sector": "Consumer Defensive",
+    "ticker": "ITBA.F"
+  },
+  "ITW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 83658694656,
+    "name": "Illinois Tool Works Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "ITW"
+  },
+  "IVZ": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 12057566208,
+    "name": "Invesco Ltd",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "IVZ"
+  },
+  "J": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Engineering & Construction",
+    "market_cap": 16504022016,
+    "name": "Jacobs Solutions Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "J"
+  },
+  "J2B.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Consulting Services",
+    "market_cap": 29016795136,
+    "name": "Experian PLC                  R",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "J2B.F"
+  },
+  "JBHT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Integrated Freight & Logistics",
+    "market_cap": 21730729984,
+    "name": "J.B. Hunt Transport Services, I",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "JBHT"
+  },
+  "JCI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Building Products & Equipment",
+    "market_cap": 87782531072,
+    "name": "Johnson Controls International ",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "JCI"
+  },
+  "JD.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Apparel Retail",
+    "market_cap": 4037462528,
+    "name": "JD SPORTS FASHION PLC ORD 0.05P",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "JD.L"
+  },
+  "JKHY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 11658509312,
+    "name": "Jack Henry & Associates, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "JKHY"
+  },
+  "JNJ": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 586738106368,
+    "name": "Johnson & Johnson",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "JNJ"
+  },
+  "JPM": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Banks - Diversified",
+    "market_cap": 825642582016,
+    "name": "JP Morgan Chase & Co.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "JPM"
+  },
+  "KDP": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Beverages - Non-Alcoholic",
+    "market_cap": 41205825536,
+    "name": "Keurig Dr Pepper Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "KDP"
+  },
+  "KEY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 24098486272,
+    "name": "KeyCorp",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "KEY"
+  },
+  "KEYS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Scientific & Technical Instruments",
+    "market_cap": 52581191680,
+    "name": "Keysight Technologies Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "KEYS"
+  },
+  "KFI1.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Home Improvement Retail",
+    "market_cap": 7176057856,
+    "name": "Kingfisher PLC                R",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "KFI1.F"
+  },
+  "KHC": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Packaged Foods",
+    "market_cap": 29084608512,
+    "name": "The Kraft Heinz Company",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "KHC"
+  },
+  "KIM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Retail",
+    "market_cap": 16008866816,
+    "name": "Kimco Realty Corporation (HC)",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "KIM"
+  },
+  "KLAC": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductor Equipment & Materials",
+    "market_cap": 200282652672,
+    "name": "KLA Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "KLAC"
+  },
+  "KMB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Household & Personal Products",
+    "market_cap": 36637589504,
+    "name": "Kimberly-Clark Corporation",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "KMB"
+  },
+  "KMI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas Midstream",
+    "market_cap": 73552101376,
+    "name": "Kinder Morgan, Inc.",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "KMI"
+  },
+  "KMX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Auto & Truck Dealerships",
+    "market_cap": 6293778432,
+    "name": "CarMax Inc",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "KMX"
+  },
+  "KO": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Beverages - Non-Alcoholic",
+    "market_cap": 346279510016,
+    "name": "Coca-Cola Company (The)",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "KO"
+  },
+  "KR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Grocery Stores",
+    "market_cap": 44518723584,
+    "name": "Kroger Company (The)",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "KR"
+  },
+  "L": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Property & Casualty",
+    "market_cap": 22614757376,
+    "name": "Loews Corporation",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "L"
+  },
+  "LAND.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "REIT - Diversified",
+    "market_cap": 4891128832,
+    "name": "LAND SECURITIES GROUP PLC ORD 1",
+    "region": "Europe",
+    "sector": "Real Estate",
+    "ticker": "LAND.L"
+  },
+  "LDOS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Information Technology Services",
+    "market_cap": 22484611072,
+    "name": "Leidos Holdings, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "LDOS"
+  },
+  "LEN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Residential Construction",
+    "market_cap": 27662516224,
+    "name": "Lennar Corporation",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "LEN"
+  },
+  "LGI.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 17454624768,
+    "name": "LEGAL & GENERAL GROUP PLC     R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "LGI.F"
+  },
+  "LH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 23843696640,
+    "name": "Labcorp Holdings Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "LH"
+  },
+  "LHX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 66433691648,
+    "name": "L3Harris Technologies, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "LHX"
+  },
+  "LIN": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 233756098560,
+    "name": "Linde plc",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "LIN"
+  },
+  "LKQ": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Auto Parts",
+    "market_cap": 8395476992,
+    "name": "LKQ Corporation",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "LKQ"
+  },
+  "LLD2.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 69669560320,
+    "name": "Lloyds Banking Group PLC      R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "LLD2.F"
+  },
+  "LLY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 964130177024,
+    "name": "Eli Lilly and Company",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "LLY"
+  },
+  "LMP.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "REIT - Industrial",
+    "market_cap": 4963632640,
+    "name": "LONDONMETRIC PROPERTY PLC ORD 1",
+    "region": "Europe",
+    "sector": "Real Estate",
+    "ticker": "LMP.L"
+  },
+  "LMT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 148471758848,
+    "name": "Lockheed Martin Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "LMT"
+  },
+  "LNC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Life",
+    "market_cap": 7003052544,
+    "name": "Lincoln National Corporation",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "LNC"
+  },
+  "LNT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 18366486528,
+    "name": "Alliant Energy Corporation",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "LNT"
+  },
+  "LOW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Home Improvement Retail",
+    "market_cap": 148309966848,
+    "name": "Lowe's Companies, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "LOW"
+  },
+  "LRCX": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductor Equipment & Materials",
+    "market_cap": 300279103488,
+    "name": "Lam Research Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "LRCX"
+  },
+  "LSEG.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Financial Data & Stock Exchanges",
+    "market_cap": 42849857536,
+    "name": "LONDON STOCK EXCHANGE GROUP PLC",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "LSEG.L"
+  },
+  "LULU": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Apparel Retail",
+    "market_cap": 22069442560,
+    "name": "lululemon athletica inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "LULU"
+  },
+  "LUMN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Telecom Services",
+    "market_cap": 7224032256,
+    "name": "Lumen Technologies, Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "LUMN"
+  },
+  "LUV": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Airlines",
+    "market_cap": 26338707456,
+    "name": "Southwest Airlines Company",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "LUV"
+  },
+  "LVS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Resorts & Casinos",
+    "market_cap": 37829722112,
+    "name": "Las Vegas Sands Corp.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "LVS"
+  },
+  "LW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaged Foods",
+    "market_cap": 6612275200,
+    "name": "Lamb Weston Holdings, Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "LW"
+  },
+  "LYB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 18138169344,
+    "name": "LyondellBasell Industries NV",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "LYB"
+  },
+  "LYV": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Entertainment",
+    "market_cap": 36668162048,
+    "name": "Live Nation Entertainment, Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "LYV"
+  },
+  "MA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Credit Services",
+    "market_cap": 459400183808,
+    "name": "Mastercard Incorporated",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "MA"
+  },
+  "MAA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Residential",
+    "market_cap": 16307603456,
+    "name": "Mid-America Apartment Communiti",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "MAA"
+  },
+  "MAR": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Lodging",
+    "market_cap": 92895641600,
+    "name": "Marriott International",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "MAR"
+  },
+  "MAS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Building Products & Equipment",
+    "market_cap": 14741153792,
+    "name": "Masco Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "MAS"
+  },
+  "MBG.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Auto Manufacturers",
+    "market_cap": 52466962432,
+    "name": "Mercedes-Benz Group AG        N",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "MBG.F"
+  },
+  "MCD": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Restaurants",
+    "market_cap": 238722088960,
+    "name": "McDonald's Corporation",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "MCD"
+  },
+  "MCHP": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 40568926208,
+    "name": "Microchip Technology Incorporat",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "MCHP"
+  },
+  "MCK": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Distribution",
+    "market_cap": 120273100800,
+    "name": "McKesson Corporation",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "MCK"
+  },
+  "MCO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Financial Data & Stock Exchanges",
+    "market_cap": 85010030592,
+    "name": "Moody's Corporation",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "MCO"
+  },
+  "MDB": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 27397279744,
+    "name": "MongoDB, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "MDB"
+  },
+  "MDLZ": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Confectioners",
+    "market_cap": 77344088064,
+    "name": "Mondelez International, Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "MDLZ"
+  },
+  "MDT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 124452233216,
+    "name": "Medtronic plc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "MDT"
+  },
+  "MELI": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Internet Retail",
+    "market_cap": 88257716224,
+    "name": "MercadoLibre, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "MELI"
+  },
+  "MET": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Life",
+    "market_cap": 50036232192,
+    "name": "MetLife, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "MET"
+  },
+  "META": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Internet Content & Information",
+    "market_cap": 1661943283712,
+    "name": "Meta Platforms, Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "META"
+  },
+  "MGM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Resorts & Casinos",
+    "market_cap": 10289311744,
+    "name": "MGM Resorts International",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "MGM"
+  },
+  "MGPUF": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 10677186560,
+    "name": "M&G PLC",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "MGPUF"
+  },
+  "MHK": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Furnishings, Fixtures & Appliances",
+    "market_cap": 7750334464,
+    "name": "Mohawk Industries, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "MHK"
+  },
+  "MKC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaged Foods",
+    "market_cap": 18592032768,
+    "name": "McCormick & Company, Incorporat",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "MKC"
+  },
+  "MKTX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Capital Markets",
+    "market_cap": 6907440128,
+    "name": "MarketAxess Holdings, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "MKTX"
+  },
+  "MLM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Building Materials",
+    "market_cap": 40915984384,
+    "name": "Martin Marietta Materials, Inc.",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "MLM"
+  },
+  "MMM": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Conglomerates",
+    "market_cap": 87521738752,
+    "name": "3M Company",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "MMM"
+  },
+  "MNST": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Beverages - Non-Alcoholic",
+    "market_cap": 84668661760,
+    "name": "Monster Beverage Corporation",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "MNST"
+  },
+  "MO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Tobacco",
+    "market_cap": 116617322496,
+    "name": "Altria Group, Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "MO"
+  },
+  "MOH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Healthcare Plans",
+    "market_cap": 7537540096,
+    "name": "Molina Healthcare Inc",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "MOH"
+  },
+  "MOS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Agricultural Inputs",
+    "market_cap": 8620797952,
+    "name": "Mosaic Company (The)",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "MOS"
+  },
+  "MPC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas Refining & Marketing",
+    "market_cap": 60442144768,
+    "name": "Marathon Petroleum Corporation",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "MPC"
+  },
+  "MPWR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 57482952704,
+    "name": "Monolithic Power Systems, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "MPWR"
+  },
+  "MRK": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 297985540096,
+    "name": "Merck & Company, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "MRK"
+  },
+  "MRK.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Drug Manufacturers - Specialty & Generic",
+    "market_cap": 54977187840,
+    "name": "MERCK KGAA                    I",
+    "region": "Europe",
+    "sector": "Healthcare",
+    "ticker": "MRK.F"
+  },
+  "MRNA": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Biotechnology",
+    "market_cap": 20204834816,
+    "name": "Moderna, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "MRNA"
+  },
+  "MRVL": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 67245846528,
+    "name": "Marvell Technology, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "MRVL"
+  },
+  "MS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Capital Markets",
+    "market_cap": 282086506496,
+    "name": "Morgan Stanley",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "MS"
+  },
+  "MSCI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Financial Data & Stock Exchanges",
+    "market_cap": 43045187584,
+    "name": "MSCI Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "MSCI"
+  },
+  "MSFT": {
+    "indices": [
+      "dow30",
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 2985734963200,
+    "name": "Microsoft Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "MSFT"
+  },
+  "MSI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Communication Equipment",
+    "market_cap": 78605631488,
+    "name": "Motorola Solutions, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "MSI"
+  },
+  "MTB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 34634219520,
+    "name": "M&T Bank Corporation",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "MTB"
+  },
+  "MTCH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Internet Content & Information",
+    "market_cap": 7752845824,
+    "name": "Match Group, Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "MTCH"
+  },
+  "MTD": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 28134461440,
+    "name": "Mettler-Toledo International, I",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "MTD"
+  },
+  "MTX.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 19884406784,
+    "name": "MTU Aero Engines AG           N",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "MTX.F"
+  },
+  "MU": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 467716636672,
+    "name": "Micron Technology, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "MU"
+  },
+  "MUV2.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Insurance - Reinsurance",
+    "market_cap": 72010719232,
+    "name": "MUENCHENER RUECKVERS.-GES. AG N",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "MUV2.F"
+  },
+  "NCLH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Travel Services",
+    "market_cap": 11390542848,
+    "name": "Norwegian Cruise Line Holdings ",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "NCLH"
+  },
+  "NDAQ": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Financial Data & Stock Exchanges",
+    "market_cap": 50584485888,
+    "name": "Nasdaq, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "NDAQ"
+  },
+  "NDSN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 16335077376,
+    "name": "Nordson Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "NDSN"
+  },
+  "NEE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 191663177728,
+    "name": "NextEra Energy, Inc.",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "NEE"
+  },
+  "NEM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Gold",
+    "market_cap": 139103289344,
+    "name": "Newmont Corporation",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "NEM"
+  },
+  "NFLX": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Entertainment",
+    "market_cap": 358821429248,
+    "name": "Netflix, Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "NFLX"
+  },
+  "NI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Gas",
+    "market_cap": 22099959808,
+    "name": "NiSource Inc",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "NI"
+  },
+  "NKE": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Footwear & Accessories",
+    "market_cap": 94670520320,
+    "name": "Nike, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "NKE"
+  },
+  "NNGF.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 81529176064,
+    "name": "National Grid PLC             R",
+    "region": "Europe",
+    "sector": "Utilities",
+    "ticker": "NNGF.F"
+  },
+  "NOC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 101459697664,
+    "name": "Northrop Grumman Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "NOC"
+  },
+  "NOW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 115327131648,
+    "name": "ServiceNow, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "NOW"
+  },
+  "NPWA.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 13073246208,
+    "name": "SMITH & NEPHEW PLC            S",
+    "region": "Europe",
+    "sector": "Healthcare",
+    "ticker": "NPWA.F"
+  },
+  "NRG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Independent Power Producers",
+    "market_cap": 39149383680,
+    "name": "NRG Energy, Inc.",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "NRG"
+  },
+  "NSC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Railroads",
+    "market_cap": 70293291008,
+    "name": "Norfolk Southern Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "NSC"
+  },
+  "NTAP": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 19790166016,
+    "name": "NetApp, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "NTAP"
+  },
+  "NTRS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 27911833600,
+    "name": "Northern Trust Corporation",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "NTRS"
+  },
+  "NUE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Steel",
+    "market_cap": 40189870080,
+    "name": "Nucor Corporation",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "NUE"
+  },
+  "NVDA": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 4501516845056,
+    "name": "NVIDIA Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "NVDA"
+  },
+  "NVR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Residential Construction",
+    "market_cap": 21108736000,
+    "name": "NVR, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "NVR"
+  },
+  "NWG.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 50038931456,
+    "name": "NATWEST GROUP PLC ORD 107.69P",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "NWG.L"
+  },
+  "NWL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Household & Personal Products",
+    "market_cap": 1936704000,
+    "name": "Newell Brands Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "NWL"
+  },
+  "NWS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Entertainment",
+    "market_cap": 14932629504,
+    "name": "News Corporation",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "NWS"
+  },
+  "NWSA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Entertainment",
+    "market_cap": 14138378240,
+    "name": "News Corporation",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "NWSA"
+  },
+  "NXG.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Apparel Retail",
+    "market_cap": 17718489088,
+    "name": "NEXT PLC                      R",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "NXG.F"
+  },
+  "NXPI": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 58548572160,
+    "name": "NXP Semiconductors N.V.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "NXPI"
+  },
+  "O": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Retail",
+    "market_cap": 62322610176,
+    "name": "Realty Income Corporation",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "O"
+  },
+  "ODFL": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Trucking",
+    "market_cap": 41691054080,
+    "name": "Old Dominion Freight Line, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "ODFL"
+  },
+  "OGN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 1879676416,
+    "name": "Organon & Co.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "OGN"
+  },
+  "OHP.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Residential Construction",
+    "market_cap": 5577563648,
+    "name": "PERSIMMON PLC                 R",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "OHP.F"
+  },
+  "OKE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas Midstream",
+    "market_cap": 52912095232,
+    "name": "ONEOK, Inc.",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "OKE"
+  },
+  "OMC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Advertising Agencies",
+    "market_cap": 26650077184,
+    "name": "Omnicom Group Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "OMC"
+  },
+  "ON": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 27426113536,
+    "name": "ON Semiconductor Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ON"
+  },
+  "ORCL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 432004628480,
+    "name": "Oracle Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ORCL"
+  },
+  "ORLY": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Auto Parts",
+    "market_cap": 77092028416,
+    "name": "O'Reilly Automotive, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "ORLY"
+  },
+  "OTIS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 35643408384,
+    "name": "Otis Worldwide Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "OTIS"
+  },
+  "OXY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas E&P",
+    "market_cap": 50723692544,
+    "name": "Occidental Petroleum Corporatio",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "OXY"
+  },
+  "PAH3.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Auto Manufacturers",
+    "market_cap": 11021937664,
+    "name": "Porsche Automobil Holding SE  I",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "PAH3.F"
+  },
+  "PANW": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 121910394880,
+    "name": "Palo Alto Networks, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "PANW"
+  },
+  "PAYC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 7126264320,
+    "name": "Paycom Software, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "PAYC"
+  },
+  "PAYX": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 33915246592,
+    "name": "Paychex, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "PAYX"
+  },
+  "PCAR": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Farm & Heavy Construction Machinery",
+    "market_cap": 65252982784,
+    "name": "PACCAR Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "PCAR"
+  },
+  "PCG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 41497632768,
+    "name": "Pacific Gas & Electric Co.",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "PCG"
+  },
+  "PCT.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": null,
+    "market_cap": 5781414400,
+    "name": "POLAR CAPITAL TECHNOLOGY TRUST ",
+    "region": "Europe",
+    "sector": null,
+    "ticker": "PCT.L"
+  },
+  "PDD": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Internet Retail",
+    "market_cap": 149616541696,
+    "name": "PDD Holdings Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "PDD"
+  },
+  "PEG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 42852368384,
+    "name": "Public Service Enterprise Group",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "PEG"
+  },
+  "PEP": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Beverages - Non-Alcoholic",
+    "market_cap": 229138874368,
+    "name": "Pepsico, Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "PEP"
+  },
+  "PES.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Publishing",
+    "market_cap": 6786627072,
+    "name": "PEARSON PLC                   R",
+    "region": "Europe",
+    "sector": "Communication Services",
+    "ticker": "PES.F"
+  },
+  "PFE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 154082689024,
+    "name": "Pfizer, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "PFE"
+  },
+  "PFG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 21420148736,
+    "name": "Principal Financial Group Inc",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "PFG"
+  },
+  "PG": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Household & Personal Products",
+    "market_cap": 382640095232,
+    "name": "Procter & Gamble Company (The)",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "PG"
+  },
+  "PGR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Property & Casualty",
+    "market_cap": 124116123648,
+    "name": "Progressive Corporation (The)",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "PGR"
+  },
+  "PH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 128105988096,
+    "name": "Parker-Hannifin Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "PH"
+  },
+  "PHM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Residential Construction",
+    "market_cap": 26091202560,
+    "name": "PulteGroup, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "PHM"
+  },
+  "PKG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaging & Containers",
+    "market_cap": 20859781120,
+    "name": "Packaging Corporation of Americ",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "PKG"
+  },
+  "PLD": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Industrial",
+    "market_cap": 132610883584,
+    "name": "Prologis, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "PLD"
+  },
+  "PM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Tobacco",
+    "market_cap": 291877421056,
+    "name": "Philip Morris International Inc",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "PM"
+  },
+  "PNC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 90089226240,
+    "name": "PNC Financial Services Group, I",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "PNC"
+  },
+  "PNR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 16465256448,
+    "name": "Pentair plc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "PNR"
+  },
+  "PNW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 11913982976,
+    "name": "Pinnacle West Capital Corporati",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "PNW"
+  },
+  "POOL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Industrial Distribution",
+    "market_cap": 8333484032,
+    "name": "Pool Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "POOL"
+  },
+  "PPG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 27597129728,
+    "name": "PPG Industries, Inc.",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "PPG"
+  },
+  "PPL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 29000441856,
+    "name": "PPL Corporation",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "PPL"
+  },
+  "PRU": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Life",
+    "market_cap": 35603877888,
+    "name": "Prudential Financial, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "PRU"
+  },
+  "PRU.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Insurance - Life",
+    "market_cap": 32776101888,
+    "name": "PRUDENTIAL PLC                R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "PRU.F"
+  },
+  "PSA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Industrial",
+    "market_cap": 53345185792,
+    "name": "Public Storage",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "PSA"
+  },
+  "PSH.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": null,
+    "market_cap": 7532800000,
+    "name": "PERSHING SQUARE HOLDINGS LTD OR",
+    "region": "Europe",
+    "sector": null,
+    "ticker": "PSH.L"
+  },
+  "PSX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas Refining & Marketing",
+    "market_cap": 61612785664,
+    "name": "Phillips 66",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "PSX"
+  },
+  "PTC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 18704998400,
+    "name": "PTC Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "PTC"
+  },
+  "PVH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Apparel Manufacturing",
+    "market_cap": 3374159360,
+    "name": "PVH Corp.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "PVH"
+  },
+  "PWR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Engineering & Construction",
+    "market_cap": 84257931264,
+    "name": "Quanta Services, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "PWR"
+  },
+  "PYPL": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Credit Services",
+    "market_cap": 42600235008,
+    "name": "PayPal Holdings, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "PYPL"
+  },
+  "QCOM": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 155496677376,
+    "name": "QUALCOMM Incorporated",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "QCOM"
+  },
+  "QIA.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 8818437120,
+    "name": "Qiagen N.V.                   A",
+    "region": "Europe",
+    "sector": "Healthcare",
+    "ticker": "QIA.F"
+  },
+  "QRVO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 7644510208,
+    "name": "Qorvo, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "QRVO"
+  },
+  "QS2A.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 9685096448,
+    "name": "Smiths Group PLC              R",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "QS2A.F"
+  },
+  "RCL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Travel Services",
+    "market_cap": 86979076096,
+    "name": "Royal Caribbean Cruises Ltd.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "RCL"
+  },
+  "RDED.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Specialty Business Services",
+    "market_cap": 51781025792,
+    "name": "Relx PLC                      R",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "RDED.F"
+  },
+  "REG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Retail",
+    "market_cap": 14644523008,
+    "name": "Regency Centers Corporation",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "REG"
+  },
+  "REGN": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Biotechnology",
+    "market_cap": 81487765504,
+    "name": "Regeneron Pharmaceuticals, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "REGN"
+  },
+  "RF": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 25745094656,
+    "name": "Regions Financial Corporation",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "RF"
+  },
+  "RHI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Staffing & Employment Services",
+    "market_cap": 2503304192,
+    "name": "Robert Half Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "RHI"
+  },
+  "RHM.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 76941312000,
+    "name": "RHEINMETALL AG                I",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "RHM.F"
+  },
+  "RIO": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Other Industrial Metals & Mining",
+    "market_cap": 164588240896,
+    "name": "Rio Tinto Plc",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "RIO"
+  },
+  "RJF": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 31531993088,
+    "name": "Raymond James Financial, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "RJF"
+  },
+  "RL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Apparel Manufacturing",
+    "market_cap": 22973714432,
+    "name": "Ralph Lauren Corporation",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "RL"
+  },
+  "RMD": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 37522092032,
+    "name": "ResMed Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "RMD"
+  },
+  "ROK": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 46243766272,
+    "name": "Rockwell Automation, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "ROK"
+  },
+  "ROL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Personal Services",
+    "market_cap": 28750069760,
+    "name": "Rollins, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "ROL"
+  },
+  "ROP": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 37904519168,
+    "name": "Roper Technologies, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ROP"
+  },
+  "ROST": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Apparel Retail",
+    "market_cap": 66183544832,
+    "name": "Ross Stores, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "ROST"
+  },
+  "RSG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Waste Management",
+    "market_cap": 69524881408,
+    "name": "Republic Services, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "RSG"
+  },
+  "RTO1.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Specialty Business Services",
+    "market_cap": 12935307264,
+    "name": "Rentokil Initial PLC          R",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "RTO1.F"
+  },
+  "RTX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 265276309504,
+    "name": "RTX Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "RTX"
+  },
+  "RWE.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Utilities - Diversified",
+    "market_cap": 39898320896,
+    "name": "RWE AG                        I",
+    "region": "Europe",
+    "sector": "Utilities",
+    "ticker": "RWE.F"
+  },
+  "S4VC.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "REIT - Industrial",
+    "market_cap": 12830977024,
+    "name": "Segro PLC                     R",
+    "region": "Europe",
+    "sector": "Real Estate",
+    "ticker": "S4VC.F"
+  },
+  "SAP.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 201942368256,
+    "name": "SAP SE                        I",
+    "region": "Europe",
+    "sector": "Technology",
+    "ticker": "SAP.F"
+  },
+  "SBAC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Specialty",
+    "market_cap": 20478212096,
+    "name": "SBA Communications Corporation",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "SBAC"
+  },
+  "SBNY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 59825336,
+    "name": "Signature Bank (New York, NY)",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "SBNY"
+  },
+  "SBUX": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Restaurants",
+    "market_cap": 111742541824,
+    "name": "Starbucks Corporation",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "SBUX"
+  },
+  "SCHW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Capital Markets",
+    "market_cap": 177020190720,
+    "name": "Charles Schwab Corporation (The",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "SCHW"
+  },
+  "SEE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaging & Containers",
+    "market_cap": 6172133888,
+    "name": "Sealed Air Corporation",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "SEE"
+  },
+  "SGK1.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 8898118656,
+    "name": "Sage Group PLC, The           R",
+    "region": "Europe",
+    "sector": "Technology",
+    "ticker": "SGK1.F"
+  },
+  "SHEL": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Oil & Gas Integrated",
+    "market_cap": 229578571776,
+    "name": "Shell PLC",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "SHEL"
+  },
+  "SHL.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 47464169472,
+    "name": "Siemens Healthineers AG       N",
+    "region": "Europe",
+    "sector": "Healthcare",
+    "ticker": "SHL.F"
+  },
+  "SHW": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 89884655616,
+    "name": "Sherwin-Williams Company (The)",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "SHW"
+  },
+  "SIE.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 195177791488,
+    "name": "SIEMENS AG                    N",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "SIE.F"
+  },
+  "SJM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Packaged Foods",
+    "market_cap": 12376542208,
+    "name": "The J.M. Smucker Company",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "SJM"
+  },
+  "SLB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas Equipment & Services",
+    "market_cap": 76994617344,
+    "name": "SLB Limited",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "SLB"
+  },
+  "SMCI": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Computer Hardware",
+    "market_cap": 19335378944,
+    "name": "Super Micro Computer, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "SMCI"
+  },
+  "SNA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Tools & Accessories",
+    "market_cap": 20109762560,
+    "name": "Snap-On Incorporated",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "SNA"
+  },
+  "SNPS": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 81501552640,
+    "name": "Synopsys, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "SNPS"
+  },
+  "SO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 106091454464,
+    "name": "Southern Company (The)",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "SO"
+  },
+  "SPG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Retail",
+    "market_cap": 76417310720,
+    "name": "Simon Property Group, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "SPG"
+  },
+  "SPGI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Financial Data & Stock Exchanges",
+    "market_cap": 132471971840,
+    "name": "S&P Global Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "SPGI"
+  },
+  "SRE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Diversified",
+    "market_cap": 62135279616,
+    "name": "DBA Sempra",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "SRE"
+  },
+  "SSE.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Utilities - Diversified",
+    "market_cap": 32459923456,
+    "name": "SSE PLC ORD 50P",
+    "region": "Europe",
+    "sector": "Utilities",
+    "ticker": "SSE.L"
+  },
+  "STD.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Banks - Diversified",
+    "market_cap": 47743324160,
+    "name": "STANDARD CHARTERED PLC        R",
+    "region": "Europe",
+    "sector": "Financial Services",
+    "ticker": "STD.F"
+  },
+  "STE": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 24998043648,
+    "name": "STERIS plc (Ireland)",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "STE"
+  },
+  "STT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 36944658432,
+    "name": "State Street Corporation",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "STT"
+  },
+  "STX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Computer Hardware",
+    "market_cap": 89337995264,
+    "name": "Seagate Technology Holdings PLC",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "STX"
+  },
+  "STZ": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Beverages - Brewers",
+    "market_cap": 27116861440,
+    "name": "Constellation Brands, Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "STZ"
+  },
+  "SUY1.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Grocery Stores",
+    "market_cap": 9216059392,
+    "name": "Sainsbury PLC, J.             R",
+    "region": "Europe",
+    "sector": "Consumer Defensive",
+    "ticker": "SUY1.F"
+  },
+  "SVT1.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Utilities - Regulated Water",
+    "market_cap": 11080035328,
+    "name": "Severn Trent PLC              R",
+    "region": "Europe",
+    "sector": "Utilities",
+    "ticker": "SVT1.F"
+  },
+  "SWK": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Tools & Accessories",
+    "market_cap": 13575666688,
+    "name": "Stanley Black & Decker, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "SWK"
+  },
+  "SWKS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 8963771392,
+    "name": "Skyworks Solutions, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "SWKS"
+  },
+  "SY1.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Specialty Chemicals",
+    "market_cap": 10638221312,
+    "name": "Symrise AG                    I",
+    "region": "Europe",
+    "sector": "Basic Materials",
+    "ticker": "SY1.F"
+  },
+  "SYF": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Credit Services",
+    "market_cap": 26645458944,
+    "name": "Synchrony Financial",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "SYF"
+  },
+  "SYK": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 147740786688,
+    "name": "Stryker Corporation",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "SYK"
+  },
+  "SYY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Food Distribution",
+    "market_cap": 42682302464,
+    "name": "Sysco Corporation",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "SYY"
+  },
+  "T": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Telecom Services",
+    "market_cap": 194676277248,
+    "name": "AT&T Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "T"
+  },
+  "TAP": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Beverages - Brewers",
+    "market_cap": 9484435456,
+    "name": "Molson Coors Beverage Company",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "TAP"
+  },
+  "TDG": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 74220945408,
+    "name": "Transdigm Group Incorporated",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "TDG"
+  },
+  "TDY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Scientific & Technical Instruments",
+    "market_cap": 31871270912,
+    "name": "Teledyne Technologies Incorpora",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "TDY"
+  },
+  "TEAM": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 20949192704,
+    "name": "Atlassian Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "TEAM"
+  },
+  "TECH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Biotechnology",
+    "market_cap": 9061774336,
+    "name": "Bio-Techne Corp",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "TECH"
+  },
+  "TEL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Electronic Components",
+    "market_cap": 69212733440,
+    "name": "TE Connectivity plc",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "TEL"
+  },
+  "TER": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Semiconductor Equipment & Materials",
+    "market_cap": 52923768832,
+    "name": "Teradyne, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "TER"
+  },
+  "TFC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 65881186304,
+    "name": "Truist Financial Corporation",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "TFC"
+  },
+  "TFX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 5260018176,
+    "name": "Teleflex Incorporated",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "TFX"
+  },
+  "TGT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Discount Stores",
+    "market_cap": 52160479232,
+    "name": "Target Corporation",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "TGT"
+  },
+  "TJX": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Apparel Retail",
+    "market_cap": 176612245504,
+    "name": "TJX Companies, Inc. (The)",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "TJX"
+  },
+  "TMO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 195413278720,
+    "name": "Thermo Fisher Scientific Inc",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "TMO"
+  },
+  "TMUS": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Telecom Services",
+    "market_cap": 238409678848,
+    "name": "T-Mobile US, Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "TMUS"
+  },
+  "TPR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Luxury Goods",
+    "market_cap": 32844240896,
+    "name": "Tapestry, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "TPR"
+  },
+  "TRGP": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas Midstream",
+    "market_cap": 49756659712,
+    "name": "Targa Resources, Inc.",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "TRGP"
+  },
+  "TRMB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Scientific & Technical Instruments",
+    "market_cap": 16236632064,
+    "name": "Trimble Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "TRMB"
+  },
+  "TROW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Asset Management",
+    "market_cap": 21051140096,
+    "name": "T. Rowe Price Group, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "TROW"
+  },
+  "TRV": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Insurance - Property & Casualty",
+    "market_cap": 68310941696,
+    "name": "The Travelers Companies, Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "TRV"
+  },
+  "TSCO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Retail",
+    "market_cap": 27043694592,
+    "name": "Tractor Supply Company",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "TSCO"
+  },
+  "TSLA": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Auto Manufacturers",
+    "market_cap": 1533168582656,
+    "name": "Tesla, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "TSLA"
+  },
+  "TSN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Farm Products",
+    "market_cap": 22395744256,
+    "name": "Tyson Foods, Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "TSN"
+  },
+  "TT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Building Products & Equipment",
+    "market_cap": 101365776384,
+    "name": "Trane Technologies plc",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "TT"
+  },
+  "TTD": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Advertising Agencies",
+    "market_cap": 11710182400,
+    "name": "The Trade Desk, Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "TTD"
+  },
+  "TTWO": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Electronic Gaming & Multimedia",
+    "market_cap": 39496073216,
+    "name": "Take-Two Interactive Software, ",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "TTWO"
+  },
+  "TXN": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Semiconductors",
+    "market_cap": 193200521216,
+    "name": "Texas Instruments Incorporated",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "TXN"
+  },
+  "TXT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Aerospace & Defense",
+    "market_cap": 17177639936,
+    "name": "Textron Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "TXT"
+  },
+  "TYL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 15276177408,
+    "name": "Tyler Technologies, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "TYL"
+  },
+  "UAL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Airlines",
+    "market_cap": 37692813312,
+    "name": "United Airlines Holdings, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "UAL"
+  },
+  "UDR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Residential",
+    "market_cap": 14340467712,
+    "name": "UDR, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "UDR"
+  },
+  "UHS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Care Facilities",
+    "market_cap": 13003293696,
+    "name": "Universal Health Services, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "UHS"
+  },
+  "ULTA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Retail",
+    "market_cap": 31190910976,
+    "name": "Ulta Beauty, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "ULTA"
+  },
+  "UNH": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Healthcare Plans",
+    "market_cap": 259667689472,
+    "name": "UnitedHealth Group Incorporated",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "UNH"
+  },
+  "UNP": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Railroads",
+    "market_cap": 157515776000,
+    "name": "Union Pacific Corporation",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "UNP"
+  },
+  "UPS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Integrated Freight & Logistics",
+    "market_cap": 99030728704,
+    "name": "United Parcel Service, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "UPS"
+  },
+  "URI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Rental & Leasing Services",
+    "market_cap": 54600396800,
+    "name": "United Rentals, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "URI"
+  },
+  "USB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 89039298560,
+    "name": "U.S. Bancorp",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "USB"
+  },
+  "UU.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Utilities - Regulated Water",
+    "market_cap": 9420289024,
+    "name": "UNITED UTILITIES GROUP PLC ORD ",
+    "region": "Europe",
+    "sector": "Utilities",
+    "ticker": "UU.L"
+  },
+  "V": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Credit Services",
+    "market_cap": 610610118656,
+    "name": "Visa Inc.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "V"
+  },
+  "VFC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Apparel Manufacturing",
+    "market_cap": 7700062208,
+    "name": "V.F. Corporation",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "VFC"
+  },
+  "VICI": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Diversified",
+    "market_cap": 31829204992,
+    "name": "VICI Properties Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "VICI"
+  },
+  "VLO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas Refining & Marketing",
+    "market_cap": 63307718656,
+    "name": "Valero Energy Corporation",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "VLO"
+  },
+  "VMC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Building Materials",
+    "market_cap": 40827125760,
+    "name": "Vulcan Materials Company (Holdi",
+    "region": "US",
+    "sector": "Basic Materials",
+    "ticker": "VMC"
+  },
+  "VNA.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Real Estate Services",
+    "market_cap": 24011487232,
+    "name": "Vonovia SE                    N",
+    "region": "Europe",
+    "sector": "Real Estate",
+    "ticker": "VNA.F"
+  },
+  "VNO": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Office",
+    "market_cap": 6091298816,
+    "name": "Vornado Realty Trust",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "VNO"
+  },
+  "VODI.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Telecom Services",
+    "market_cap": 30835765248,
+    "name": "Vodafone Group PLC            R",
+    "region": "Europe",
+    "sector": "Communication Services",
+    "ticker": "VODI.F"
+  },
+  "VOW3.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Auto Manufacturers",
+    "market_cap": 51539578880,
+    "name": "VOLKSWAGEN AG                 V",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "VOW3.F"
+  },
+  "VRSK": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Consulting Services",
+    "market_cap": 28311842816,
+    "name": "Verisk Analytics, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "VRSK"
+  },
+  "VRSN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 20884381696,
+    "name": "VeriSign, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "VRSN"
+  },
+  "VRTX": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Biotechnology",
+    "market_cap": 121969434624,
+    "name": "Vertex Pharmaceuticals Incorpor",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "VRTX"
+  },
+  "VTR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Healthcare Facilities",
+    "market_cap": 41055993856,
+    "name": "Ventas, Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "VTR"
+  },
+  "VTRS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - Specialty & Generic",
+    "market_cap": 17605623808,
+    "name": "Viatris Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "VTRS"
+  },
+  "VZ": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Telecom Services",
+    "market_cap": 206202585088,
+    "name": "Verizon Communications Inc.",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "VZ"
+  },
+  "WAB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Railroads",
+    "market_cap": 45031833600,
+    "name": "Westinghouse Air Brake Technolo",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "WAB"
+  },
+  "WAT": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Diagnostics & Research",
+    "market_cap": 31666241536,
+    "name": "Waters Corporation",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "WAT"
+  },
+  "WBD": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Entertainment",
+    "market_cap": 71409213440,
+    "name": "Warner Bros. Discovery, Inc. - ",
+    "region": "US",
+    "sector": "Communication Services",
+    "ticker": "WBD"
+  },
+  "WDAY": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Software - Application",
+    "market_cap": 37142368256,
+    "name": "Workday, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "WDAY"
+  },
+  "WDC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Computer Hardware",
+    "market_cap": 96501080064,
+    "name": "Western Digital Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "WDC"
+  },
+  "WEC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 37685186560,
+    "name": "WEC Energy Group, Inc.",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "WEC"
+  },
+  "WEIR.L": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 9179881472,
+    "name": "WEIR GROUP PLC ORD 12.5P",
+    "region": "Europe",
+    "sector": "Industrials",
+    "ticker": "WEIR.L"
+  },
+  "WELL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Healthcare Facilities",
+    "market_cap": 145446502400,
+    "name": "Welltower Inc.",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "WELL"
+  },
+  "WFC": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Diversified",
+    "market_cap": 270903001088,
+    "name": "Wells Fargo & Company",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "WFC"
+  },
+  "WHR": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Furnishings, Fixtures & Appliances",
+    "market_cap": 3907137536,
+    "name": "Whirlpool Corporation",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "WHR"
+  },
+  "WM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Waste Management",
+    "market_cap": 94340235264,
+    "name": "Waste Management, Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "WM"
+  },
+  "WMB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas Midstream",
+    "market_cap": 91368939520,
+    "name": "Williams Companies, Inc. (The)",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "WMB"
+  },
+  "WMT": {
+    "indices": [
+      "dow30",
+      "sp500"
+    ],
+    "industry": "Discount Stores",
+    "market_cap": 991982125056,
+    "name": "Walmart Inc.",
+    "region": "US",
+    "sector": "Consumer Defensive",
+    "ticker": "WMT"
+  },
+  "WRB": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance - Property & Casualty",
+    "market_cap": 27201916928,
+    "name": "W.R. Berkley Corporation",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "WRB"
+  },
+  "WST": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 17934790656,
+    "name": "West Pharmaceutical Services, I",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "WST"
+  },
+  "WTW": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Insurance Brokers",
+    "market_cap": 29518342144,
+    "name": "Willis Towers Watson Public Lim",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "WTW"
+  },
+  "WY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "REIT - Specialty",
+    "market_cap": 17675511808,
+    "name": "Weyerhaeuser Company",
+    "region": "US",
+    "sector": "Real Estate",
+    "ticker": "WY"
+  },
+  "WYNN": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Resorts & Casinos",
+    "market_cap": 11448855552,
+    "name": "Wynn Resorts, Limited",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "WYNN"
+  },
+  "XEL": {
+    "indices": [
+      "nasdaq100",
+      "sp500"
+    ],
+    "industry": "Utilities - Regulated Electric",
+    "market_cap": 49375825920,
+    "name": "Xcel Energy Inc.",
+    "region": "US",
+    "sector": "Utilities",
+    "ticker": "XEL"
+  },
+  "XGR2.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Restaurants",
+    "market_cap": 43238666240,
+    "name": "Compass Group PLC             R",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "XGR2.F"
+  },
+  "XOM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Oil & Gas Integrated",
+    "market_cap": 618931027968,
+    "name": "Exxon Mobil Corporation",
+    "region": "US",
+    "sector": "Energy",
+    "ticker": "XOM"
+  },
+  "XRAY": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Instruments & Supplies",
+    "market_cap": 2536305408,
+    "name": "DENTSPLY SIRONA Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "XRAY"
+  },
+  "XYL": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Specialty Industrial Machinery",
+    "market_cap": 32138145792,
+    "name": "Xylem Inc.",
+    "region": "US",
+    "sector": "Industrials",
+    "ticker": "XYL"
+  },
+  "YUM": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Restaurants",
+    "market_cap": 46009851904,
+    "name": "Yum! Brands, Inc.",
+    "region": "US",
+    "sector": "Consumer Cyclical",
+    "ticker": "YUM"
+  },
+  "ZAL.F": {
+    "indices": [
+      "dax40"
+    ],
+    "industry": "Internet Retail",
+    "market_cap": 5414587904,
+    "name": "Zalando SE                    I",
+    "region": "Europe",
+    "sector": "Consumer Cyclical",
+    "ticker": "ZAL.F"
+  },
+  "ZBH": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Medical Devices",
+    "market_cap": 20014354432,
+    "name": "Zimmer Biomet Holdings, Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "ZBH"
+  },
+  "ZBRA": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Communication Equipment",
+    "market_cap": 11906675712,
+    "name": "Zebra Technologies Corporation",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ZBRA"
+  },
+  "ZEG.F": {
+    "indices": [
+      "ftse100"
+    ],
+    "industry": "Drug Manufacturers - General",
+    "market_cap": 267040915456,
+    "name": "AstraZeneca PLC               R",
+    "region": "Europe",
+    "sector": "Healthcare",
+    "ticker": "ZEG.F"
+  },
+  "ZION": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Banks - Regional",
+    "market_cap": 9102807040,
+    "name": "Zions Bancorporation N.A.",
+    "region": "US",
+    "sector": "Financial Services",
+    "ticker": "ZION"
+  },
+  "ZS": {
+    "indices": [
+      "nasdaq100"
+    ],
+    "industry": "Software - Infrastructure",
+    "market_cap": 26689099776,
+    "name": "Zscaler, Inc.",
+    "region": "US",
+    "sector": "Technology",
+    "ticker": "ZS"
+  },
+  "ZTS": {
+    "indices": [
+      "sp500"
+    ],
+    "industry": "Drug Manufacturers - Specialty & Generic",
+    "market_cap": 57184350208,
+    "name": "Zoetis Inc.",
+    "region": "US",
+    "sector": "Healthcare",
+    "ticker": "ZTS"
+  }
+}

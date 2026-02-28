@@ -10,8 +10,8 @@ The score combines:
   - Relative scoring: How does each KPI compare to the sector/industry average?
   - Trend scoring: Is the KPI improving or deteriorating over time?
 
-Final score = weighted blend of absolute (30%) + relative (50%) + trend (20%).
-When trend data is unavailable, redistributes to ~37.5% abs + ~62.5% rel.
+Final score = weighted blend of absolute (35%) + relative (55%) + trend (10%).
+When trend data is unavailable, redistributes proportionally to abs + rel.
 
 KPIs used (12):
   - P/E Ratio (trailingPE): Lower is cheaper.
@@ -303,14 +303,14 @@ def calculate_rating(
     industry_averages: dict[str, Optional[float]] | None = None,
     sector_thresholds: dict[str, tuple | None] | None = None,
     historical_yearly: dict[str, list | None] | None = None,
-    absolute_weight: float = 0.30,
-    relative_weight: float = 0.50,
-    trend_weight: float = 0.20,
+    absolute_weight: float = 0.35,
+    relative_weight: float = 0.55,
+    trend_weight: float = 0.10,
 ) -> dict:
     """
     Calculate the overall stock rating (1-10) and per-KPI breakdown.
 
-    Uses 3-way scoring: absolute (30%) + relative (50%) + trend (20%).
+    Uses 3-way scoring: absolute (35%) + relative (55%) + trend (10%).
     Prefers industry averages over sector averages for relative scoring.
     Uses dynamic sector thresholds for absolute scoring when available.
     When trend data is unavailable for a KPI, redistributes that weight.

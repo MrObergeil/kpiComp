@@ -1,5 +1,38 @@
 # Changelog
 
+## 2026-02-27 — Peer Drill-Down, Regional Comparison & Scoring
+
+### Added
+- **Stock database** (`data/stocks.json`): 603 enriched stocks from S&P 500, NASDAQ-100, Dow 30, FTSE 100, DAX 40 with sector, industry, market cap, and index membership
+- `scripts/build_stock_db.py` build script for stock database (yfinance enrichment, pytickersymbols for EU indices)
+- `stock_db.py` query module: get_stock, query_stocks, get_sectors, get_industries, get_market_cap_band
+- `peers.py` cascading peer resolution: custom > industry+region > industry global > sector+cap band > sector+region > sector global
+- `peer_groups.py` custom peer persistence (server-side JSON at `peer_groups/custom_peers.json`)
+- **Peer selection modal**: browse, search, select/deselect peers, recalculate with custom peer set, save as custom
+- **Region toggle**: Global / US / Europe button group above KPI table, re-analyzes with region filter
+- **KPI sparklines**: inline SVG mini-charts replacing trend arrows, color-coded by direction
+- **Expandable KPI rows**: click any KPI row to see year-by-year historical values
+- **Score breakdown tooltip**: hover over rating circle to see Absolute / Relative / Trend scores
+- **Colored percentage gaps**: difference column shows percentage with green/red text
+- **URL sharing**: extended to `?ticker=AMZN&peers=BABA,JD&region=us`
+- API endpoints: `GET /api/peers/{ticker}`, `PUT /api/peers/{ticker}`, `DELETE /api/peers/{ticker}`
+- API endpoints: `GET /api/taxonomy/sectors`, `GET /api/taxonomy/industries`, `GET /api/stocks`
+- `historical_yearly` and `peer_selection` in `/api/analyze` response
+- Peer metadata (name, market_cap) in API response for modal display
+- `peer_groups/` added to `.gitignore`
+
+### Changed
+- **Scoring weights**: absolute 35% / relative 55% / trend 10% (was 30/50/20)
+- Peer comparison now uses stock database (603 stocks across 7 indices) instead of S&P 500 only
+- Per-ticker KPI cache replaces per-sector cache (enables reuse across different peer sets)
+- `/api/analyze/{ticker}` accepts `?peers=` and `?region=` query params
+- `data.py` refactored: `analyze_stock()` accepts `peers` and `region` params, uses `peers.resolve_peers()`
+- Fallback to legacy S&P 500 peer lookup when stock not in database
+- Client-side recalculate() uses updated 35/55/10 weights
+- `appState` object replaces `window._stockData` for state management
+- Clickable peer count badges open the peer modal
+- README updated with full API reference for all endpoints, new project structure, and peer system docs
+
 ## 2026-02-27
 
 ### Added
