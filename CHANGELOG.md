@@ -1,5 +1,20 @@
 # Changelog
 
+## 2026-05-07 — HTTP Basic Auth, Stable Hostname, LAN Access Docs
+
+### Added
+- **HTTP Basic auth middleware** in `main.py` — opt-in via `APP_USERNAME` / `APP_PASSWORD` env vars. Disabled if either is empty (warning logged at startup). Timing-safe comparison via `secrets.compare_digest`. Failed attempts logged with `client_ip`. Returns `401` + `WWW-Authenticate: Basic realm="Stock Rater"`.
+- **`docs/README.md`** — new `Authentication` and `LAN Access` sections covering `.env` setup, browser/`curl`/`fetch` examples, mDNS access, IP fallback, troubleshooting.
+- **`docs/TASKLIST.md`** — running planned-work tracker (introduced in this change).
+
+### Changed
+- **System hostname** changed from `valentin-ThinkPad-P1-Gen-3` → `homelab` so mDNS publishes `homelab.local`. App is reachable from any LAN device at `http://homelab.local:8000/` regardless of DHCP lease changes.
+- **`.env.example`** — added `APP_USERNAME` and `APP_PASSWORD` placeholders.
+
+### Notes
+- `.env` (gitignored) populated with a random 18-byte urlsafe password for `admin`.
+- `pip install` surfaces a benign `starlette` version conflict with `sse-starlette` — tracked in `docs/TASKLIST.md`.
+
 ## 2026-02-28 — Expand Stock DB: DAX, EURO STOXX 50, Russell 2000
 
 ### Added

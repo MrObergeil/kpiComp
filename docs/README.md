@@ -84,6 +84,8 @@ uvicorn main:app --reload --host 0.0.0.0 --port 8000
 ```
 
 Then open [http://localhost:8000](http://localhost:8000) in your browser.
+If `APP_USERNAME` / `APP_PASSWORD` are set in `.env`, the browser will prompt for credentials — see [Authentication](#authentication).
+If you're connecting from another machine on the LAN, use [http://homelab.local:8000](http://homelab.local:8000) instead — see [LAN Access](#lan-access).
 
 ### Rebuild Stock Database
 
@@ -440,6 +442,115 @@ kpiComp/
     ├── README.md
     └── rating_improvements.md
 ```
+
+## Authentication
+
+The app supports HTTP Basic auth, opt-in via two env vars in `.env`:
+
+```bash
+APP_USERNAME=admin
+APP_PASSWORD=<random-secret>
+```
+
+If both are set, every request (UI and API) requires `Authorization: Basic <base64(user:pass)>`. Failures return `401` with `WWW-Authenticate: Basic realm="Stock Rater"`. Comparison is timing-safe (`secrets.compare_digest`).
+
+If either is empty/missing, auth is **disabled** and a warning is logged at startup. Use this only for local-only dev (`--host 127.0.0.1`).
+
+### Generate a strong password
+
+```bash
+python -c "import secrets; print(secrets.token_urlsafe(18))"
+```
+
+### Browser
+
+Just open the URL — your browser will pop up a Basic auth dialog. Most browsers cache credentials for the session.
+
+To clear cached credentials, fully close the browser (or use the URL form `http://user:pass@homelab.local:8000/` once to update them — note: deprecated, but works in Chrome/Firefox with a warning).
+
+### `curl`
+
+```bash
+curl -u admin:$APP_PASSWORD http://homelab.local:8000/api/analyze/AAPL
+```
+
+### From JavaScript / `fetch`
+
+```js
+const headers = { Authorization: "Basic " + btoa("admin:" + password) };
+fetch("http://homelab.local:8000/api/analyze/AAPL", { headers })
+  .then(r => r.json()).then(console.log);
+```
+
+### Disabling auth for local dev
+
+Comment out (or empty) `APP_USERNAME` / `APP_PASSWORD` in `.env`:
+
+```bash
+# APP_USERNAME=admin
+# APP_PASSWORD=...
+```
+
+Restart the server. You'll see `HTTP Basic auth DISABLED` in the startup log.
+
+## LAN Access
+
+The app binds to `0.0.0.0:8000` by default, so it's reachable from any device on the same WiFi.
+
+### Stable URL via mDNS
+
+The host advertises itself as **`homelab.local`** via Avahi/mDNS. This works out of the box on:
+
+- Windows 10/11 (built-in mDNS resolver)
+- macOS / iOS (Bonjour)
+- Android (recent versions)
+- Other Linux boxes (with avahi-daemon or systemd-resolved)
+
+**From any device on the network, just open:**
+
+```
+http://homelab.local:8000/
+```
+
+No more chasing DHCP-assigned IPs across reboots.
+
+### IP fallback
+
+If mDNS is blocked (some corporate networks, AP isolation), use the raw LAN IP:
+
+```bash
+# Find the host's LAN IP from the machine running the server
+ip -4 -o addr show scope global
+```
+
+Then on the client: `http://<that-ip>:8000/`. From Windows, you can confirm reachability with PowerShell:
+
+```powershell
+Test-NetConnection homelab.local -Port 8000
+```
+
+### Make the IP itself stable (optional, recommended)
+
+Even with mDNS, it's good belt-and-suspenders to reserve a static DHCP lease:
+
+1. Open the Fritz!Box admin UI (`http://fritz.box`)
+2. Home Network → Network → click the laptop
+3. Tick **"Always assign the same IP address"**
+
+That pins the IP so the fallback URL also stays stable.
+
+### Troubleshooting
+
+| Symptom | Fix |
+|---|---|
+| `homelab.local` doesn't resolve from Windows | Confirm Windows 11 has mDNS enabled (it is by default). On Windows 10, may need [Bonjour Print Services](https://support.apple.com/kb/DL999) installed. |
+| Connection refused on the LAN IP | Server bound to `127.0.0.1`. Restart with `--host 0.0.0.0`. |
+| Connection times out | Linux firewall (`ufw status`) or router AP-isolation. UFW is inactive in this repo's default setup. |
+| URL works on Linux loopback but not from another machine | The two devices may be on different SSIDs (2.4 GHz vs 5 GHz with isolation), or the router has guest-network isolation enabled. |
+
+### Adding more services
+
+When you stand up additional apps on this box, just pick another port — they'll all be reachable as `http://homelab.local:<port>/`. Once you have 3+ services, consider a reverse proxy (Caddy is simplest) so they all share port 80/443 under paths or subdomains.
 
 ## Notes
 

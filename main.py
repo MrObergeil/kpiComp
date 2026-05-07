@@ -10,7 +10,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 import asyncio
+import base64
 import json
+import os
+import secrets
 import time
 import logging
 import uuid
@@ -18,7 +21,7 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import FastAPI, Request, HTTPException, Query
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse, JSONResponse, Response
 from pydantic import BaseModel, field_validator
 
 from logging_config import setup_logging
@@ -98,6 +101,44 @@ app.state.ticker_to_aliases = _ticker_to_aliases  # expose for train.py router
 
 
 # --- Middleware ---
+
+_AUTH_USER = os.environ.get("APP_USERNAME", "").strip()
+_AUTH_PASS = os.environ.get("APP_PASSWORD", "").strip()
+_AUTH_ENABLED = bool(_AUTH_USER and _AUTH_PASS)
+
+if _AUTH_ENABLED:
+    logger.info(f"HTTP Basic auth enabled (user={_AUTH_USER!r})")
+else:
+    logger.warning(
+        "HTTP Basic auth DISABLED — set APP_USERNAME and APP_PASSWORD in .env "
+        "before exposing on a network."
+    )
+
+_UNAUTHORIZED = Response(
+    content="Unauthorized",
+    status_code=401,
+    headers={"WWW-Authenticate": 'Basic realm="Stock Rater"'},
+)
+
+@app.middleware("http")
+async def basic_auth(request: Request, call_next):
+    if not _AUTH_ENABLED:
+        return await call_next(request)
+    header = request.headers.get("authorization", "")
+    if header.startswith("Basic "):
+        try:
+            user, _, pw = base64.b64decode(header[6:]).decode("utf-8").partition(":")
+            if (secrets.compare_digest(user, _AUTH_USER)
+                    and secrets.compare_digest(pw, _AUTH_PASS)):
+                return await call_next(request)
+        except Exception:
+            pass
+    logger.warning(
+        f"Auth failed: {request.method} {request.url.path}",
+        extra={"client_ip": request.client.host if request.client else "unknown"},
+    )
+    return _UNAUTHORIZED
+
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
